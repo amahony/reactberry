@@ -1,11 +1,14 @@
 {
   "name": "reactberry",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "start": "webpack-dev-server",
     "docs": "NODE_ENV=production webpack -p",
