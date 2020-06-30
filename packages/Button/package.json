@@ -1,5 +1,5 @@
 {
-    "name": "Button",
+    "name": "@reactberry/Button",
     "version": "1.0.1",
     "main": "lib/index.js",
     "module": "src/index.js",
@@ -13,5 +13,6 @@
         "react": "^15.0.0 || ^16.0.0",
         "react-dom": "^15.0.0 || ^16.0.0",
         "styled-components": "^5.0.0"
-    }
+    },
+    "gitHead": "0281e1f12191fdda91ed681c28281e5df4745a66"
 }
