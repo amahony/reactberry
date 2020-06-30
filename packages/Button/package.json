@@ -1,5 +1,5 @@
 {
-    "name": "reactberry/button",
+    "name": "@reactberry/button",
     "version": "1.0.3",
     "main": "lib/index.js",
     "module": "src/index.js",
