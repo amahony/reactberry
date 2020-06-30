@@ -8,7 +8,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/codeberryinc/reactberry.git",
+    "url": "https://github.com/codeberryinc/reactberry.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
