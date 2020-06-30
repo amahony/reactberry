@@ -1,6 +1,9 @@
 {
   "name": "reactberry",
-  "private": true,
+  "repository": {
+  "type": "git",
+  "url": "ssh://git@github.com/codeberryinc/reactberry.git"
+},
   "workspaces": [
     "packages/*"
   ],
