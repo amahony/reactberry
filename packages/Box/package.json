@@ -1,5 +1,5 @@
 {
-    "name": "@reactberry/box",
+    "name": "reactberry/box",
     "version": "1.0.3",
     "main": "lib/index.js",
     "module": "src/index.js",
@@ -15,5 +15,5 @@
         "react-dom": "^15.0.0 || ^16.0.0",
         "styled-components": "^5.0.0"
     },
-    "gitHead": "76a6749b2ad9517376e7e9736a785e1a29ccb4b7"
+    "gitHead": "9610bbd5f402d29c737c585180c7c36dc0301f7d"
 }
