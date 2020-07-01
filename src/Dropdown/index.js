@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Box} from '../Box';
-import {Button} from '../Button';
-import {Icon} from '../Icon';
+import Box from '../Box';
+import Button from '../Button';
 
 import useDropdown from './utils';
 

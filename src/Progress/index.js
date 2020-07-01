@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Box } from '../Box';
+import Box from '../Box';
 
 const ProgressStyled = styled(Box)`
   height: 0.5rem;
@@ -20,35 +20,35 @@ const ProgressStyled = styled(Box)`
   ${props => props.small && 'height: .25rem;'}
   /* negative increment */
 ${props =>
-    props.type === 'negative' &&
+  props.type === 'negative' &&
   props.progress <= '25' &&
   `${Box}{background: ${props.theme.colors.palette.greens[3]};} `}
 ${props =>
-    props.type === 'negative' &&
+  props.type === 'negative' &&
   props.progress >= '26' &&
   props.progress <= '50' &&
   ` ${Box}{background: ${props.theme.colors.palette.grays[5]};}`}
 ${props =>
-    props.type === 'negative' &&
+  props.type === 'negative' &&
   props.progress >= '51' &&
   props.progress <= '75' &&
   ` ${Box} {background: ${props.theme.colors.warning};}`}
 ${props =>
-    props.type === 'negative' &&
+  props.type === 'negative' &&
   props.progress >= '76' &&
   ` ${Box} {background: ${props.theme.colors.danger};}`}
 
 /* type positive */
 
 ${props =>
-    props.type === 'positive' &&
+  props.type === 'positive' &&
   props.progress > '90' &&
   `
 
 ${Box}{background: ${props.theme.colors.palette.greens[3]};}
 `}
 ${props =>
-    props.type === 'positive' &&
+  props.type === 'positive' &&
   props.progress >= '70' &&
   props.progress <= '90' &&
   `
@@ -56,14 +56,14 @@ ${props =>
 ${Box}{background: ${props.theme.colors.palette.grays[5]};}
 `}
 ${props =>
-    props.type === 'positive' &&
+  props.type === 'positive' &&
   props.progress >= '50' &&
   props.progress <= '69' &&
   `
 ${Box}{background: ${props.theme.colors.warning};}
 `}
 ${props =>
-    props.type === 'positive' &&
+  props.type === 'positive' &&
   props.progress < '50' &&
   `
 
@@ -73,7 +73,7 @@ ${Box}{background: ${props.theme.colors.danger};}
 /* type neutral */
 
 ${props =>
-    props.type === 'neutral' &&
+  props.type === 'neutral' &&
   `
 ${Box}{background: ${props.theme.colors.palette.neutrals[3]};}
 `}
@@ -81,7 +81,7 @@ ${Box}{background: ${props.theme.colors.palette.neutrals[3]};}
 /* type neutral */
 
 ${props =>
-    props.type === 'custom' &&
+  props.type === 'custom' &&
   `
 
 `}

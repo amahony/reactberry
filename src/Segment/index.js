@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button} from '../Button';
-import {Group} from '../Group';
+import Button from '../Button';
+import Group from '../Group';
 
 const SegmentContext = React.createContext();
 

@@ -1,7 +1,7 @@
 import {variant} from 'styled-system';
 import styled, {css} from 'styled-components';
 
-import {Box} from '../Box';
+import Box from '../Box';
 import {disabled} from '../utils';
 
 const buttonStyle = variant({
@@ -49,8 +49,9 @@ const buttonStyling = css`
 
 const disabledStyling = css`
   ${disabled};
-  &&props.variant!== 'custom'
-  background: ${props => props.theme.colors.palette.grays[0]};
+  &&props.variant!=='custom'
+  background: ${props =>
+    props.theme.colors.palette.grays[0]};
   color: ${props => props.theme.colors.palette.grays[5]};
 `;
 
