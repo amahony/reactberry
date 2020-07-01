@@ -15,12 +15,14 @@
   },
   "scripts": {
     "start": "webpack-dev-server",
-    "docs": "NODE_ENV=production webpack -p",
+    "docs": "yarn docz dev",
     "build": "babel src -d dist",
     "clean": "rm -rf dist",
     "dist": "yarn run clean && yarn run build"
   },
   "dependencies": {
+    "chroma-js": "^2.1.0",
+    "docz": "^2.3.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
