@@ -43,11 +43,6 @@ DropdownStyled.defaultProps = {
   display: 'flex'
 };
 
-ButtonStyled.defaultProps = {
-  fontWeight: '600',
-  mr: '0'
-};
-
 const Dropdown = ({
   children,
   title,
@@ -74,7 +69,8 @@ const Dropdown = ({
 
   return (
     <DropdownStyled className={isOpen ? 'active' : ''} {...boxProps}>
-      <ButtonStyled
+      <Button
+        fontWeight="600"
         ref={actionEl}
         buttonSize={buttonSize}
         variant={variant}
@@ -82,13 +78,13 @@ const Dropdown = ({
         shape={shape}
         hover={hover}
         hoverbg={hoverbg}
-        mr={mr}
+        mr={mr || '0'}
         onClick={toggleDrop}
         {...buttonProps}
       >
         {title || 'Select'}
         {!hideIcon && <>{isOpen ? '+' : '-'}</>}
-      </ButtonStyled>
+      </Button>
 
       <ListStyled
         ref={dropEl}
