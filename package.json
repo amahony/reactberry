@@ -20,6 +20,13 @@
     "clean": "rm -rf dist",
     "dist": "yarn run clean && yarn run build"
   },
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^5.1.1",
+    "styled-system": "^5.1.5",
+  },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
