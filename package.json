@@ -1,5 +1,5 @@
 {
-  "name": "@codeberryinc/reactberry",
+  "name": "@amahony/reactberry",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -8,7 +8,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/codeberryinc/reactberry.git"
+    "url": "https://github.com/amahony/reactberry.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
