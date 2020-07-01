@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IconSmallUp } from './small-up';
-import { IconSmallDown } from './small-down';
-import { Box} from '../Box';
-import { Button} from '../Button';
-import { Icon} from '../Icon';
+import {Box} from '../Box';
+import {Button} from '../Button';
+import {Icon} from '../Icon';
 
 import useDropdown from './utils';
 
@@ -90,15 +88,7 @@ const Dropdown = ({
         {...buttonProps}
       >
         {title || 'Select'}
-        {!hideIcon && (
-          <>
-            {isOpen ? (
-              <Icon ml="auto" icon={<IconSmallUp />} />
-            ) : (
-              <Icon ml="auto" icon={<IconSmallDown />} />
-            )}
-          </>
-        )}
+        {!hideIcon && <>{isOpen ? '+' : '-'}</>}
       </ButtonStyled>
 
       <ListStyled
