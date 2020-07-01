@@ -1,6 +1,6 @@
 {
   "name": "@amahony/reactberry",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "main": "index.js",
   "license": "MIT",
   "files": [
@@ -29,12 +29,12 @@
     "styled-system": "^5.1.5"
   },
   "devDependencies": {
-    "docz": "^2.3.1",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "docz": "^2.3.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
