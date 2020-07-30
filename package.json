@@ -1,18 +1,12 @@
 {
-  "name": "@amahony/reactberry",
-  "version": "1.0.17",
+  "name": "@reactberry/core",
+  "version": "1.0.25",
   "main": "index.js",
   "license": "MIT",
   "files": [
     "dist"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/amahony/reactberry.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
+  "repository": "https://github.com/amahony/reactberry.git",
   "scripts": {
     "start": "webpack-dev-server",
     "docs": "yarn docz dev",
@@ -49,5 +43,6 @@
     "react-dom": ">= 16",
     "styled-components": "^5.1.1",
     "styled-system": "^5.1.5"
-  }
+  },
+  "author": "Atanas Mahony <atanas@codeberry.io>"
 }
