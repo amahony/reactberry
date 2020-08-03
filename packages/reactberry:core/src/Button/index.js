@@ -41,7 +41,7 @@ const intents = {
 const buttonStyling = css`
   align-items: center;
   cursor: pointer;
-  font-weight: 600;
+
   transition: all 0.125s ease-out;
   text-align: center;
   text-decoration: none;
@@ -49,10 +49,6 @@ const buttonStyling = css`
 
 const disabledStyling = css`
   ${disabled};
-  &&props.variant!=='custom'
-  background: ${props =>
-    props.theme.colors.palette.grays[0]};
-  color: ${props => props.theme.colors.palette.grays[5]};
 `;
 
 const Button = styled(Box)`
@@ -75,6 +71,7 @@ Button.defaultProps = {
   display: 'inline-flex',
   variant: 'default',
   buttonSize: 'medium',
+  fontWeight: 600,
   shape: 'rounded',
   mr: 'xxxsmall',
   justifyContent: 'center'

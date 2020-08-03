@@ -1,0 +1,49 @@
+{
+  "name": "@reactberry/core",
+  "version": "1.0.25",
+  "main": "index.js",
+  "files": [
+    "dist"
+  ],
+  "repository": "https://github.com/amahony/reactberry.git",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "docs": "yarn docz dev",
+    "build": "babel src -d dist",
+    "clean": "rm -rf dist",
+    "dist": "yarn run clean && yarn run build",
+    "test": "echo @reactberry/core"
+  },
+  "dependencies": {
+    "chroma-js": "^2.1.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^5.1.1",
+    "styled-system": "^5.1.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "docz": "^2.3.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^5.1.1",
+    "styled-system": "^5.1.5",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1"
+  },
+  "peerDependencies": {
+    "react": ">= 16",
+    "react-dom": ">= 16",
+    "styled-components": "^5.1.1",
+    "styled-system": "^5.1.5"
+  },
+  "license": "MIT",
+  "author": "Atanas Mahony <atanas@codeberry.io>"
+}
