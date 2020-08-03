@@ -8,10 +8,9 @@ export const StyledLabel = styled.label`
     margin-right: 0.5rem;
   }
 `;
-const { createContext, useState, useContext } = React;
+const {createContext, useState, useContext} = React;
 
-function useCheckboxButtons(name, onChange = () => {
-}) {
+function useCheckboxButtons(name, onChange = () => {}) {
   const [value, setState] = useState(null);
 
   const handleChange = event => {
@@ -21,8 +20,7 @@ function useCheckboxButtons(name, onChange = () => {
 
   const inputProps = {
     onChange: handleChange,
-    name,
-    type: 'checkbox'
+    name
   };
 
   return [value, inputProps];
@@ -30,7 +28,7 @@ function useCheckboxButtons(name, onChange = () => {
 
 const CheckboxGroupContext = createContext();
 
-export function CheckboxGroup({ children, name, onChange }) {
+export function CheckboxGroup({children, name, onChange}) {
   const [state, inputProps] = useCheckboxButtons(name, onChange);
   return (
     <CheckboxGroupContext.Provider state={state} value={inputProps}>
@@ -43,7 +41,7 @@ export function CheckboxButton(props) {
   const context = useContext(CheckboxGroupContext);
   return (
     <StyledLabel>
-      <input {...props} {...context} />
+      <input type="checkbox" {...props} {...context} />
       {props.label}
     </StyledLabel>
   );
