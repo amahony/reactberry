@@ -9,10 +9,9 @@ export const StyledLabel = styled.label`
   }
 `;
 
-const { createContext, useState, useContext } = React;
+const {createContext, useState, useContext} = React;
 
-function useRadioButtons(name, onChange = () => {
-}) {
+function useRadioButtons(name, onChange = () => {}) {
   const [value, setState] = useState(null);
 
   const handleChange = event => {
@@ -22,8 +21,7 @@ function useRadioButtons(name, onChange = () => {
 
   const inputProps = {
     onChange: handleChange,
-    name,
-    type: 'radio'
+    name
   };
 
   return [value, inputProps];
@@ -31,7 +29,7 @@ function useRadioButtons(name, onChange = () => {
 
 const RadioGroupContext = createContext();
 
-export function RadioGroup({ children, name, onChange }) {
+export function RadioGroup({children, name, onChange}) {
   const [state, inputProps] = useRadioButtons(name, onChange);
   return (
     <RadioGroupContext.Provider state={state} value={inputProps}>
@@ -44,7 +42,7 @@ export function RadioButton(props) {
   const context = useContext(RadioGroupContext);
   return (
     <StyledLabel>
-      <input {...props} {...context} />
+      <input type="radio" {...props} {...context} />
       {props.label}
     </StyledLabel>
   );

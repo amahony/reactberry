@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import FieldStyling from './styling';
+import FieldStyling from '../styling';
 
 export const StyledTextarea = styled.textarea`
   ${FieldStyling};
@@ -9,7 +9,7 @@ export const StyledTextarea = styled.textarea`
   /* flex: 1 0 auto; */
 `;
 
-function Textarea({value, rows, minRows, maxRows, placeholder, ...rest}) {
+function Textarea({value, rows, placeholder, ...rest}) {
   return (
     <StyledTextarea
       rows={rows}

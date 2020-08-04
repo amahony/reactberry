@@ -22,3 +22,5 @@ export {default as Tag} from './Tag';
 export {default as Text} from './Text';
 export {default as Theme} from './Theme';
 export {default as Toggle} from './Toggle';
+
+export * from './utils';

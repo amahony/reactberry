@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { IconSmallDown } from '@project/iconberry';
-
-import { Box, Icon } from '../..';
-import FieldStyling from './styling';
+import {Box, Icon} from '@reactberry/core';
+import FieldStyling from '../styling';
 
 const StyledIcon = styled(Icon)`
   position: absolute;
@@ -47,7 +45,7 @@ export const StyledSelect = styled.select`
   }
 `;
 
-export class Select extends React.Component {
+class Select extends React.Component {
   constructor() {
     super();
     this._handleKeyPress = this._handleKeyPress.bind(this);
@@ -92,9 +90,7 @@ export class Select extends React.Component {
         >
           {this.props.children}
         </StyledSelect>
-        <StyledIcon>
-          <IconSmallDown />
-        </StyledIcon>
+        <StyledIcon>{'▼'}</StyledIcon>
       </Box>
     );
   }
@@ -104,3 +100,5 @@ Select.defaultProps = {
   fontSize: 'small',
   preset: 'light'
 };
+
+export default Select;

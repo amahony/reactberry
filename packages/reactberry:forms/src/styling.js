@@ -1,14 +1,7 @@
-import {
-  border,
-  color,
-  flexbox,
-  layout,
-  space,
-  typography
-} from 'styled-system';
-import { css } from 'styled-components';
+import {border, color, flexbox, layout, space, typography} from 'styled-system';
+import {css} from 'styled-components';
 
-import { presets } from '../utils';
+import {presets} from '@reactberry/core';
 
 const FieldStyling = css`
   resize: none;

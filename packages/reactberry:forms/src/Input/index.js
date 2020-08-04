@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {Box, Text} from '@reactberry/core';
-import FieldStyling from './styling';
+
+import FieldStyling from '../styling';
 
 export const StyledInput = styled.input`
   ${FieldStyling};
@@ -70,5 +71,6 @@ export class Input extends React.Component {
 
 Input.defaultProps = {
   flow: 'vertical',
-  mb: 'small'
+  mb: 'small',
+  placeholder: 'Placeholder'
 };
