@@ -45,5 +45,6 @@
     "styled-system": "^5.1.5"
   },
   "license": "MIT",
-  "author": "Atanas Mahony <atanas@codeberry.io>"
+  "author": "Atanas Mahony <atanas@codeberry.io>",
+  "gitHead": "61165ffb6d3702e8eed2243646e11b47a041a05b"
 }
