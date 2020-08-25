@@ -20,4 +20,9 @@ function Textarea({value, rows, placeholder, ...rest}) {
   );
 }
 
+Textarea.defaultProps = {
+  preset: 'light',
+  rows: 10
+};
+
 export default Textarea;

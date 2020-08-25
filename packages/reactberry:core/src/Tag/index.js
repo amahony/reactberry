@@ -65,7 +65,7 @@ const TagBase = styled(Box)`
 const Tag = ({children, variant, status, icon, ...rest}) => (
   <React.Fragment>
     <TagBase showIcon variant={variant} status={status} {...rest}>
-      {children ? <span>{children}</span> : <span>{status}</span>}
+      {children ? <>{children}</> : <>{status}</>}
     </TagBase>
   </React.Fragment>
 );

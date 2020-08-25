@@ -1,6 +1,7 @@
 {
-  "name": "@reactberry/core",
-  "version": "1.1.3",
+  "name": "@reactberry/ui",
+  "version": "1.1.4",
+  "private": true,
   "main": "index.js",
   "files": [
     "dist"
@@ -8,17 +9,18 @@
   "repository": "https://github.com/amahony/reactberry.git",
   "scripts": {
     "start": "webpack-dev-server",
-    "docs": "yarn docz dev",
     "build": "babel src -d dist",
     "clean": "rm -rf dist",
     "dist": "yarn run clean && yarn run build",
-    "test": "echo @reactberry/core"
+    "test": "echo @reactberry/ui"
   },
   "dependencies": {
+    "@reactberry/core": "^1.1.3",
     "chroma-js": "^2.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-form": "^4.0.1",
     "styled-components": "^5.1.1",
     "styled-system": "^5.1.5"
   },
@@ -28,7 +30,6 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
-    "docz": "^2.3.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
