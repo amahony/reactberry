@@ -1,10 +1,10 @@
 {
   "name": "@reactberry/playground",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "dependencies": {
-    "@reactberry/core": "*",
-    "@reactberry/forms": "*",
+    "@reactberry/core": "^1.1.4",
+    "@reactberry/forms": "^1.1.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
