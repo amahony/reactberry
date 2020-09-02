@@ -64,7 +64,6 @@ const AvatarStructure = props => (
   </Box>
 );
 
-
 const avatarSize = variant({
   key: 'avatarSizes',
   prop: 'avatarSize'
@@ -93,10 +92,9 @@ Avatar.defaultProps = {
 };
 
 Avatar.propTypes = {
-    initials: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.oneOf(['text','icon']),
-    avatarSize: PropTypes.oneOf(['small','medium', "large"]),
-    shape: PropTypes.oneOf(['square','rounded', "circle"]),
+  initials: PropTypes.string,
+  name: PropTypes.string,
+  type: PropTypes.oneOf(['text', 'icon']),
+  shape: PropTypes.oneOf(['square', 'rounded', 'circle'])
 };
 export default Avatar;

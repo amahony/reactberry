@@ -1,6 +1,6 @@
-import { variant } from 'styled-system';
+import {variant} from 'styled-system';
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import Text from '../Text';
 
@@ -25,9 +25,9 @@ const BadgeStyled = styled(Text)`
   ${badgeSize};
 `;
 
-const Badge = ({ children, count, ...rest }) => (
+const Badge = ({children, value, ...rest}) => (
   <BadgeStyled {...rest}>
-    {count !== 0 ? count : 0}
+    {value !== 0 ? value : 0}
     {children}
   </BadgeStyled>
 );

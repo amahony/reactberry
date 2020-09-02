@@ -97,7 +97,7 @@ function Field({
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          mb="xsmall"
+          pb="xsmall"
         >
           <Text fontWeight="700">{label}</Text>
           {required && (
