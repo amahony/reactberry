@@ -1,6 +1,15 @@
-import {Button, Theme, Box} from '@reactberry/core';
-import { Field, Form, Input, RadioGroup, RadioButton, CheckboxGroup, CheckboxButton, Select, Textarea } from '@reactberry/forms';
-
+import { Badge, Box, Button, Heading, Theme } from '@reactberry/core';
+import {
+  CheckboxButton,
+  CheckboxGroup,
+  Field,
+  Form,
+  Input,
+  RadioButton,
+  RadioGroup,
+  Select,
+  Textarea
+} from '@reactberry/forms';
 import GlobalStyle from '@reactberry/core/src/Theme/default/utils'
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -12,8 +21,19 @@ class App extends React.Component {
     return <Theme>
     <GlobalStyle/>
     
+    
+    
     <Box width={[1/3]} mx="auto" p="large">
+    <Heading>Core</Heading>
     <Button>button</Button>
+  
+    <Badge value="99"/>
+    
+    
+    
+    <Heading>Forms</Heading>
+    
+    
     <Form
     validate={(values, instance) => console.log({ values, instance })}
     onSubmit={(values, instance) => console.log('submit')}

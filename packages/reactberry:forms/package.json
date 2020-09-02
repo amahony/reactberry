@@ -16,7 +16,11 @@
   "dependencies": {
     "@reactberry/core": "^1.1.4",
     "chroma-js": "^2.1.0",
-    "prop-types": "^15.7.2",
+    "@react-workspaces/react-scripts": "3.0.1-alpha-07",
+    "cross-env": "5.0.5",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "prop-types": "^15.6.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-form": "^4.0.1",

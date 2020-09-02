@@ -5,11 +5,16 @@
   "dependencies": {
     "@reactberry/core": "^1.1.4",
     "@reactberry/forms": "^1.1.5",
+    "@react-workspaces/react-scripts": "3.0.1-alpha-07",
+    "@styled-system/theme-get": "^5.0.12",
+    "cross-env": "5.0.5",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "prop-types": "^15.6.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.4.1",
     "styled-components": "^5.1.1",
     "styled-system": "^5.1.5"
   },
