@@ -1,11 +1,11 @@
 {
   "name": "@reactberry/playground",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "dependencies": {
-    "@reactberry/core": "^1.1.4",
-    "@reactberry/forms": "^1.1.5",
     "@react-workspaces/react-scripts": "3.0.1-alpha-07",
+    "@reactberry/core": "^1.1.5",
+    "@reactberry/forms": "^1.1.6",
     "@styled-system/theme-get": "^5.0.12",
     "cross-env": "5.0.5",
     "enzyme": "^3.9.0",
