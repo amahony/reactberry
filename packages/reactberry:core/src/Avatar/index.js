@@ -1,7 +1,8 @@
 import {variant} from 'styled-system';
+import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+
 import {shape} from '../utils';
 import Box from '../Box';
 
@@ -95,6 +96,7 @@ Avatar.propTypes = {
   initials: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.oneOf(['text', 'icon']),
-  shape: PropTypes.oneOf(['square', 'rounded', 'circle'])
+  shape: PropTypes.oneOf(['square', 'rounded', 'circle']),
+  avatarSize: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge'])
 };
 export default Avatar;

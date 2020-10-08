@@ -1,7 +1,7 @@
 import {variant} from 'styled-system';
 import React from 'react';
 import styled, {css} from 'styled-components';
-
+import PropTypes from 'prop-types';
 import Text from '../Text';
 
 const badgeSize = variant({
@@ -37,6 +37,12 @@ Badge.defaultProps = {
   bg: 'danger',
   color: 'white',
   fontWeight: '600'
+};
+
+Badge.propTypes = {
+  color: PropTypes.objectOf(PropTypes.object),
+  value: PropTypes.string,
+  badgeSize: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge'])
 };
 
 export default Badge;
