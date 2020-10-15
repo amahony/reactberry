@@ -37,7 +37,7 @@ export function CheckboxGroup({children, name, onChange}) {
   );
 }
 
-export function CheckboxButton(props) {
+function Checkbox(props) {
   const context = useContext(CheckboxGroupContext);
   return (
     <StyledLabel>
@@ -46,3 +46,5 @@ export function CheckboxButton(props) {
     </StyledLabel>
   );
 }
+
+export default Checkbox;

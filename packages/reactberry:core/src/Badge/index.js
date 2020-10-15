@@ -40,7 +40,7 @@ Badge.defaultProps = {
 };
 
 Badge.propTypes = {
-  color: PropTypes.objectOf(PropTypes.object),
+  color: PropTypes.objectOf('theme.colors'),
   value: PropTypes.string,
   badgeSize: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge'])
 };

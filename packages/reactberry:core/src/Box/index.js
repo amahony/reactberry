@@ -9,9 +9,9 @@ import {
   shadow,
   space
 } from 'styled-system';
-import styled, { css } from 'styled-components';
+import styled, {css} from 'styled-components';
 import PropTypes from 'prop-types';
-import { hoverbg, hoverbr, hover, shape, pointer, presets } from '../utils';
+import {hoverbg, hoverbr, hover, shape, pointer, presets} from '../utils';
 
 const BoxStyling = css`
   box-sizing: border-box;
@@ -38,9 +38,6 @@ const Box = styled.div`
   }
 `;
 
-Box.propTypes = {
-    variant: PropTypes.oneOf(['primary','secondary', 'tertiary'])
-};
-
+Box.propTypes = {};
 
 export default Box;

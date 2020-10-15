@@ -2,19 +2,30 @@
   "name": "root",
   "private": true,
   "useWorkspaces": true,
+  "main": "index.js",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "../packages/**/*"
   ],
   "engines": {
-   "node": ">=12.0.0"
- },
+    "node": ">=12.0.0"
+  },
   "scripts": {
     "build": "lerna run build",
     "test": "lerna run test",
     "clean": "lerna run clean",
-    "dev": "cd packages/playground && yarn start"
+    "playground": "cd packages/playground && yarn start",
+    "docs": "yarn docz dev",
+    "docz:build": "yarn docz build",
+    "docz:dev": "yarn docz dev",
+    "docz:serve": "yarn docz serve"
   },
   "devDependencies": {
-    "lerna": "^3.15.0"
+    "lerna": "^3.16.4"
+  },
+  "dependencies": {
+    "docz": "2.0.0-rc.52",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
   }
 }
