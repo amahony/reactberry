@@ -3,11 +3,11 @@ export default {
   menu: [
     "Getting Started",
     "Style Props",
-    "Reactberry:Core",
-    "Reactberry:Forms",
-    "Reactberry:UI",
-    "Reactberry:Theme",
-    "Reactberry:Hooks"
+    "reactberry/core",
+    "reactberry/forms",
+    "reactberry/ui",
+    "reactberry/theme",
+    "reactberry/hooks"
   ],
   files: ["./**/*.mdx", "../components/**/*.mdx"]
 };

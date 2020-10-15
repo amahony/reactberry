@@ -9,12 +9,12 @@ import {
   shadow,
   space
 } from 'styled-system';
-import styled, {css} from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 import {hoverbg, hoverbr, hover, shape, pointer, presets} from '../utils';
 
-const BoxStyling = css`
-  box-sizing: border-box;
+const Box = styled.div`
   ${color};
   ${space};
   ${layout};
@@ -25,10 +25,6 @@ const BoxStyling = css`
   ${grid};
   ${shadow};
   ${shape};
-`;
-
-const Box = styled.div`
-  ${BoxStyling};
   ${presets};
   ${props => props.pointer && pointer};
   &:hover {
@@ -38,6 +34,12 @@ const Box = styled.div`
   }
 `;
 
-Box.propTypes = {};
+Box.defaultProps = {
+  boxSizing: 'border-box'
+};
+
+Box.propTypes = {
+  boxSizing: PropTypes.string
+};
 
 export default Box;
