@@ -1,23 +1,22 @@
+import {variant} from 'styled-system';
 import React from 'react';
+import styled from 'styled-components';
+
 import Box from '../Box';
-import styled, { css } from 'styled-components';
-import { variant } from 'styled-system';
 
 const switchSize = variant({
   key: 'switchSizes',
   prop: 'switchSize'
 });
 
-const SwitchStyling = css`
+const Switch = styled(Box)`
+  ${switchSize};
   position: relative;
   transition: all 0.6s;
   border-radius: 25px;
   cursor: pointer;
   &:before {
     transition: all 0.25s;
-  }
-
-  &:before {
     display: block;
     position: absolute;
     content: '';
@@ -30,16 +29,16 @@ const SwitchStyling = css`
     transition-delay: 0.01s;
     border-radius: 50%;
   }
-  ${props => props.state === 'off'} && {
+  ${props => props.checked === false} && {
     &:before {
       transform: translateX(100%) scale(0.8);
     }
   }
-`;
-
-const Switch = styled(Box)`
-  ${SwitchStyling};
-  ${switchSize};
+  ${props =>
+    props.disabled &&
+    `pointer-events: none;
+    opacity: 0.7;
+    background: gray;`}
 `;
 
 Switch.defaultProps = {
@@ -50,25 +49,17 @@ Switch.defaultProps = {
 
 export default function Toggle({
   switchSize,
-  initState = 'off',
-  onToggle = () => {},
+  checked = false,
+  onClick = () => {},
   ...rest
 }) {
-  const [state, setState] = React.useState(initState);
-
-  function toggle() {
-    const currentState = state === 'off' ? 'on' : 'off';
-    setState(currentState);
-    onToggle(currentState);
-  }
-
   return (
     <Switch
-      bg={state === 'on' ? 'success' : 'neutral'}
-      state={state}
+      checked={checked}
+      bg={checked === true ? 'success' : 'neutral'}
       switchSize={switchSize}
-      onClick={toggle}
+      onClick={() => onClick(!checked)}
       {...rest}
-    ></Switch>
+    />
   );
 }
