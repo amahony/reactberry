@@ -1,14 +1,14 @@
 import React from 'react';
-import { useForm } from 'react-form';
+import {useForm} from 'react-form';
 
 function Form({
   children,
-  defaultValue = {},
+  defaultValues,
   onSubmit = async () => null,
   validate = async () => null
 }) {
-  const { Form: FormComponent } = useForm({
-    defaultValue,
+  const {Form: FormComponent} = useForm({
+    defaultValues,
     onSubmit,
     validate
   });
