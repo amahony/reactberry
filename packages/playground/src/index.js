@@ -34,7 +34,11 @@ class App extends React.Component {
             validate={(values, instance) => console.log({ values, instance })}
             onSubmit={(values, instance) => console.log("submit")}
           >
-            <Field label="name" field="name" Component={Textarea} />
+            <Field
+              label="name"
+              field="name"
+              Component={<Input preset="light" flow="horizontal" label="asd" />}
+            />
             <Field
               required
               label="email"
