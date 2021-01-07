@@ -40,9 +40,11 @@ Badge.defaultProps = {
 };
 
 Badge.propTypes = {
-  color: PropTypes.objectOf('theme.colors'),
+  color: PropTypes.node,
+  bg: PropTypes.node,
   value: PropTypes.string,
-  badgeSize: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge'])
+  badgeSize: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge']),
+  fontWeight: PropTypes.oneOf(['300', '400', '500', '600', '700', '800', '900'])
 };
 
 export default Badge;
