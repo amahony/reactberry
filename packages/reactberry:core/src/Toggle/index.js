@@ -49,16 +49,21 @@ Switch.defaultProps = {
 
 export default function Toggle({
   switchSize,
-  checked = false,
+  initialValue = false,
   onClick = () => {},
   ...rest
 }) {
+  const [toggle, setToggle] = React.useState(initialValue);
+
   return (
     <Switch
-      checked={checked}
-      bg={checked === true ? 'success' : 'neutral'}
+      checked={toggle}
+      bg={toggle ? 'success' : 'neutral'}
       switchSize={switchSize}
-      onClick={() => onClick(!checked)}
+      onClick={() => {
+        setToggle(!toggle);
+        onClick();
+      }}
       {...rest}
     />
   );
