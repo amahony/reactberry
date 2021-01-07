@@ -1,7 +1,5 @@
-import { Badge, Box, Button, Heading, Theme } from "@reactberry/core";
+import { Badge, Box, Button, Heading, Theme, Toggle } from "@reactberry/core";
 import {
-  CheckboxButton,
-  CheckboxGroup,
   Field,
   Form,
   Input,
@@ -28,6 +26,8 @@ class App extends React.Component {
 
           <Badge value="99" />
 
+          <Toggle />
+
           <Heading>Forms</Heading>
 
           <Form
@@ -53,12 +53,6 @@ class App extends React.Component {
               <RadioButton label="option2" />
               <RadioButton label="option3" />
             </RadioGroup>
-
-            <CheckboxGroup name="checkbox_group" value="option1">
-              <CheckboxButton label="option1" />
-              <CheckboxButton label="option2" />
-              <CheckboxButton label="option3" />
-            </CheckboxGroup>
 
             <Select placeholder="select" defaultValue="option1" width="100%">
               <option value="option1">option1</option>
