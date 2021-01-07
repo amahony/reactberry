@@ -1,0 +1,22 @@
+---
+name: Segment
+menu: reactberry/core
+---
+
+import {Playground, Props} from 'docz';
+import {SegmentList, Segment} from '.';
+
+# Segment
+
+<Props of={Segment} />
+
+## Basic usage
+
+<Playground>
+  <SegmentList initialValue="B">
+    <Segment name="A">A</Segment>
+    <Segment name="B">B</Segment>
+    <Segment name="C">C</Segment>
+    <Segment name="D">D</Segment>
+  </SegmentList>
+</Playground>

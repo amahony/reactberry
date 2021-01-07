@@ -1,0 +1,59 @@
+---
+name: Tabs
+menu: reactberry/core
+---
+
+import {Playground, Props} from 'docz';
+import {Tabs, TabList, Tab, TabPanel} from '.';
+
+# Tabs
+
+<Props of={Tabs} />
+
+## Basic usage
+
+<Playground>
+  <Tabs initialValue="spider-man">
+    <TabList borderBottom="1px solid" borderColor="intents.actions.2">
+      <Tab name="spider-man">Spider-Man</Tab>
+      <Tab name="thanos">Thanos</Tab>
+      <Tab name="thor">Thor</Tab>
+    </TabList>
+    <TabPanel name="spider-man">
+      Peter Benjamin Parker was born in Queens to Richard and Mary Parker.While
+      Peter was still an infant, his parents were assigned by the CIA to
+      infiltrate the Algerian based spy ring controlled by the communist agent,
+      the Red Skull. The moment the Red Skull learned that Richard and Mary were
+      double agents, he had them killed by one of his agents, the Finisher, in
+      an airplane crash overseas and then framed them for treason. Before their
+      deaths however, Richard and Mary had another child unknown to all others
+      including Peter himself, a daughter and Peter's younger sister, Teresa.
+    </TabPanel>
+    <TabPanel name="thanos">
+      Thanos was one of the last sons of A'Lars, progenitor of the second colony
+      of Eternals on Titan, and Sui-San, the last survivor of the original
+      settlement of Eternals in this moon. He was born with purple, hide-like
+      skin and a massive body due to his Deviant Syndrome. The very first time
+      his mother laid her eyes on the baby, she was driven mad and tried to kill
+      him. Despite his unusual appearance and introvert nature, Thanos was well
+      accepted by his peers. He was a mild-mannered intellectual that dreamed of
+      becoming a scientist like his neglectful father. However, signs of his
+      true nature started to creep up early on. For instance, he liked to draw
+      dead animals despite vomiting at the prospect of performing a dissection.
+      Thanos' life reached a tipping point when a mysterious girl convinced him
+      to explore with his friends a dangerous cave to overcome his fear of
+      killing.
+    </TabPanel>
+    <TabPanel name="thor">
+      Thor is the blood-son of Odin, All-Father of the Asgardians, and Jord, who
+      was also known as Gaea, the goddess who was one of the Elder Gods. Odin
+      sought to father a son whose power would derive from both Asgard and
+      Midgard (as the Earth realm is called by Asgardians), and hence he sought
+      to mate with Jord. Odin created a cave in Norway where Jord gave birth to
+      Thor.[25] Months after the infant Thor was weaned, Odin brought him to
+      Asgard to be raised. Odin's wife, the goddess Frigga, acted as Thor's
+      mother from that time onward. Not until many decades later did Thor learn
+      that Jord was his birth mother.
+    </TabPanel>
+  </Tabs>
+</Playground>

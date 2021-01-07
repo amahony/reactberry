@@ -1,0 +1,96 @@
+---
+name: Theme
+---
+
+import {Playground} from 'docz';
+import {Button, Box, Heading} from '@reactberry/core';
+import theme from '.';
+
+export function Colormap() {
+  return (
+    <Box display="grid" gridGap="small" gridTemplateColumns="repeat(8, 1fr)">
+      {Object.keys(theme.colors).map(
+        (color, i) =>
+          color !== 'palette' &&
+          color !== 'intents' && (
+            <Box key={i} border="1px solid" borderColor="light" shadow="small">
+              <Box bg={color} p="2rem" />
+              <Heading fontSize="xsmall" px="xsmall">
+                {color}
+              </Heading>
+            </Box>
+          )
+      )}
+    </Box>
+  );
+}
+
+export function Palettemap() {
+  return (
+    <Box>
+      {Object.keys(theme.colors.palette).map((item, i) => (
+        <Box key={i}>
+          <Heading fontSize="medium" mb={0}>
+            {item}
+          </Heading>
+          <Box
+            display="grid"
+            gridGap="small"
+            gridTemplateColumns="repeat(10, 1fr)"
+          >
+            {Object.values(theme.colors.palette[item]).map((data, i) => (
+              <Box flex="1 0 auto" key={i}>
+                <Heading fontSize="xsmall">
+                  {item}.{i}
+                </Heading>
+                <Box bg={data} p="2rem" />
+                <Text fontSize="xsmall">{data}</Text>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      ))}
+    </Box>
+  );
+}
+
+export function Intentsmap() {
+  return (
+    <Box>
+      {Object.keys(theme.colors.intents).map((item, i) => (
+        <Box key={i}>
+          <Heading fontSize="medium" mb={0}>
+            {item}
+          </Heading>
+          <Box
+            display="grid"
+            gridGap="small"
+            gridTemplateColumns="repeat(10, 1fr)"
+          >
+            {Object.values(theme.colors.intents[item]).map((data, i) => (
+              <Box flex="1 0 auto" key={i}>
+                <Heading fontSize="xsmall">
+                  {item}.{i}
+                </Heading>
+                <Box bg={data} p="2rem" />
+                <Text fontSize="xsmall">{data}</Text>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      ))}
+    </Box>
+  );
+}
+
+## Colors
+
+<Colormap />
+
+## Color Palettes
+
+<Palettemap />
+
+## Color Intents
+
+<Intentsmap />

@@ -65,7 +65,7 @@ Object.keys(intent).map(function(item) {
     .domain([0, 0.5, 1])
     .mode('lab')
     .padding([0.05, 0.2])
-    .colors(6);
+    .colors(7);
   return intents;
 });
 

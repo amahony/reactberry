@@ -2,6 +2,9 @@
 name: Style Props
 ---
 
+import { Playground } from "docz";
+import { Button } from "@reactberry/core";
+
 # Definition
 
 Style props are a way to alter the style of a component by simply passing props
@@ -42,17 +45,17 @@ each group.
 
 ### Typography
 
-| Prop             | CSS Property      | Theme Key        |
-| ---------------- | ----------------- | ---------------- |
-| `fontFamily`     | `font-family`     | `fonts`          |
-| `fontSize`       | `font-size`       | `fontSizes`      |
-| `fontWeight`     | `font-weight`     | `fontWeights`    |
-| `lineHeight`     | `line-height`     | `lineHeights`    |
-| `letterSpacing`  | `letter-spacing`  | `letterSpacings` |
-| `textAlign`      | `text-align`      | none             |
-| `fontStyle`      | `font-style`      | none             |
-| `textTransform`  | `text-transform`  | none             |
-| `textDecoration` | `text-decoration` | none             |
+| Prop             | CSS Property      | Theme Key   |
+| ---------------- | ----------------- | ----------- |
+| `fontFamily`     | `font-family`     | `fonts`     |
+| `fontSize`       | `font-size`       | `fontSizes` |
+| `fontWeight`     | `font-weight`     | none        |
+| `lineHeight`     | `line-height`     | none        |
+| `letterSpacing`  | `letter-spacing`  | none        |
+| `textAlign`      | `text-align`      | none        |
+| `fontStyle`      | `font-style`      | none        |
+| `textTransform`  | `text-transform`  | none        |
+| `textDecoration` | `text-decoration` | none        |
 
 ### Layout, width and height
 
@@ -65,7 +68,7 @@ each group.
 | `minHeight`     | `min-height`      | `sizes`   |
 | `maxHeight`     | `max-height`      | `sizes`   |
 | `display`       | `display`         | none      |
-| `boxSize`       | `width`, `height` | `sizes`   |
+| `size`          | `width`, `height` | `sizes`   |
 | `verticalAlign` | `vertical-align`  | none      |
 | `overflow`      | `overflow`        | none      |
 | `overflowX`     | `overflowX`       | none      |
@@ -131,64 +134,12 @@ import { Box } from "@reactberry/core"
 
 ```
 
-| Prop                | CSS Property      | Theme Key |
-| ------------------- | ----------------- | --------- |
-| `width`             | `width`           | `sizes`   |
-| `height`            | `height`          | `sizes`   |
-| `minW`, `minWidth`  | `min-width`       | `sizes`   |
-| `maxW`, `maxWidth`  | `max-width`       | `sizes`   |
-| `minH`, `minHeight` | `min-height`      | `sizes`   |
-| `maxH`, `maxHeight` | `max-height`      | `sizes`   |
-| `d`, `display`      | `display`         | none      |
-| `boxSize`           | `width`, `height` | `sizes`   |
-| `verticalAlign`     | `vertical-align`  | none      |
-| `overflow`          | `overflow`        | none      |
-| `overflowX`         | `overflowX`       | none      |
-| `overflowY`         | `overflowY`       | none      |
-
-### Flexbox
-
-| Prop             | CSS Property      | Theme Key |
-| ---------------- | ----------------- | --------- |
-| `alignItems`     | `align-items`     | none      |
-| `alignContent`   | `align-content`   | none      |
-| `justifyItems`   | `justify-items`   | none      |
-| `justifyContent` | `justify-content` | none      |
-| `flexWrap`       | `flex-wrap`       | none      |
-| `flexDirection`  | `flex-direction`  | none      |
-| `flex`           | `flex`            | none      |
-| `flexGrow`       | `flex-grow`       | none      |
-| `flexShrink`     | `flex-shrink`     | none      |
-| `flexBasis`      | `flex-basis`      | none      |
-| `justifySelf`    | `justify-self`    | none      |
-| `alignSelf`      | `align-self`      | none      |
-| `order`          | `order`           | none      |
-
-### Grid Layout
-
-> Note: Props in `*` will only work if you use the `Grid` component.
-
-| Prop                  | CSS Property            | Theme Key |
-| --------------------- | ----------------------- | --------- |
-| `gridGap`             | `grid-gap`              | `space`   |
-| `gridRowGap`          | `grid-row-gap`          | `space`   |
-| `gridColumnGap`       | `grid-column-gap`       | `space`   |
-| `gridColumn`          | `grid-column`           | none      |
-| `gridRow`             | `grid-row`              | none      |
-| `gridArea`            | `grid-area`             | none      |
-| `gridAutoFlow`        | `grid-auto-flow`        | none      |
-| `gridAutoRows`        | `grid-auto-rows`        | none      |
-| `gridAutoColumns`     | `grid-auto-columns`     | none      |
-| `gridTemplateRows`    | `grid-template-rows`    | none      |
-| `gridTemplateColumns` | `grid-template-columns` | none      |
-| `gridTemplateAreas`   | `grid-template-areas`   | none      |
-
 ### Position
 
 | Prop       | CSS Property | Theme Field |
 | ---------- | ------------ | ----------- |
 | `position` | `position`   | none        |
-| `zIndex`   | `z-index`    | `zIndices`  |
+| `zIndex`   | `z-index`    | none        |
 | `top`      | `top`        | `space`     |
 | `right`    | `right`      | `space`     |
 | `bottom`   | `bottom`     | `space`     |
@@ -208,6 +159,12 @@ HTML tag or component to be rendered.
 
 For example, say you are using a `Button` component, and you need to make it a
 link instead. You can compose `a` and `Button` like this:
+
+<Playground>
+  <Button as="a" href="https://google.com">
+    Link
+  </Button>
+</Playground>
 
 This allows you to use all of the `Button` props and all of the `a` props
 without having to wrap the Button in an `a` component.
