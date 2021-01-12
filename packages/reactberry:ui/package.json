@@ -1,6 +1,6 @@
 {
   "name": "@reactberry/ui",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "private": true,
   "main": "index.js",
   "files": [
@@ -15,7 +15,7 @@
     "test": "echo @reactberry/ui"
   },
   "dependencies": {
-    "@reactberry/core": "^1.1.6",
+    "@reactberry/core": "^1.1.7",
     "chroma-js": "^2.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
