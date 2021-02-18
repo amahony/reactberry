@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import {hoverbg, hoverbr, hover, shape, pointer, presets} from '../utils';
 
 const Box = styled.div`
+  box-sizing: border-box;
   ${color};
   ${space};
   ${layout};
@@ -33,13 +34,5 @@ const Box = styled.div`
     ${hoverbr};
   }
 `;
-
-Box.defaultProps = {
-  boxSizing: 'border-box'
-};
-
-Box.propTypes = {
-  boxSizing: PropTypes.string
-};
 
 export default Box;
