@@ -1,4 +1,4 @@
-import * as test from "@reactberry/forms/dist";
+import { CheckboxButton } from "@reactberry/forms/dist";
 import { Badge, Box, Button, Heading, Theme, Toggle } from "@reactberry/core";
 import {
   Field,
@@ -7,8 +7,7 @@ import {
   RadioButton,
   RadioGroup,
   Select,
-  Textarea,
-  CheckboxButton
+  Textarea
 } from "@reactberry/forms";
 
 import GlobalStyle from "@reactberry/core/src/Theme/default/utils";
@@ -17,7 +16,7 @@ import ReactDOM from "react-dom";
 
 import * as serviceWorker from "./serviceWorker";
 
-console.log(test);
+console.log(CheckboxButton);
 
 class App extends React.Component {
   render() {
