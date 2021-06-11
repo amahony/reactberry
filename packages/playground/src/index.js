@@ -1,3 +1,4 @@
+import * as test from "@reactberry/forms/dist";
 import { Badge, Box, Button, Heading, Theme, Toggle } from "@reactberry/core";
 import {
   Field,
@@ -6,13 +7,17 @@ import {
   RadioButton,
   RadioGroup,
   Select,
-  Textarea
+  Textarea,
+  CheckboxButton
 } from "@reactberry/forms";
+
 import GlobalStyle from "@reactberry/core/src/Theme/default/utils";
 import React from "react";
 import ReactDOM from "react-dom";
 
 import * as serviceWorker from "./serviceWorker";
+
+console.log(test);
 
 class App extends React.Component {
   render() {
@@ -21,6 +26,8 @@ class App extends React.Component {
         <GlobalStyle />
 
         <Box width={[1 / 3]} mx="auto" p="large">
+          <CheckboxButton label="test" />
+
           <Heading>Core</Heading>
           <Button>button</Button>
 
