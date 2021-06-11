@@ -5,9 +5,14 @@ export const StyledLabel = styled.label`
   margin-left: 0.25rem;
   margin-bottom: 0.5rem;
   & input {
-    margin-right: 0.5rem;
+    margin-right: ${p => p.mr || '0.5rem'};
   }
 `;
+
+StyledLabel.defaultProps = {
+  mr: '0.5rem'
+};
+
 const {createContext, useState, useContext} = React;
 
 function useCheckboxButtons(name, onChange = () => {}) {
