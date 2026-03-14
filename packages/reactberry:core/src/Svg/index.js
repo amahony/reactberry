@@ -18,6 +18,9 @@ const stroke = style({
 });
 
 const SvgStyled = styled.svg`
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
   ${color};
   ${space};
   ${layout};
@@ -29,5 +32,10 @@ const SvgStyled = styled.svg`
 const Svg = ({ children, ...rest }) => (
   <SvgStyled {...rest}>{children}</SvgStyled>
 );
+
+Svg.defaultProps = {
+  fill: 'current',
+  xmlns: 'http://www.w3.org/2000/svg'
+};
 
 export default Svg;

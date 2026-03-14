@@ -1,23 +1,46 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 import Box from '../Box';
 
-
-const DividerStyling = css`
-  display: inline-flex;
-  opacity: 0.6;
-`
 const DividerStyled = styled(Box)`
-  ${DividerStyling};
-`
+  flex-shrink: 0;
+`;
 
-const Divider = props => <DividerStyled {...props}>{props.symbol}</DividerStyled>
+const Divider = ({decorative, orientation, ...rest}) => {
+  const isVertical = orientation === 'vertical';
+  const orientationProps = isVertical
+    ? {
+        alignSelf: 'stretch',
+        display: 'inline-flex',
+        height: '1em',
+        mx: 'small',
+        my: 0,
+        width: '1px'
+      }
+    : {
+        display: 'block',
+        height: '1px',
+        mx: 0,
+        my: 'small',
+        width: '100%'
+      };
+
+  return (
+    <DividerStyled
+      aria-hidden={decorative ? true : undefined}
+      aria-orientation={decorative ? undefined : orientation}
+      role={decorative ? undefined : 'separator'}
+      {...orientationProps}
+      {...rest}
+    />
+  );
+};
 
 Divider.defaultProps = {
-    mx: 'xxsmall',
-    bg: 'inherit',
-    symbol: '|',
-}
+  bg: 'border.default',
+  decorative: true,
+  orientation: 'horizontal'
+};
 
-export default Divider
+export default Divider;

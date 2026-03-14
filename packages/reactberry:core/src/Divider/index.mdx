@@ -4,7 +4,9 @@ menu: reactberry/core
 ---
 
 import {Playground, Props} from 'docz';
+import Box from '../Box';
 import Divider from '.';
+import Text from '../Text';
 
 # Divider
 
@@ -13,5 +15,11 @@ import Divider from '.';
 ## Basic usage
 
 <Playground>
-  <Divider>This is Some Box</Divider>
+  <Box maxWidth="20rem">
+    <Text mb="small">Above the divider</Text>
+    <Divider />
+    <Text mt="small" color="text.muted">
+      Below the divider
+    </Text>
+  </Box>
 </Playground>

@@ -20,7 +20,13 @@ export {default as Svg} from './Svg';
 export {Tabs, TabList, Tab, TabPanel} from './Tabs';
 export {default as Tag} from './Tag';
 export {default as Text} from './Text';
-export {default as Theme} from './Theme';
+export {
+  default as Theme,
+  ThemeContext,
+  ThemeProvider,
+  defaultTheme,
+  GlobalStyle
+} from './Theme';
 export {default as Toggle} from './Toggle';
 
 export * from './utils';

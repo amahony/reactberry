@@ -4,6 +4,8 @@ menu: reactberry/core
 ---
 
 import {Playground, Props} from 'docz';
+import Heading from '../Heading';
+import Text from '../Text';
 import Card from '.';
 
 # Card
@@ -13,5 +15,8 @@ import Card from '.';
 ## Basic usage
 
 <Playground>
-  <Card>This is a Card</Card>
+  <Card maxWidth="20rem">
+    <Heading fontSize="medium" mb="xxsmall">Surface primitive</Heading>
+    <Text color="text.muted">Cards now default to the theme surface, border, and shadow tokens.</Text>
+  </Card>
 </Playground>

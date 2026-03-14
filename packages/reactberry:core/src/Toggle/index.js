@@ -1,44 +1,69 @@
 import {variant} from 'styled-system';
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import Box from '../Box';
+import {disabled as disabledStyles, focusRing} from '../utils';
 
 const switchSize = variant({
   key: 'switchSizes',
   prop: 'switchSize'
 });
 
-const Switch = styled(Box)`
+const Switch = styled(Box).attrs({
+  as: 'button',
+  type: 'button'
+})`
   ${switchSize};
   position: relative;
-  transition: all 0.6s;
-  border-radius: 25px;
-  cursor: pointer;
+  padding: 0;
+  border: 1px solid
+    ${({theme, $checked}) =>
+      $checked ? theme.colors.action : theme.colors.border.default};
+  background-color: ${({theme, $checked, disabled}) => {
+    if (disabled) {
+      return theme.colors.surface.sunken;
+    }
+
+    return $checked ? theme.colors.action : theme.colors.surface.sunken;
+  }};
+  border-radius: ${({theme}) => theme.radii.pill};
+  cursor: ${({disabled}) => (disabled ? 'not-allowed' : 'pointer')};
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.125s ease;
+
   &:before {
-    transition: all 0.25s;
+    transition: transform 0.2s ease;
     display: block;
     position: absolute;
     content: '';
-    height: 100%;
-    width: calc(100% / 2);
-    transform: translateX(0%) scale(0.8);
-    left: 0px;
-    top: 0px;
-    background-color: white;
-    transition-delay: 0.01s;
-    border-radius: 50%;
+    height: calc(100% - 4px);
+    width: calc(50% - 2px);
+    transform: translateX(0);
+    left: 2px;
+    top: 2px;
+    background-color: ${({theme}) => theme.colors.surface.default};
+    box-shadow: ${({theme}) => theme.shadows.small};
+    border-radius: ${({theme}) => theme.radii.circle};
   }
-  ${props => props.checked === false} && {
+
+  ${({$checked}) =>
+    $checked &&
+    css`
     &:before {
-      transform: translateX(100%) scale(0.8);
-    }
+        transform: translateX(100%);
+      }
+    `}
+
+  &:focus {
+    ${focusRing};
   }
-  ${props =>
-    props.disabled &&
-    `pointer-events: none;
-    opacity: 0.7;
-    background: gray;`}
+
+  ${({disabled}) =>
+    disabled &&
+    css`
+      ${disabledStyles};
+    `}
 `;
 
 Switch.defaultProps = {
@@ -50,20 +75,39 @@ Switch.defaultProps = {
 export default function Toggle({
   switchSize,
   initialValue = false,
+  checked,
+  onChange = () => {},
   onClick = () => {},
+  disabled = false,
   ...rest
 }) {
-  const [toggle, setToggle] = React.useState(initialValue);
+  const [internalChecked, setInternalChecked] = React.useState(initialValue);
+  const isControlled = checked !== undefined;
+  const isChecked = isControlled ? checked : internalChecked;
+
+  const handleClick = event => {
+    if (disabled) {
+      return;
+    }
+
+    const nextChecked = !isChecked;
+
+    if (!isControlled) {
+      setInternalChecked(nextChecked);
+    }
+
+    onClick(event);
+    onChange(nextChecked, event);
+  };
 
   return (
     <Switch
-      checked={toggle}
-      bg={toggle ? 'success' : 'neutral'}
+      $checked={isChecked}
       switchSize={switchSize}
-      onClick={() => {
-        setToggle(!toggle);
-        onClick();
-      }}
+      role="switch"
+      aria-checked={isChecked}
+      disabled={disabled}
+      onClick={handleClick}
       {...rest}
     />
   );

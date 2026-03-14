@@ -15,6 +15,18 @@ Regardless of the technologies and tools behind them, a successful design system
 - **It’s accessible**. Applications built with your design system are usable by as many people as possible, no matter how they access the web.
 - **It’s robust**. No matter the product or platform to which your design system is applied, it should perform with grace and minimal bugs.
 
+## Current public release surface
+
+The first public Reactberry release supports only these consumer entrypoints:
+
+- `@reactberry/core`
+- `@reactberry/forms`
+- `@reactberry/core/theme`
+
+Treat this as a hard-break contract: migrate off any older `/src`, `/dist`, or placeholder-package imports and use only the supported public entrypoints above.
+
+`@reactberry/ui`, `@reactberry/hooks`, and `@reactberry/icons` may exist inside this repo for internal/deferred work, but they are not supported public entrypoints for the first release and are intentionally omitted from the public docs contract.
+
 ## Consistency
 
 Your first, most important task when starting out is to define the rules of your system, document them, and ensure that everyone follows them. When you have clearly documented code standards and best practices in place, designers and developers from across your organization can easily use and, more importantly, contribute to your design system.

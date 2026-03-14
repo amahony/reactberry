@@ -1,46 +1,59 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import Box from '../Box';
 import Button from '../Button';
+import Icon from '../Icon';
+import {focusRing} from '../utils';
+import useDropdown from './useDropdown';
 
-import useDropdown from './utils';
+const TriggerButton = styled(Button)`
+  &:focus {
+    ${focusRing};
+  }
+`;
 
 const ListStyled = styled(Box)`
   position: absolute;
-  box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1),
-    0 1px 0px 0px rgba(0, 0, 0, 0.075);
-  border-radius: 8px;
-  transform: scale(0.9);
-  transition: all 0.125s ease-out;
+  box-shadow: ${({theme}) => theme.shadows.small};
+  border: 1px solid ${({theme}) => theme.colors.border.default};
+  border-radius: ${({theme}) => theme.radii.medium};
+  transform: translateY(${({theme}) => theme.space.xxxsmall}) scale(0.98);
+  transition: transform 0.125s ease-out, opacity 0.125s ease-out,
+    visibility 0.125s ease-out;
   transform-origin: top center;
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
+
   &.active {
-    transform: scale(1);
+    transform: translateY(0) scale(1);
     visibility: visible;
     opacity: 1;
-    pointer-events: initial;
+    pointer-events: auto;
     z-index: 1;
   }
 `;
 
 ListStyled.defaultProps = {
-  top: '2.25rem',
+  top: '100%',
   left: '0',
   display: 'flex',
   flexDirection: 'column',
-  bg: 'white',
-  color: 'primary',
-  padding: 'xsmall',
-  width: '200px',
+  bg: 'surface.default',
+  color: 'text.default',
+  mt: 'xsmall',
+  p: 'xsmall',
+  minWidth: '12rem',
   m: '0'
 };
 
 const DropdownStyled = styled(Box)`
   position: relative;
 `;
+
 DropdownStyled.defaultProps = {
-  display: 'flex'
+  display: 'inline-flex'
 };
 
 const Dropdown = ({
@@ -61,6 +74,12 @@ const Dropdown = ({
   const actionEl = React.useRef(null);
   const dropEl = React.useRef(null);
   const [isOpen, toggleDrop] = useDropdown(dropEl, actionEl);
+  const dropdownIconName = isOpen
+    ? 'ChevronSmallUpIcon'
+    : 'ChevronSmallDownIcon';
+  const buttonId = buttonProps && buttonProps.id;
+  const menuId = buttonId ? `${buttonId}-menu` : undefined;
+
   const onClick = () => {
     if (!disableClose) {
       toggleDrop();
@@ -68,26 +87,37 @@ const Dropdown = ({
   };
 
   return (
-    <DropdownStyled className={isOpen ? 'active' : ''} {...boxProps}>
-      <Button
+    <DropdownStyled {...boxProps}>
+      <TriggerButton
         fontWeight="600"
         ref={actionEl}
         buttonSize={buttonSize}
         variant={variant}
-        hideIcon={hideIcon}
         shape={shape}
         hover={hover}
         hoverbg={hoverbg}
         mr={mr || '0'}
+        type="button"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        aria-controls={menuId}
         onClick={toggleDrop}
         {...buttonProps}
       >
         {title || 'Select'}
-        {!hideIcon && <>{isOpen ? '+' : '-'}</>}
-      </Button>
+        {!hideIcon && (
+          <Icon
+            name={dropdownIconName}
+            iconSize="small"
+            ml="xxxsmall"
+            aria-hidden="true"
+          />
+        )}
+      </TriggerButton>
 
       <ListStyled
         ref={dropEl}
+        id={menuId}
         className={isOpen ? 'active' : ''}
         onClick={onClick}
         {...rest}
@@ -99,10 +129,9 @@ const Dropdown = ({
 };
 
 Dropdown.defaultProps = {
-  display: 'inline-flex',
   buttonSize: 'medium',
   variant: 'custom',
-  hoverbg: 'rgba(0,0,0,0.125)',
+  hoverbg: 'surface.muted',
   mr: 'xxxsmall'
 };
 

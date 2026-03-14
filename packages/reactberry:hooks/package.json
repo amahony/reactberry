@@ -1,0 +1,18 @@
+{
+  "name": "@reactberry/hooks",
+  "version": "1.1.0",
+  "description": "Reactberry-owned hooks package foundation with reusable UI behavior hooks.",
+  "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/amahony/reactberry.git",
+  "scripts": {
+    "build": "echo @reactberry/hooks",
+    "clean": "echo @reactberry/hooks",
+    "test": "echo @reactberry/hooks"
+  },
+  "peerDependencies": {
+    "react": ">= 16"
+  },
+  "license": "MIT",
+  "author": "Atanas Mahony <atanas@codeberry.io>"
+}

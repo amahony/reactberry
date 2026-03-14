@@ -51,8 +51,14 @@ const disabledStyling = css`
   ${disabled};
 `;
 
-const Button = styled(Box)`
+const Button = styled(Box).attrs(props => ({
+  as: props.as || 'button',
+  type: props.type || (!props.as || props.as === 'button' ? 'button' : undefined)
+}))`
   ${buttonStyling};
+  appearance: none;
+  border: 0;
+  font: inherit;
   ${buttonStyle};
   ${props => intents[props.variant]};
   ${buttonSize};
@@ -64,6 +70,9 @@ const Button = styled(Box)`
     `
   background: none;
   `};
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 Button.defaultProps = {

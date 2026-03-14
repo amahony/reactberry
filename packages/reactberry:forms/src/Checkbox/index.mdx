@@ -3,18 +3,25 @@ name: Checkbox
 menu: reactberry/forms
 ---
 
-import { Playground, Props } from 'docz'
-import Checkbox from '.'
+import {Playground, Props} from 'docz'
+import CheckboxButton, {CheckboxGroup} from '.'
 
 # Checkbox
 
-<Props of={Checkbox} />
+<Props of={CheckboxButton} />
 
 ## Basic usage
 
 <Playground>
+  <CheckboxButton label="Receive product updates" />
+</Playground>
 
-  <Checkbox/>
+## Group usage
 
-
+<Playground>
+  <CheckboxGroup name="channels" defaultValue={['email']}>
+    <CheckboxButton value="email" label="Email" />
+    <CheckboxButton value="sms" label="SMS" />
+    <CheckboxButton value="push" label="Push" />
+  </CheckboxGroup>
 </Playground>

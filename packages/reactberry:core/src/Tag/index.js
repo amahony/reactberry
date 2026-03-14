@@ -3,14 +3,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 
 import Box from '../Box';
-
-// adding close icon
-// import IconERemove from '../icons/e-remove'
-
-// const Icon = styled(IconERemove)`
-//   width: 10px;
-//   height: 10px;
-// `
+import Icon from '../Icon';
 
 // default variant
 const tagStyle = variant({
@@ -39,9 +32,9 @@ const status = {
 const hoverState = css`
   cursor: pointer;
   &:hover {
-    box-shadow: 0 0 0 2px ${props => props.theme.colors.action};
-    background: white;
-    color: blue;
+    box-shadow: 0 0 0 2px ${props => props.theme.colors.border.accent};
+    background: ${props => props.theme.colors.surface.default};
+    color: ${props => props.theme.colors.text.default};
   }
 `;
 
@@ -60,18 +53,35 @@ const TagBase = styled(Box)`
   ${tagSize}
   ${props => status[props.variant]};
   ${props => props.interactive && hoverState};
+  & > * + * {
+    margin-left: ${props => props.theme.space.xxxsmall};
+  }
 `;
 
+const renderTagIcon = icon => {
+  if (!icon) {
+    return null;
+  }
+
+  return (
+    <Icon
+      name={typeof icon === 'string' ? icon : undefined}
+      icon={icon}
+      iconSize="xsmall"
+      aria-hidden="true"
+    />
+  );
+};
+
 const Tag = ({children, variant, status, icon, ...rest}) => (
-  <React.Fragment>
-    <TagBase showIcon variant={variant} status={status} {...rest}>
-      {children ? <>{children}</> : <>{status}</>}
-    </TagBase>
-  </React.Fragment>
+  <TagBase variant={variant} status={status} {...rest}>
+    {renderTagIcon(icon)}
+    {children || status}
+  </TagBase>
 );
 
 Tag.defaultProps = {
-  borderRadius: 'pill',
+  shape: 'pill',
   mr: 'xxsmall',
   tagSize: 'small',
   variant: 'default'

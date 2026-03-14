@@ -9,13 +9,13 @@ import {
   shadow,
   space
 } from 'styled-system';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import {hoverbg, hoverbr, hover, shape, pointer, presets} from '../utils';
 
 const Box = styled.div`
   box-sizing: border-box;
+  min-width: 0;
   ${color};
   ${space};
   ${layout};

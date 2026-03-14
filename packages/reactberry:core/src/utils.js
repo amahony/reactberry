@@ -1,5 +1,5 @@
-import { style, variant } from 'styled-system';
-import { css, createGlobalStyle } from 'styled-components';
+import {style, variant} from 'styled-system';
+import {css} from 'styled-components';
 
 // Text Truncating
 export const truncate = css`
@@ -25,6 +25,11 @@ export const pointer = css`
 export const disabled = css`
   opacity: 0.6;
   pointer-events: none;
+`;
+
+export const focusRing = css`
+  outline: none;
+  box-shadow: 0 0 0 3px ${props => props.theme.colors.focus.ring};
 `;
 
 // Hover prop support
@@ -70,18 +75,3 @@ export const presets = variant({
   key: 'colorStyles',
   prop: 'preset'
 });
-
-export const GlobalStyle = createGlobalStyle`
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", "Ubuntu", sans-serif;
-  padding: 0;
-  margin: 0;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: "pnum";
-  font-variant-numeric: proportional-nums;
-}
-img { max-width: 100%; }
-`;

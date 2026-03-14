@@ -5,13 +5,19 @@ menu: reactberry/core
 
 import {Playground, Props} from 'docz';
 import Group from '.';
+import Button from '../Button';
 
 # Group
 
 <Props of={Group} />
 
-## Basic usage
+## Button group
 
 <Playground>
-  <Group>This is Group</Group>
+  <Group type="buttons">
+    <Button mr="0">Back</Button>
+    <Button variant="primary" intent="action" mr="0">
+      Continue
+    </Button>
+  </Group>
 </Playground>

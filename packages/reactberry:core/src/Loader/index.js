@@ -1,20 +1,14 @@
 import React from 'react';
 
 import Box from '../Box';
+import Svg from '../Svg';
 
 const Loader = ({ size, ...rest }) => (
-  <Box display="flex" alignItems="center" {...rest}>
-    <svg
-      version="1.1"
-      id="loader-1"
-      xmlns="http://www.w3.org/2000/svg"
-      x="0px"
-      y="0px"
+  <Box display="inline-flex" alignItems="center" justifyContent="center" {...rest}>
+    <Svg
       width={size}
       height={size}
       viewBox="0 0 40 40"
-      enableBackground="new 0 0 40 40"
-      xmlSpace="preserve"
     >
       <path
         opacity="0.1"
@@ -38,12 +32,13 @@ C22.32,8.481,24.301,9.057,26.013,10.047z"
           repeatCount="indefinite"
         />
       </path>
-    </svg>
+    </Svg>
   </Box>
 );
 
 Loader.defaultProps = {
-  size: '40px'
+  size: '40px',
+  color: 'action'
 };
 
 export default Loader;

@@ -4,10 +4,7 @@ export default {
     "Getting Started",
     "Style Props",
     "reactberry/core",
-    "reactberry/forms",
-    "reactberry/ui",
-    "reactberry/theme",
-    "reactberry/hooks"
+    "reactberry/forms"
   ],
   files: ["./**/*.mdx", "../components/**/*.mdx"]
 };

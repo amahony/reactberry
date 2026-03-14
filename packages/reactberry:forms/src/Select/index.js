@@ -4,24 +4,36 @@ import styled from 'styled-components';
 import {Box, Icon} from '@reactberry/core';
 import FieldStyling from '../styling';
 
-const StyledIcon = styled(Icon)`
-  position: absolute;
-  right: 0.5rem;
-  top: 0.75rem;
-  pointer-events: none;
+const SelectField = styled(Box)`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: ${props => props.width || '100%'};
 `;
 
+const StyledIcon = styled(Icon)`
+  pointer-events: none;
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+`;
+
+StyledIcon.defaultProps = {
+  name: 'ChevronSmallDownIcon',
+  iconSize: 'small',
+  fill: 'text.subtle'
+};
+
 export const StyledSelect = styled.select`
+  ${FieldStyling};
+  display: block;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  padding-right: 1.5rem;
+  padding-right: ${props => (props.$hideIcon ? '0.75rem' : '2.25rem')};
   font-size: inherit;
-  background: none;
-  ${FieldStyling};
-  & + ${StyledIcon} {
-    color: ${props => props.theme.colors.palette.grays[5]};
-  }
+  background-image: none;
 
   /* Hide arrow icon in IE browsers */
   &::-ms-expand {
@@ -29,76 +41,37 @@ export const StyledSelect = styled.select`
   }
   /* Set options to normal weight */
   & > option {
+    color: ${props => props.theme.colors.text.default};
     font-weight: normal;
   }
 
-  /* Disabled styles */
-  &:disabled,
-  &[aria-disabled='true'] {
-    color: graytext;
-    background: ${props => props.theme.colors.palette.grays[1]};
-  }
-
-  &:disabled:hover,
-  &[aria-disabled='true'] {
-    background: ${props => props.theme.colors.palette.grays[1]};
+  &[multiple],
+  &[size]:not([size='1']) {
+    padding-right: 0.75rem;
   }
 `;
 
-class Select extends React.Component {
-  constructor() {
-    super();
-    this._handleKeyPress = this._handleKeyPress.bind(this);
-  }
+StyledSelect.defaultProps = {
+  fontSize: 'medium',
+  p: 'xsmall',
+  width: '100%'
+};
 
-  // Loop through the ref's object, and bind each of them to onkeypress
-  componentDidMount() {
-    for (let x in this.refs) {
-      this.refs[x].onkeypress = e => this._handleKeyPress(e, this.refs[x]);
-    }
-  }
+const Select = React.forwardRef(
+  ({children, hideIcon = false, iconProps, multiple, size, width = '100%', ...rest}, ref) => {
+    const shouldHideIcon = hideIcon || multiple || Number(size) > 1;
 
-  // This checks ENTER key (13), then checks if next node is an INPUT
-  // Then focuses next input box
-  _handleKeyPress(e, field) {
-    if (e.keyCode === 13) {
-      e.preventDefault(); // Prevent form submission if button present
-      let next = this.refs[field.name].nextSibling;
-
-      if (next && next.tagName === 'input') {
-        this.refs[field.name].nextSibling.focus();
-      }
-    }
-  }
-
-  render() {
     return (
-      <Box
-        display="inline-flex"
-        position="relative"
-        width={this.props.width}
-        fontSize={this.props.fontSize}
-        {...this.props}
-      >
-        <StyledSelect
-          width="100%"
-          display="inline-flex"
-          defaultValue={this.props.defaultValue}
-          placeholder={this.props.value}
-          fontSize={this.props.fontSize}
-          onKeyPress={this._handleKeyPress}
-        >
-          {this.props.children}
+      <SelectField width={width}>
+        <StyledSelect ref={ref} multiple={multiple} size={size} $hideIcon={shouldHideIcon} {...rest}>
+          {children}
         </StyledSelect>
-        <StyledIcon>{'▼'}</StyledIcon>
-      </Box>
+        {!shouldHideIcon && <StyledIcon aria-hidden="true" {...iconProps} />}
+      </SelectField>
     );
   }
-}
+);
 
-Select.defaultProps = {
-  fontSize: 'small',
-  preset: 'light'
-};
+Select.displayName = 'Select';
 
 export default Select;

@@ -5,6 +5,7 @@ menu: reactberry/core
 
 import {Playground, Props} from 'docz';
 import Toggle from '.';
+import Box from '../Box';
 
 # Toggle
 
@@ -13,5 +14,8 @@ import Toggle from '.';
 ## Basic usage
 
 <Playground>
-  <Toggle />
+  <Box display="flex" alignItems="center">
+    <Toggle initialValue mr="small" />
+    <Toggle disabled />
+  </Box>
 </Playground>

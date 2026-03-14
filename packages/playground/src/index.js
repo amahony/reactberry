@@ -1,6 +1,16 @@
-import { CheckboxButton } from "@reactberry/forms/dist";
-import { Badge, Box, Button, Heading, Theme, Toggle } from "@reactberry/core";
 import {
+  Badge,
+  Box,
+  Button,
+  GlobalStyle,
+  Heading,
+  ThemeProvider,
+  Toggle,
+  defaultTheme
+} from "./reactberry-local";
+import {
+  CheckboxGroup,
+  CheckboxButton,
   Field,
   Form,
   Input,
@@ -8,24 +18,28 @@ import {
   RadioGroup,
   Select,
   Textarea
-} from "@reactberry/forms";
-
-import GlobalStyle from "@reactberry/core/src/Theme/default/utils";
+} from "./reactberry-local";
 import React from "react";
 import ReactDOM from "react-dom";
 
 import * as serviceWorker from "./serviceWorker";
 
-console.log(CheckboxButton);
-
 class App extends React.Component {
   render() {
     return (
-      <Theme>
+      <ThemeProvider theme={defaultTheme}>
         <GlobalStyle />
 
         <Box width={[1 / 3]} mx="auto" p="large">
-          <CheckboxButton label="test" />
+          <Box mb="large">
+            <Heading>Legacy/Internal CRA Playground</Heading>
+            <p>
+              This app is retained only as an internal legacy sandbox. It is not the supported
+              public Reactberry example contract; the canonical in-repo consumer-validation path
+              now lives in `packages/next-starter`, while this playground intentionally continues
+              to exercise the current local source barrels for internal-only inspection.
+            </p>
+          </Box>
 
           <Heading>Core</Heading>
           <Button>button</Button>
@@ -37,37 +51,88 @@ class App extends React.Component {
           <Heading>Forms</Heading>
 
           <Form
+            defaultValues={{
+              name: "",
+              email: "",
+              bio: "This is textarea",
+              contactPreference: "email",
+              productUpdates: true,
+              role: "option1",
+              channels: ["email"]
+            }}
             validate={(values, instance) => console.log({ values, instance })}
             onSubmit={(values, instance) => console.log("submit")}
           >
             <Field
-              label="name"
+              label="Name"
               field="name"
-              Component={<Input preset="light" flow="horizontal" label="asd" />}
+              placeholder="Jane Doe"
+              Component={<Input />}
             />
             <Field
               required
-              label="email"
+              label="Email"
               validation={{ isEmail: true }}
               field="email"
-              Component={<Input preset="light" flow="horizontal" label="asd" />}
+              placeholder="jane@example.com"
+              type="email"
+              Component={<Input />}
             />
-            <Textarea rows="20" defaultValue="This is textarea" />
+            <Field
+              label="Bio"
+              description="Textarea now sits on the shared Field foundation."
+              field="bio"
+              Component={<Textarea rows={6} />}
+            />
 
-            <RadioGroup name="radio_group" value="option1">
-              <RadioButton label="option1" />
-              <RadioButton label="option2" />
-              <RadioButton label="option3" />
-            </RadioGroup>
+            <Field
+              label="Product updates"
+              description="Checkbox controls now integrate directly with the shared Field state."
+              field="productUpdates"
+              validation={{ isCheck: "Please confirm you want product updates enabled" }}
+              Component={<CheckboxButton label="Receive release and feature updates" />}
+            />
 
-            <Select placeholder="select" defaultValue="option1" width="100%">
-              <option value="option1">option1</option>
-              <option value="option2">option2</option>
-              <option value="option3">option3</option>
-            </Select>
+            <Field
+              label="Notification channels"
+              description="Checkbox groups now manage array selection through the shared forms foundation."
+              field="channels"
+              Component={
+                <CheckboxGroup>
+                  <CheckboxButton value="email" label="Email" />
+                  <CheckboxButton value="sms" label="SMS" />
+                  <CheckboxButton value="push" label="Push" />
+                </CheckboxGroup>
+              }
+            />
+
+            <Field
+              label="Contact preference"
+              description="Radio groups now sit cleanly on the shared Field foundation."
+              field="contactPreference"
+              Component={
+                <RadioGroup>
+                  <RadioButton value="email" label="Email" />
+                  <RadioButton value="sms" label="SMS" />
+                  <RadioButton value="phone" label="Phone" />
+                </RadioGroup>
+              }
+            />
+
+            <Field
+              label="Role"
+              field="role"
+              Component={
+                <Select>
+                  <option value="option1">option1</option>
+                  <option value="option2">option2</option>
+                  <option value="option3">option3</option>
+                </Select>
+              }
+            />
           </Form>
         </Box>
-      </Theme>
+      </ThemeProvider>
     );
   }
 }

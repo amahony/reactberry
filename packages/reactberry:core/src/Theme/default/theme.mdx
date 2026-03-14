@@ -1,15 +1,22 @@
 ---
 name: Theme
+menu: reactberry/core
 ---
 
 import {Playground} from 'docz';
-import {Button, Box, Heading} from '@reactberry/core';
-import theme from '.';
+import {
+  Box,
+  GlobalStyle,
+  Heading,
+  Text,
+  ThemeProvider,
+  defaultTheme
+} from '../..';
 
 export function Colormap() {
   return (
     <Box display="grid" gridGap="small" gridTemplateColumns="repeat(8, 1fr)">
-      {Object.keys(theme.colors).map(
+      {Object.keys(defaultTheme.colors).map(
         (color, i) =>
           color !== 'palette' &&
           color !== 'intents' && (
@@ -28,7 +35,7 @@ export function Colormap() {
 export function Palettemap() {
   return (
     <Box>
-      {Object.keys(theme.colors.palette).map((item, i) => (
+      {Object.keys(defaultTheme.colors.palette).map((item, i) => (
         <Box key={i}>
           <Heading fontSize="medium" mb={0}>
             {item}
@@ -38,7 +45,7 @@ export function Palettemap() {
             gridGap="small"
             gridTemplateColumns="repeat(10, 1fr)"
           >
-            {Object.values(theme.colors.palette[item]).map((data, i) => (
+            {Object.values(defaultTheme.colors.palette[item]).map((data, i) => (
               <Box flex="1 0 auto" key={i}>
                 <Heading fontSize="xsmall">
                   {item}.{i}
@@ -57,7 +64,7 @@ export function Palettemap() {
 export function Intentsmap() {
   return (
     <Box>
-      {Object.keys(theme.colors.intents).map((item, i) => (
+      {Object.keys(defaultTheme.colors.intents).map((item, i) => (
         <Box key={i}>
           <Heading fontSize="medium" mb={0}>
             {item}
@@ -67,7 +74,7 @@ export function Intentsmap() {
             gridGap="small"
             gridTemplateColumns="repeat(10, 1fr)"
           >
-            {Object.values(theme.colors.intents[item]).map((data, i) => (
+            {Object.values(defaultTheme.colors.intents[item]).map((data, i) => (
               <Box flex="1 0 auto" key={i}>
                 <Heading fontSize="xsmall">
                   {item}.{i}
@@ -82,6 +89,31 @@ export function Intentsmap() {
     </Box>
   );
 }
+
+# Theme
+
+This page documents the current Reactberry theme contract within the `@reactberry/core` docs.
+
+This repo-local page mirrors the supported public theme contract for the first release: use `@reactberry/core/theme` for `ThemeProvider`, `defaultTheme`, and `GlobalStyle`.
+
+This contract remains part of the hard-break migration posture, so consumer guidance stays the same: use supported package entries only and do not rely on `/src` or `/dist` deep imports.
+
+## Contract
+
+<Playground>
+  <ThemeProvider theme={defaultTheme}>
+    <GlobalStyle />
+    <Box bg="surface.default" color="text.default" p="large">
+      <Heading fontSize="large" mb="small">
+        Reactberry theme contract
+      </Heading>
+      <Text>
+        Wrap UI in `ThemeProvider`, start from `defaultTheme`, and apply `GlobalStyle`
+        from the supported `@reactberry/core/theme` entry.
+      </Text>
+    </Box>
+  </ThemeProvider>
+</Playground>
 
 ## Colors
 

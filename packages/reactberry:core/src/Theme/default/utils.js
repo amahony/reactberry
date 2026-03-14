@@ -13,6 +13,10 @@ body {
   font-feature-settings: "pnum";
   font-variant-numeric: proportional-nums;
 }
+
+img {
+  max-width: 100%;
+}
 `;
 
 export default GlobalStyle;

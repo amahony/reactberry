@@ -20,9 +20,11 @@ const Card = styled(Box)`
 
 Card.defaultProps = {
   type: 'default',
-  boxShadow: 'none',
-  p: 6,
-  borderRadius: '.5rem'
+  boxShadow: 'small',
+  p: 'large',
+  shape: 'rounded',
+  border: '1px solid',
+  borderColor: 'border.subtle'
 };
 Card.propTypes = {
   type: PropTypes.any

@@ -1,25 +1,41 @@
 {
   "name": "@reactberry/core",
   "version": "1.1.8",
-  "main": "index.js",
+  "description": "Approved initial public Reactberry package surface for core primitives and theming.",
+  "main": "./index.js",
+  "module": "./dist/esm/index.js",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./theme": {
+      "require": "./theme.js",
+      "import": "./dist/esm/theme.js",
+      "default": "./dist/esm/theme.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
-    "dist"
+    "dist",
+    "index.js",
+    "theme.js"
   ],
   "repository": "https://github.com/amahony/reactberry.git",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "babel src -d dist",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm",
+    "build:cjs": "babel src --out-dir dist/cjs --config-file ./babel.config.cjs.json",
+    "build:esm": "babel src --out-dir dist/esm --config-file ./babel.config.esm.json",
     "clean": "rm -rf dist",
-    "dist": "yarn run clean && yarn run build",
+    "dist": "npm run build",
+    "prepack": "npm run build",
     "test": "echo @reactberry/core"
   },
   "dependencies": {
     "chroma-js": "^2.1.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "styled-components": "^5.1.1",
-    "styled-system": "^5.1.5"
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",

@@ -18,6 +18,7 @@ const headingSize = variant({
 
 const HeadingStyling = css`
   box-sizing: border-box;
+  margin: 0;
   ${fontFamily};
   ${fontWeight};
   ${textAlign};
@@ -33,8 +34,10 @@ const Heading = styled(Box)`
 
 Heading.defaultProps = {
   as: 'h2',
+  color: 'text.default',
+  fontFamily: 'heading',
   fontSize: 'large',
-  fontWeight: '600'
+  fontWeight: 'semibold'
 };
 
 export default Heading;

@@ -10,14 +10,13 @@ const badgeSize = variant({
 });
 
 const BadgeStyling = css`
-  cursor: pointer;
   text-decoration: none;
   transition: all 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  border-radius: 27px;
+  white-space: nowrap;
 `;
 
 const BadgeStyled = styled(Text)`
@@ -35,14 +34,15 @@ const Badge = ({children, value, ...rest}) => (
 Badge.defaultProps = {
   badgeSize: 'medium',
   bg: 'danger',
-  color: 'white',
-  fontWeight: '600'
+  color: 'text.inverse',
+  fontWeight: '600',
+  shape: 'pill'
 };
 
 Badge.propTypes = {
   color: PropTypes.node,
   bg: PropTypes.node,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   badgeSize: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge']),
   fontWeight: PropTypes.oneOf(['300', '400', '500', '600', '700', '800', '900'])
 };
