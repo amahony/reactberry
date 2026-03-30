@@ -1,5 +1,5 @@
-import light from "./pocketagent/modes/light/theme";
-import dark from "./pocketagent/modes/dark/theme";
+import light from "./default/modes/light/theme";
+import dark from "./default/modes/dark/theme";
 
 export const themes = {
 	dark,

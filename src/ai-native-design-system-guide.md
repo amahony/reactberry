@@ -66,7 +66,7 @@ src
   ai-native-design-system-guide.md  # This file
   /elements                # Box, Text, Button, Field (core primitives)
   /blocks                  # Composed UI patterns (Avatar, Menu, Modal, etc.)
-  /themes                  # pocketagent theme (light/dark, tokens, skins)
+  /themes                  # default theme (light/dark, tokens, skins)
   /hooks                   # Interaction hooks (useAnimatedText, useHover, etc.)
   /charts                  # Chart primitives (BarChart, PieChart, ...)
   /docs                    # Human + AI documentation, examples, decision trees
@@ -113,7 +113,7 @@ Theme and token information is split between:
   - `fontSize` (typography scale, used by `fontSize` on Text)
   - `componentSize` (used by `$size` on Button/Field only)
   - `shape` (border-radius scale, used by `shape`)
-- `themes/` (especially `themes/pocketagent`) – implementation of light/dark themes, skins, shapes, shadows, etc.
+- `themes/` (especially `themes/default`) – implementation of light/dark themes, skins, shapes, shadows, etc.
 - `docs/themes.md` and `docs/assets/design-tokens.md` – human-readable documentation of all tokens and skins.
 
 AI should **always** prefer these token names (`"m"`, `"xl"`, `"primary"`, etc.) instead of hard-coded pixel values or colors.
@@ -202,7 +202,7 @@ This section describes how an **LLM audit agent** should evaluate the current de
    - Read `elements/index.ts` and list all exported primitives (currently: `Box`, `Text`, `Button`, `Field`).
    - Scan `blocks/` for exported block components (check each folder’s `index.tsx`/`index.ts`).
 2. **Tokens and themes**
-   - Inspect `themes/` (especially `themes/pocketagent`) to discover all tokens (space, font sizes, colors, component sizes, shapes, shadows, skins).
+   - Inspect `themes/` (especially `themes/default`) to discover all tokens (space, font sizes, colors, component sizes, shapes, shadows, skins).
    - Compare these to the `tokens` section in `components.json` and to `docs/themes.md`.
 
 Output: a structured list of **all exported components and known tokens**.
@@ -338,7 +338,7 @@ When adding or changing components, keep the AI surface area in sync.
 
 ### 9.3 Updating tokens or themes
 
-1. Change token or theme definitions under `themes/pocketagent/` as needed.
+1. Change token or theme definitions under `themes/default/` as needed.
 2. Keep `components.json.tokens` and `docs/themes.md` in sync with the new values.
 3. Audit examples in `docs/*` to ensure they still use valid tokens.
 
