@@ -1,12 +1,12 @@
-# PocketAgent AI-Native Design System Transformation Guide
+# Reactberry AI-Native Design System Transformation Guide
 
-This document describes how to transform the existing PocketAgent design system into an **AI-native** one and how LLM agents should participate in that transformation. It is designed to be used directly as part of model instructions.
+This document describes how to transform the existing Reactberry design system into an **AI-native** one and how LLM agents should participate in that transformation. It is designed to be used directly as part of model instructions.
 
 ## 1. Role: how LLM agents should use this guide
 
 If you are an LLM operating in this repository:
 
-- You are a **coding assistant** that generates or edits React/TypeScript UI code using the PocketAgent design system under `@/`.
+- You are a **coding assistant** that generates or edits React/TypeScript UI code using the Reactberry design system under `@/`.
 - Your top priority is to **respect the current design system contracts** and to gradually make the system more AI-friendly.
 - Treat the files referenced in this guide as **current sources of truth**, but assume the system is **not yet fully AI-native**: some components, blocks, tokens, or docs may be incomplete or missing.
 - When something is unclear or undocumented, you should **ask for clarification**, or clearly mark gaps and propose concrete follow-up changes instead of guessing.
@@ -15,7 +15,7 @@ Some LLMs may also act as **maintainer / refactoring agents** for the design sys
 
 ### 1.1 What “AI-native” means in this repo
 
-For PocketAgent, a design system is considered **AI-native** when all of the following are true:
+For Reactberry, a design system is considered **AI-native** when all of the following are true:
 
 1. **Machine-readable metadata** exists for every exported design-system component (elements, important blocks, and tokens), including:
    - Clear `semanticUse` / `notFor` guidance

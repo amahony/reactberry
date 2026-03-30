@@ -725,7 +725,7 @@ Animated text reveal effects.
 **Usage:**
 ```tsx
 <TextBreak
-  text="Welcome to PocketAgent"
+  text="Welcome to Reactberry"
   speed="medium"
   delay={500}
 />

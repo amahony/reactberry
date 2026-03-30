@@ -1,6 +1,6 @@
 # Sidebar Navigation Examples
 
-Comprehensive sidebar navigation patterns using the PocketAgent Design System components for application navigation and content organization.
+Comprehensive sidebar navigation patterns using the Reactberry Design System components for application navigation and content organization.
 
 ## Overview
 
@@ -26,7 +26,7 @@ function BasicSidebar({ items, activeItem, onItemClick }) {
     >
       <Box mb="l">
         <Text as="h2" fontSize="m" fontWeight="bold" color="primary">
-          PocketAgent
+          Reactberry
         </Text>
       </Box>
 
@@ -118,7 +118,7 @@ function CollapsibleSidebar({ items, activeItem, onItemClick }) {
       <Box display="flex" alignItems="center" justifyContent="space-between" mb="l">
         {!isCollapsed && (
           <Text as="h2" fontSize="m" fontWeight="bold" color="primary">
-            PocketAgent
+            Reactberry
           </Text>
         )}
 
@@ -423,7 +423,7 @@ function ResponsiveSidebar({ items, activeItem, onItemClick }) {
           </Button>
 
           <Text as="h1" fontSize="m" fontWeight="bold" color="primary" ml="m">
-            PocketAgent
+            Reactberry
           </Text>
         </Box>
       )}

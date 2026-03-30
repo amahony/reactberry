@@ -256,7 +256,7 @@ Mobile-first approach with responsive arrays:
 ```jsx
 <Box display="flex" alignItems="center" justifyContent="space-between" p="m">
   <Text as="h1" fontSize="l" fontWeight="bold" color="primary">
-    PocketAgent
+    Reactberry
   </Text>
   <Box display="flex" gap="m" alignItems="center">
     <Text as="a" href="/home" fontSize="s">Home</Text>

@@ -19,7 +19,7 @@ The Design System is built on four core principles:
 
 ## Installation
 
-The design system is included in the PocketAgent frontend. No separate installation is required.
+The design system is included in the Reactberry package. Install it in your project rather than expecting it to be bundled into an app.
 
 ```bash
 # Already available in your project

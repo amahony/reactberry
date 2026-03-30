@@ -1,10 +1,10 @@
 # Form Patterns Documentation
 
-Comprehensive examples and patterns for building accessible, user-friendly forms using the PocketAgent Design System.
+Comprehensive examples and patterns for building accessible, user-friendly forms using the Reactberry Design System.
 
 ## Overview
 
-Forms are critical touchpoints in user interfaces. The PocketAgent Design System provides patterns that ensure forms are accessible, consistent, and provide excellent user experience across all devices.
+Forms are critical touchpoints in user interfaces. The Reactberry Design System provides patterns that ensure forms are accessible, consistent, and provide excellent user experience across all devices.
 
 ## Basic Form Patterns
 
@@ -133,7 +133,7 @@ function RegistrationForm() {
         Create Your Account
       </Text>
       <Text as="p" fontSize="s" color="secondary" mb="l">
-        Join thousands of users who trust PocketAgent
+        Join thousands of users who trust Reactberry
       </Text>
 
       {/* Name Fields Row */}
@@ -966,7 +966,7 @@ function SideBySideForm() {
       {/* Right Column - Information */}
       <Box skin="panel" p="l" shape="rounded">
         <Text as="h3" fontSize="l" fontWeight="semibold" mb="m">
-          Why Choose PocketAgent?
+          Why Choose Reactberry?
         </Text>
         
         <Box display="flex" flexDirection="column" gap="m">

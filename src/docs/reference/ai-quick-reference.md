@@ -1,4 +1,4 @@
-# PocketAgent Design System - AI Assistant Quick Reference
+# Reactberry Design System - AI Assistant Quick Reference
 
 ## Component Selection Matrix
 

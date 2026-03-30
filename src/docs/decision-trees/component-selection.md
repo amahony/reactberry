@@ -40,12 +40,12 @@ Text is for **any content that is readable text**, including:
 ```tsx
 // ✅ CORRECT
 <Text as="h1" fontSize="xl" fontWeight="bold">
-  Welcome to PocketAgent
+  Welcome to Reactberry
 </Text>
 
 // ❌ WRONG - Box doesn't support typography
 <Box as="h1" fontSize="xl">
-  Welcome to PocketAgent
+  Welcome to Reactberry
 </Box>
 ```
 
@@ -413,7 +413,7 @@ Start: What am I building?
 >
   {/* Logo/Title */}
   <Text as="h1" fontSize="l" fontWeight="bold" color="primary">
-    PocketAgent Dashboard
+    Reactberry Dashboard
   </Text>
   
   {/* Actions */}

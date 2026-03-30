@@ -187,7 +187,7 @@
   gap="l"
 >
   <Text as="h1" fontSize={['xl', 'xxl', 'xxxl']} fontWeight="bold">
-    Welcome to PocketAgent
+    Welcome to Reactberry
   </Text>
   <Text as="p" fontSize={['m', 'l', 'l']} color="secondary" maxWidth="600px" mx="auto">
     Build amazing applications with our design system
@@ -693,7 +693,7 @@
   borderColor="surface"
 >
   <Text as="h1" fontSize="l" fontWeight="bold" color="primary">
-    PocketAgent
+    Reactberry
   </Text>
   <Box display="flex" gap="s" alignItems="center">
     <Text as="a" href="/docs" fontSize="s" color="secondary">
