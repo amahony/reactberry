@@ -1,0 +1,431 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "designSystem": "PocketAgent",
+  "lastUpdated": "2025-01-09",
+  "elements": {
+    "Box": {
+      "path": "@/design-system/elements",
+      "category": "layout",
+      "description": "Layout and container component - use for non-text content only",
+      "extends": null,
+      "semanticUse": "containers, layouts, divs, wrappers, any non-text structural element",
+      "notFor": ["text content", "typography", "headings", "paragraphs"],
+      "props": {
+        "display": {
+          "type": "string",
+          "values": ["flex", "grid", "block", "inline-block", "inline-flex", "none"],
+          "default": null,
+          "description": "CSS display property"
+        },
+        "gap": {
+          "type": "SpaceToken",
+          "values": ["mini", "xs", "s", "m", "l", "xl", "xxl", "xxxl"],
+          "default": null,
+          "description": "Gap between children in flex/grid layouts"
+        },
+        "p": {
+          "type": "SpaceToken",
+          "values": ["mini", "xs", "s", "m", "l", "xl", "xxl", "xxxl"],
+          "default": null,
+          "description": "Padding (internal spacing)"
+        },
+        "m": {
+          "type": "SpaceToken",
+          "values": ["mini", "xs", "s", "m", "l", "xl", "xxl", "xxxl"],
+          "default": null,
+          "description": "Margin (external spacing)"
+        },
+        "size": {
+          "type": "SpaceToken",
+          "values": ["mini", "xs", "s", "m", "l", "xl", "xxl", "xxxl"],
+          "default": null,
+          "description": "Generic size for width/height using theme scale",
+          "critical": "Use 'size' for Box, NOT '$size'. Button/Field use '$size'."
+        },
+        "skin": {
+          "type": "string",
+          "values": ["base", "surface", "card", "panel", "primary", "secondary", "error", "success", "warning", "info", "blue", "green", "red", "yellow", "purple", "orange"],
+          "default": null,
+          "description": "Predefined styling combinations"
+        },
+        "shape": {
+          "type": "ShapeToken",
+          "values": ["square", "roundedSmall", "rounded", "roundedLarge", "pill", "circle"],
+          "default": null,
+          "description": "Border radius from theme"
+        },
+        "bg": {
+          "type": "string",
+          "description": "Background color - use theme tokens"
+        },
+        "cursor": {
+          "type": "string",
+          "values": ["pointer", "default", "not-allowed", "text"],
+          "description": "Cursor style"
+        },
+        "hover": {
+          "type": "string",
+          "values": ["subtle", "lift", "glow"],
+          "description": "Hover state styling"
+        },
+        "as": {
+          "type": "string",
+          "default": "div",
+          "description": "HTML element to render as"
+        }
+      },
+      "commonMistakes": [
+        "Using Box for text content (use Text instead)",
+        "Using $size instead of size on Box",
+        "Using arbitrary values like '16px' instead of theme tokens like 'm'",
+        "Trying to use fontSize, fontWeight, or color props (Box doesn't support typography)"
+      ],
+      "correctUsage": [
+        "<Box display=\"flex\" gap=\"m\">",
+        "<Box skin=\"card\" p=\"m\" shape=\"rounded\">",
+        "<Box size=\"m\"> // for generic width/height"
+      ],
+      "incorrectUsage": [
+        "<Box as=\"h1\" fontSize=\"xl\"> // Wrong - use Text",
+        "<Box $size=\"medium\"> // Wrong - use 'size' not '$size'",
+        "<Box p=\"16px\"> // Wrong - use theme token like 'p=\"m\"'"
+      ],
+      "relatedComponents": ["Text", "Container", "Group", "Collection"]
+    },
+    "Text": {
+      "path": "@/design-system/elements",
+      "category": "typography",
+      "description": "Typography component for all text content",
+      "extends": "Box",
+      "semanticUse": "headings, paragraphs, labels, spans, any text content",
+      "notFor": ["layouts", "containers without text"],
+      "props": {
+        "as": {
+          "type": "string",
+          "values": ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "label", "a", "div"],
+          "default": "div",
+          "required": true,
+          "description": "Semantic HTML element - ALWAYS specify for accessibility",
+          "critical": "Always use semantic HTML tags for text content"
+        },
+        "fontSize": {
+          "type": "FontSizeToken",
+          "values": ["xs", "s", "m", "l", "xl", "xxl", "xxxl"],
+          "default": "m",
+          "description": "Font size from theme scale"
+        },
+        "fontWeight": {
+          "type": "string",
+          "values": ["normal", "medium", "semibold", "bold"],
+          "default": "normal",
+          "description": "Font weight"
+        },
+        "color": {
+          "type": "string",
+          "description": "Text color - use theme tokens like 'primary', 'secondary', 'error'"
+        },
+        "lineHeight": {
+          "type": "string",
+          "values": ["tight", "normal", "relaxed", "loose"],
+          "default": "normal",
+          "description": "Line height"
+        },
+        "textAlign": {
+          "type": "string",
+          "values": ["left", "center", "right", "justify"],
+          "description": "Text alignment"
+        },
+        "truncate": {
+          "type": "boolean",
+          "default": false,
+          "description": "Truncate text with ellipsis"
+        },
+        "size": {
+          "type": "SpaceToken",
+          "description": "Generic size (inherits from Box)",
+          "note": "For text sizing, use fontSize instead"
+        }
+      },
+      "inheritsAllPropsFrom": "Box",
+      "commonMistakes": [
+        "Forgetting to set 'as' prop for semantic HTML",
+        "Using size instead of fontSize for text sizing",
+        "Using Box for text content instead of Text"
+      ],
+      "correctUsage": [
+        "<Text as=\"h1\" fontSize=\"xl\" fontWeight=\"bold\">",
+        "<Text as=\"p\" fontSize=\"m\" lineHeight=\"relaxed\">",
+        "<Text as=\"label\" htmlFor=\"input\" fontSize=\"s\">"
+      ],
+      "incorrectUsage": [
+        "<Text fontSize=\"xl\"> // Missing 'as' prop",
+        "<Text as=\"h1\" size=\"xl\"> // Wrong - use fontSize not size",
+        "<Box>Some text</Box> // Wrong - use Text for text"
+      ],
+      "relatedComponents": ["Box", "Button", "Heading"]
+    },
+    "Button": {
+      "path": "@/design-system/elements",
+      "category": "interactive",
+      "description": "Interactive button component for user actions",
+      "extends": "Text",
+      "semanticUse": "clickable actions, form submissions, interactive triggers",
+      "notFor": ["links (use Text as='a')", "non-interactive elements"],
+      "props": {
+        "variant": {
+          "type": "string",
+          "values": ["primary", "secondary", "ghost", "outline", "default"],
+          "default": "default",
+          "description": "Visual style variant"
+        },
+        "$size": {
+          "type": "ComponentSize",
+          "values": ["small", "medium", "large"],
+          "default": "medium",
+          "description": "Component-specific size",
+          "critical": "CRITICAL: Use '$size' (with $) for Button, NOT 'size'. This is the most common mistake."
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disabled state"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": false,
+          "description": "Loading state"
+        },
+        "icon": {
+          "type": "boolean",
+          "default": false,
+          "description": "Icon-only button styling"
+        },
+        "onClick": {
+          "type": "function",
+          "description": "Click handler"
+        }
+      },
+      "inheritsAllPropsFrom": "Text",
+      "commonMistakes": [
+        "Using 'size' instead of '$size' - THIS IS THE #1 MISTAKE",
+        "Forgetting the $ prefix on $size prop",
+        "Using Button for navigation links (use Text as='a' instead)"
+      ],
+      "correctUsage": [
+        "<Button variant=\"primary\" $size=\"medium\">",
+        "<Button variant=\"ghost\" $size=\"small\" icon>",
+        "<Button variant=\"outline\" $size=\"large\" disabled>"
+      ],
+      "incorrectUsage": [
+        "<Button size=\"medium\"> // WRONG - missing $ prefix",
+        "<Button variant=\"primary\" fontSize=\"l\"> // Wrong - use $size",
+        "<Button as=\"a\" href=\"/link\"> // Wrong - use Text for links"
+      ],
+      "relatedComponents": ["Text", "Field", "Controls"]
+    },
+    "Field": {
+      "path": "@/design-system/elements",
+      "category": "form",
+      "description": "Form input component for user data entry",
+      "extends": "Text",
+      "semanticUse": "text inputs, textareas, selects, form fields",
+      "notFor": ["buttons", "non-form interactive elements"],
+      "props": {
+        "as": {
+          "type": "string",
+          "values": ["input", "textarea", "select"],
+          "default": "input",
+          "required": true,
+          "description": "Form element type"
+        },
+        "type": {
+          "type": "string",
+          "values": ["text", "email", "password", "number", "tel", "url", "search", "date", "time"],
+          "default": "text",
+          "description": "Input type (when as='input')"
+        },
+        "variant": {
+          "type": "string",
+          "values": ["outline", "filled", "unstyled"],
+          "default": "outline",
+          "description": "Visual style variant"
+        },
+        "$size": {
+          "type": "ComponentSize",
+          "values": ["small", "medium", "large"],
+          "default": "medium",
+          "description": "Component-specific size",
+          "critical": "CRITICAL: Use '$size' (with $) for Field, NOT 'size'"
+        },
+        "error": {
+          "type": "boolean",
+          "default": false,
+          "description": "Error state styling"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disabled state"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text"
+        },
+        "value": {
+          "type": "string",
+          "description": "Controlled input value"
+        },
+        "onChange": {
+          "type": "function",
+          "description": "Change handler"
+        }
+      },
+      "inheritsAllPropsFrom": "Text",
+      "commonMistakes": [
+        "Using 'size' instead of '$size' - THIS IS THE #1 MISTAKE",
+        "Forgetting to connect label with htmlFor/id",
+        "Not specifying 'as' prop for input type"
+      ],
+      "correctUsage": [
+        "<Field as=\"input\" type=\"email\" variant=\"outline\" $size=\"medium\" />",
+        "<Field as=\"textarea\" variant=\"filled\" $size=\"large\" />",
+        "<Field id=\"email\" as=\"input\" type=\"email\" $size=\"medium\" />"
+      ],
+      "incorrectUsage": [
+        "<Field size=\"medium\" /> // WRONG - missing $ prefix",
+        "<Field type=\"email\" /> // Incomplete - specify 'as' prop",
+        "<Field variant=\"outline\" fontSize=\"m\" /> // Wrong - use $size"
+      ],
+      "requiredPatterns": {
+        "labeledInput": {
+          "description": "Field must have associated label",
+          "example": "<Text as=\"label\" htmlFor=\"email\">Email</Text>\n<Field id=\"email\" as=\"input\" type=\"email\" $size=\"medium\" />"
+        }
+      },
+      "relatedComponents": ["Text", "FieldSet", "Controls"]
+    }
+  },
+  "blocks": {
+    "Container": {
+      "path": "@/design-system/blocks",
+      "category": "layout",
+      "description": "Page container with max-width constraints",
+      "dependencies": ["Box"],
+      "commonUse": "Page wrappers, content containers"
+    },
+    "Heading": {
+      "path": "@/design-system/blocks",
+      "category": "typography",
+      "description": "Styled heading component",
+      "dependencies": ["Text"],
+      "commonUse": "Section headings, page titles"
+    },
+    "Avatar": {
+      "path": "@/design-system/blocks",
+      "category": "display",
+      "description": "User avatar with image or initials",
+      "dependencies": ["Box", "Text"],
+      "commonUse": "User profiles, comment threads, team members"
+    },
+    "Menu": {
+      "path": "@/design-system/blocks",
+      "category": "interactive",
+      "description": "Dropdown menu component",
+      "dependencies": ["Box", "Text", "Button"],
+      "exports": ["Menu", "MenuItem", "MenuContent"],
+      "commonUse": "Action menus, navigation dropdowns"
+    },
+    "Tooltip": {
+      "path": "@/design-system/blocks",
+      "category": "overlay",
+      "description": "Contextual help tooltips",
+      "dependencies": ["Box", "Text"],
+      "commonUse": "Hover hints, help text"
+    },
+    "Modal": {
+      "path": "@/design-system/blocks",
+      "category": "overlay",
+      "description": "Dialog and modal overlays",
+      "dependencies": ["Box", "Text", "Button", "Underlay"],
+      "commonUse": "Confirmations, forms, detail views"
+    },
+    "Table": {
+      "path": "@/design-system/blocks",
+      "category": "data",
+      "description": "Data table with sorting and pagination",
+      "dependencies": ["Box", "Text"],
+      "exports": ["Table", "TableHeader", "TableBody", "TableRow", "TableCell", "TableHeaderCell", "TablePagination", "useTableControls", "useTableFilters"],
+      "commonUse": "Data grids, lists, records"
+    },
+    "FieldSet": {
+      "path": "@/design-system/blocks",
+      "category": "form",
+      "description": "Grouped form fields with legend",
+      "dependencies": ["Box", "Field", "Text"],
+      "commonUse": "Form sections, grouped inputs"
+    }
+  },
+  "tokens": {
+    "space": {
+      "type": "SpaceToken",
+      "values": {
+        "mini": "4px",
+        "xs": "8px",
+        "s": "12px",
+        "m": "16px",
+        "l": "24px",
+        "xl": "32px",
+        "xxl": "48px",
+        "xxxl": "64px"
+      },
+      "usage": ["gap", "p", "m", "size (for Box/Text)"]
+    },
+    "fontSize": {
+      "type": "FontSizeToken",
+      "values": {
+        "xs": "12px",
+        "s": "14px",
+        "m": "16px",
+        "l": "20px",
+        "xl": "24px",
+        "xxl": "32px",
+        "xxxl": "48px"
+      },
+      "usage": ["fontSize (for Text)"]
+    },
+    "componentSize": {
+      "type": "ComponentSize",
+      "values": ["small", "medium", "large"],
+      "usage": ["$size (for Button/Field only)"],
+      "critical": "This is different from SpaceToken - only for Button/Field components"
+    },
+    "shape": {
+      "type": "ShapeToken",
+      "values": {
+        "square": "0px",
+        "roundedSmall": "4px",
+        "rounded": "8px",
+        "roundedLarge": "16px",
+        "pill": "32px",
+        "circle": "50%"
+      },
+      "usage": ["shape"]
+    }
+  },
+  "criticalRules": [
+    "NEVER use Box for text content - always use Text",
+    "ALWAYS use theme tokens (e.g., 'm') instead of arbitrary values (e.g., '16px')",
+    "Button and Field use '$size' prop (with $), NOT 'size'",
+    "Box and Text use 'size' prop (without $) for generic sizing",
+    "Text components MUST have 'as' prop for semantic HTML",
+    "Always connect labels to inputs with htmlFor/id attributes"
+  ],
+  "decisionTree": {
+    "isTextContent": "Use Text component with 'as' prop",
+    "isButton": "Use Button component with '$size' prop",
+    "isFormInput": "Use Field component with '$size' prop",
+    "isLayout": "Use Box component with 'size' prop (if needed)",
+    "isComplexPattern": "Check blocks components"
+  }
+}

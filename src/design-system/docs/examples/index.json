@@ -1,0 +1,354 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "lastUpdated": "2025-01-09",
+  "examples": [
+    {
+      "id": "labeled-input",
+      "title": "Form Input with Label",
+      "category": "forms",
+      "tags": ["form", "input", "label", "accessibility", "field"],
+      "components": ["Box", "Text", "Field"],
+      "tokens": {
+        "gap": "xs",
+        "fontSize": "s",
+        "fontWeight": "medium",
+        "$size": "medium"
+      },
+      "complexity": "basic",
+      "file": "forms/form-patterns.md",
+      "code": "<Box gap=\"xs\">\n  <Text as=\"label\" htmlFor=\"email\" fontSize=\"s\" fontWeight=\"medium\">\n    Email Address\n  </Text>\n  <Field \n    id=\"email\"\n    as=\"input\" \n    type=\"email\" \n    variant=\"outline\" \n    $size=\"medium\"\n  />\n</Box>",
+      "description": "Accessible form input with connected label",
+      "accessibility": ["htmlFor/id connection", "semantic label"],
+      "commonUse": "Contact forms, login forms, any user input"
+    },
+    {
+      "id": "card-layout",
+      "title": "Card Component",
+      "category": "layouts",
+      "tags": ["layout", "card", "container", "box"],
+      "components": ["Box", "Text", "Button"],
+      "tokens": {
+        "skin": "card",
+        "p": "m",
+        "shape": "rounded",
+        "gap": "s",
+        "fontSize": ["l", "s"]
+      },
+      "complexity": "basic",
+      "file": "layouts/dashboard.md",
+      "code": "<Box skin=\"card\" p=\"m\" shape=\"rounded\" gap=\"s\">\n  <Text as=\"h3\" fontSize=\"l\" fontWeight=\"bold\">Card Title</Text>\n  <Text as=\"p\" fontSize=\"s\" color=\"secondary\">Card content goes here</Text>\n  <Button variant=\"primary\" $size=\"small\">Learn More</Button>\n</Box>",
+      "description": "Elevated card container with content and action",
+      "commonUse": "Dashboards, product cards, feature highlights"
+    },
+    {
+      "id": "responsive-grid",
+      "title": "Responsive Grid Layout",
+      "category": "layouts",
+      "tags": ["layout", "grid", "responsive", "breakpoints"],
+      "components": ["Box"],
+      "tokens": {
+        "display": "grid",
+        "gridTemplateColumns": ["1fr", "1fr 1fr", "1fr 1fr 1fr"],
+        "gap": "m"
+      },
+      "complexity": "intermediate",
+      "file": "layouts/dashboard.md",
+      "code": "<Box \n  display=\"grid\" \n  gridTemplateColumns={[\"1fr\", \"1fr 1fr\", \"1fr 1fr 1fr\"]} \n  gap=\"m\"\n>\n  {items.map(item => (\n    <Box key={item.id} skin=\"card\" p=\"m\">\n      <Text>{item.name}</Text>\n    </Box>\n  ))}\n</Box>",
+      "description": "Mobile-first responsive grid that adapts columns by screen size",
+      "responsiveBreakpoints": ["mobile: 1 column", "tablet: 2 columns", "desktop: 3 columns"],
+      "commonUse": "Product grids, image galleries, dashboard widgets"
+    },
+    {
+      "id": "flex-space-between",
+      "title": "Flex Layout - Space Between",
+      "category": "layouts",
+      "tags": ["layout", "flex", "header", "navigation"],
+      "components": ["Box", "Text", "Button"],
+      "tokens": {
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "p": "m"
+      },
+      "complexity": "basic",
+      "file": "layouts/dashboard.md",
+      "code": "<Box display=\"flex\" justifyContent=\"space-between\" alignItems=\"center\" p=\"m\">\n  <Text as=\"h1\" fontSize=\"xl\" fontWeight=\"bold\">Dashboard</Text>\n  <Button variant=\"primary\" $size=\"medium\">New Project</Button>\n</Box>",
+      "description": "Header layout with title and action on opposite ends",
+      "commonUse": "Page headers, navigation bars, toolbars"
+    },
+    {
+      "id": "form-with-error",
+      "title": "Form Field with Error State",
+      "category": "forms",
+      "tags": ["form", "error", "validation", "accessibility"],
+      "components": ["Box", "Text", "Field"],
+      "tokens": {
+        "gap": "xs",
+        "fontSize": ["s", "xs"],
+        "color": "error",
+        "error": true
+      },
+      "complexity": "intermediate",
+      "file": "forms/form-patterns.md",
+      "code": "<Box gap=\"xs\">\n  <Text as=\"label\" htmlFor=\"username\" fontSize=\"s\" fontWeight=\"medium\">\n    Username\n  </Text>\n  <Field \n    id=\"username\"\n    as=\"input\" \n    type=\"text\" \n    variant=\"outline\" \n    $size=\"medium\"\n    error\n  />\n  <Text fontSize=\"xs\" color=\"error\">\n    Username is already taken\n  </Text>\n</Box>",
+      "description": "Form field with validation error message",
+      "accessibility": ["error state", "descriptive message"],
+      "commonUse": "Form validation, real-time feedback"
+    },
+    {
+      "id": "primary-cta-button",
+      "title": "Primary CTA Button",
+      "category": "interactive",
+      "tags": ["button", "cta", "action", "interactive"],
+      "components": ["Button"],
+      "tokens": {
+        "variant": "primary",
+        "$size": "medium"
+      },
+      "complexity": "basic",
+      "file": null,
+      "code": "<Button variant=\"primary\" $size=\"medium\" onClick={handleClick}>\n  Get Started\n</Button>",
+      "description": "Primary call-to-action button",
+      "commonUse": "Hero sections, forms, main actions",
+      "criticalNote": "Use $size (with $) not size"
+    },
+    {
+      "id": "button-group",
+      "title": "Button Group",
+      "category": "interactive",
+      "tags": ["button", "group", "actions", "toolbar"],
+      "components": ["Box", "Button"],
+      "tokens": {
+        "display": "flex",
+        "gap": "s",
+        "$size": "small"
+      },
+      "complexity": "basic",
+      "file": null,
+      "code": "<Box display=\"flex\" gap=\"s\">\n  <Button variant=\"outline\" $size=\"small\">Bold</Button>\n  <Button variant=\"outline\" $size=\"small\">Italic</Button>\n  <Button variant=\"outline\" $size=\"small\">Underline</Button>\n</Box>",
+      "description": "Multiple related action buttons grouped together",
+      "commonUse": "Toolbars, text editors, action menus"
+    },
+    {
+      "id": "page-header",
+      "title": "Page Header with Actions",
+      "category": "navigation",
+      "tags": ["header", "navigation", "layout", "flex"],
+      "components": ["Box", "Text", "Button"],
+      "tokens": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "space-between",
+        "p": "m",
+        "gap": "s"
+      },
+      "complexity": "intermediate",
+      "file": "layouts/dashboard.md",
+      "code": "<Box display=\"flex\" alignItems=\"center\" justifyContent=\"space-between\" p=\"m\">\n  <Text as=\"h1\" fontSize=\"xl\" fontWeight=\"bold\" color=\"primary\">\n    Page Title\n  </Text>\n  <Box display=\"flex\" gap=\"s\" alignItems=\"center\">\n    <Button variant=\"ghost\" $size=\"small\">Cancel</Button>\n    <Button variant=\"primary\" $size=\"medium\">Save</Button>\n  </Box>\n</Box>",
+      "description": "Page header with title and action buttons",
+      "commonUse": "App headers, page titles, admin interfaces"
+    },
+    {
+      "id": "centered-container",
+      "title": "Centered Content Container",
+      "category": "layouts",
+      "tags": ["layout", "container", "centered", "responsive"],
+      "components": ["Box"],
+      "tokens": {
+        "maxWidth": "1200px",
+        "mx": "auto",
+        "p": "l"
+      },
+      "complexity": "basic",
+      "file": "layouts/dashboard.md",
+      "code": "<Box maxWidth=\"1200px\" mx=\"auto\" p=\"l\">\n  {/* Page content */}\n</Box>",
+      "description": "Max-width container centered horizontally",
+      "commonUse": "Page wrappers, content areas, article layouts"
+    },
+    {
+      "id": "stat-card",
+      "title": "Statistic Display Card",
+      "category": "data-display",
+      "tags": ["card", "statistics", "metrics", "dashboard"],
+      "components": ["Box", "Text"],
+      "tokens": {
+        "skin": "card",
+        "p": "m",
+        "gap": "xs",
+        "fontSize": ["s", "xxl", "xs"]
+      },
+      "complexity": "intermediate",
+      "file": null,
+      "code": "<Box skin=\"card\" p=\"m\" shape=\"rounded\" gap=\"xs\">\n  <Text fontSize=\"s\" color=\"secondary\">Total Revenue</Text>\n  <Text as=\"div\" fontSize=\"xxl\" fontWeight=\"bold\" color=\"primary\">\n    $42,350\n  </Text>\n  <Text fontSize=\"xs\" color=\"success\">+12.5% from last month</Text>\n</Box>",
+      "description": "Card displaying key metric with trend",
+      "commonUse": "Dashboards, analytics, KPI displays"
+    },
+    {
+      "id": "empty-state",
+      "title": "Empty State Message",
+      "category": "content",
+      "tags": ["empty", "placeholder", "state", "feedback"],
+      "components": ["Box", "Text", "Button"],
+      "tokens": {
+        "textAlign": "center",
+        "p": "xl",
+        "gap": "m"
+      },
+      "complexity": "basic",
+      "file": null,
+      "code": "<Box textAlign=\"center\" p=\"xl\" gap=\"m\">\n  <Text as=\"h3\" fontSize=\"l\" color=\"secondary\">\n    No items found\n  </Text>\n  <Text as=\"p\" fontSize=\"s\" color=\"secondary\">\n    Get started by creating your first item\n  </Text>\n  <Button variant=\"primary\" $size=\"medium\">\n    Create Item\n  </Button>\n</Box>",
+      "description": "Empty state with call-to-action",
+      "commonUse": "Empty lists, no search results, onboarding"
+    },
+    {
+      "id": "alert-notice",
+      "title": "Alert/Warning Notice",
+      "category": "content",
+      "tags": ["alert", "warning", "notice", "feedback"],
+      "components": ["Box", "Text"],
+      "tokens": {
+        "skin": "warning",
+        "p": "m",
+        "shape": "rounded",
+        "gap": "xs"
+      },
+      "complexity": "basic",
+      "file": null,
+      "code": "<Box skin=\"warning\" p=\"m\" shape=\"rounded\" gap=\"xs\">\n  <Text fontWeight=\"bold\" fontSize=\"s\">Warning</Text>\n  <Text fontSize=\"s\">\n    Your subscription will expire in 3 days.\n  </Text>\n</Box>",
+      "description": "Warning or informational alert box",
+      "commonUse": "Notifications, warnings, system messages",
+      "variants": ["error", "success", "warning", "info"]
+    },
+    {
+      "id": "loading-state",
+      "title": "Loading State Indicator",
+      "category": "state",
+      "tags": ["loading", "state", "feedback", "async"],
+      "components": ["Box", "Text"],
+      "tokens": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "p": "xl"
+      },
+      "complexity": "basic",
+      "file": null,
+      "code": "{loading ? (\n  <Box display=\"flex\" alignItems=\"center\" justifyContent=\"center\" p=\"xl\">\n    <Text color=\"secondary\">Loading...</Text>\n  </Box>\n) : (\n  <Box>{/* Content */}</Box>\n)}",
+      "description": "Centered loading indicator",
+      "commonUse": "Async data fetching, page transitions"
+    },
+    {
+      "id": "textarea-field",
+      "title": "Textarea Input Field",
+      "category": "forms",
+      "tags": ["form", "textarea", "multiline", "input"],
+      "components": ["Box", "Text", "Field"],
+      "tokens": {
+        "gap": "xs",
+        "$size": "medium"
+      },
+      "complexity": "basic",
+      "file": "forms/form-patterns.md",
+      "code": "<Box gap=\"xs\">\n  <Text as=\"label\" htmlFor=\"description\" fontSize=\"s\" fontWeight=\"medium\">\n    Description\n  </Text>\n  <Field \n    id=\"description\"\n    as=\"textarea\" \n    variant=\"outline\" \n    $size=\"medium\"\n    rows={6}\n  />\n</Box>",
+      "description": "Multi-line text input field",
+      "commonUse": "Comments, descriptions, long-form input"
+    },
+    {
+      "id": "select-dropdown",
+      "title": "Select Dropdown Field",
+      "category": "forms",
+      "tags": ["form", "select", "dropdown", "options"],
+      "components": ["Box", "Text", "Field"],
+      "tokens": {
+        "gap": "xs",
+        "$size": "medium"
+      },
+      "complexity": "basic",
+      "file": "forms/form-patterns.md",
+      "code": "<Box gap=\"xs\">\n  <Text as=\"label\" htmlFor=\"country\" fontSize=\"s\" fontWeight=\"medium\">\n    Country\n  </Text>\n  <Field id=\"country\" as=\"select\" variant=\"outline\" $size=\"medium\">\n    <option value=\"\">Select a country</option>\n    <option value=\"us\">United States</option>\n    <option value=\"uk\">United Kingdom</option>\n  </Field>\n</Box>",
+      "description": "Dropdown selection field",
+      "commonUse": "Country selectors, category pickers, option lists"
+    }
+  ],
+  "categories": {
+    "layouts": {
+      "name": "Layout Patterns",
+      "description": "Container and structural patterns",
+      "count": 5
+    },
+    "forms": {
+      "name": "Form Patterns",
+      "description": "Input fields and form components",
+      "count": 5
+    },
+    "interactive": {
+      "name": "Interactive Patterns",
+      "description": "Buttons and interactive elements",
+      "count": 2
+    },
+    "navigation": {
+      "name": "Navigation Patterns",
+      "description": "Headers and navigation components",
+      "count": 1
+    },
+    "data-display": {
+      "name": "Data Display Patterns",
+      "description": "Cards and data visualization",
+      "count": 1
+    },
+    "content": {
+      "name": "Content Patterns",
+      "description": "Text and content display",
+      "count": 2
+    },
+    "state": {
+      "name": "State Patterns",
+      "description": "Loading, error, and empty states",
+      "count": 1
+    }
+  },
+  "complexityLevels": {
+    "basic": {
+      "description": "Simple, single-purpose patterns",
+      "count": 11
+    },
+    "intermediate": {
+      "description": "Multi-component patterns with interactions",
+      "count": 4
+    },
+    "advanced": {
+      "description": "Complex patterns with state management",
+      "count": 0
+    }
+  },
+  "searchIndex": {
+    "byComponent": {
+      "Box": ["card-layout", "responsive-grid", "flex-space-between", "form-with-error", "button-group", "page-header", "centered-container", "stat-card", "empty-state", "alert-notice", "loading-state", "textarea-field", "select-dropdown", "labeled-input"],
+      "Text": ["card-layout", "flex-space-between", "form-with-error", "page-header", "stat-card", "empty-state", "alert-notice", "loading-state", "textarea-field", "select-dropdown", "labeled-input"],
+      "Button": ["card-layout", "flex-space-between", "primary-cta-button", "button-group", "page-header", "empty-state"],
+      "Field": ["labeled-input", "form-with-error", "textarea-field", "select-dropdown"]
+    },
+    "byToken": {
+      "gap": ["labeled-input", "card-layout", "responsive-grid", "form-with-error", "button-group", "page-header", "stat-card", "empty-state", "alert-notice", "textarea-field", "select-dropdown"],
+      "$size": ["labeled-input", "form-with-error", "primary-cta-button", "button-group", "page-header", "empty-state", "textarea-field", "select-dropdown"],
+      "skin": ["card-layout", "stat-card", "alert-notice"],
+      "display": ["responsive-grid", "flex-space-between", "button-group", "page-header", "loading-state"]
+    },
+    "byUseCase": {
+      "forms": ["labeled-input", "form-with-error", "textarea-field", "select-dropdown"],
+      "layouts": ["card-layout", "responsive-grid", "flex-space-between", "centered-container"],
+      "headers": ["flex-space-between", "page-header"],
+      "buttons": ["primary-cta-button", "button-group"],
+      "feedback": ["empty-state", "alert-notice", "loading-state"],
+      "dashboards": ["stat-card", "responsive-grid"]
+    }
+  },
+  "criticalReminders": [
+    "Button and Field use $size (with $), not size",
+    "Box and Text use size (without $) for generic sizing",
+    "Always connect labels to inputs with htmlFor/id",
+    "Always specify 'as' prop on Text for semantic HTML",
+    "Use theme tokens, not arbitrary pixel values"
+  ]
+}
