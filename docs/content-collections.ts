@@ -2,6 +2,8 @@ import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
 import { z } from "zod";
 
+const includePattern = "**/*.md*";
+
 const humanize = (value: string) =>
   value
     .replace(/\.[^.]+$/u, "")
@@ -28,28 +30,93 @@ const extractDescription = (content: string) => {
   return summary?.slice(0, 180);
 };
 
-const docsPageSchema = z
+const toRouteSegments = (path: string) => {
+  const segments = path.split("/").filter(Boolean);
+  return segments.at(-1) === "index" ? segments.slice(0, -1) : segments;
+};
+
+const toLookupPath = (path: string) => {
+  const segments = toRouteSegments(path);
+  return segments.join("/") || "index";
+};
+
+const toHref = (base: "docs" | "guides", path: string) => {
+  const segments = toRouteSegments(path);
+  return segments.length ? `/${base}/${segments.join("/")}` : `/${base}`;
+};
+
+const basePageSchema = z
   .object({
     content: z.string(),
     title: z.string().optional(),
     description: z.string().optional(),
+    navTitle: z.string().optional(),
+    published: z.boolean().optional(),
+    order: z.number().optional(),
   })
   .passthrough();
 
-const docsPages = defineCollection({
-  name: "docsPages",
-  directory: "../src/design-system/docs",
-  include: "**/*.md",
+const docsPageSchema = basePageSchema;
+
+const guidePageSchema = basePageSchema
+  .extend({
+    date: z.string().optional(),
+    featured: z.boolean().optional(),
+  })
+  .passthrough();
+
+const docs = defineCollection({
+  name: "docs",
+  directory: "./content/docs",
+  include: includePattern,
   schema: docsPageSchema,
   transform: async (document, context) => {
     const body = await compileMDX(context, document);
-    const section = document._meta.directory.split("/")[0] || "overview";
+    const routeSegments = toRouteSegments(document._meta.path);
+    const section = routeSegments[0] || "overview";
 
     return {
       ...document,
+      kind: "docs",
       body,
-      slug: document._meta.path.split("/"),
+      rawContent: Buffer.from(document.content, "utf8").toString("base64"),
+      sourcePath: document._meta.path,
+      path: toLookupPath(document._meta.path),
+      href: toHref("docs", document._meta.path),
+      slug: routeSegments,
       section,
+      navTitle: document.navTitle,
+      published: document.published ?? true,
+      order: document.order ?? 0,
+      title: document.title || extractTitle(document.content, humanize(document._meta.fileName)),
+      description: document.description || extractDescription(document.content),
+    };
+  },
+});
+
+const guides = defineCollection({
+  name: "guides",
+  directory: "./content/guides",
+  include: includePattern,
+  schema: guidePageSchema,
+  transform: async (document, context) => {
+    const body = await compileMDX(context, document);
+    const routeSegments = toRouteSegments(document._meta.path);
+
+    return {
+      ...document,
+      kind: "guides",
+      body,
+      rawContent: Buffer.from(document.content, "utf8").toString("base64"),
+      sourcePath: document._meta.path,
+      path: toLookupPath(document._meta.path),
+      href: toHref("guides", document._meta.path),
+      slug: routeSegments,
+      navTitle: document.navTitle,
+      published: document.published ?? true,
+      order: document.order ?? 0,
+      featured: document.featured ?? false,
+      date: document.date,
       title: document.title || extractTitle(document.content, humanize(document._meta.fileName)),
       description: document.description || extractDescription(document.content),
     };
@@ -57,5 +124,5 @@ const docsPages = defineCollection({
 });
 
 export default defineConfig({
-  content: [docsPages],
+  content: [docs, guides],
 });
