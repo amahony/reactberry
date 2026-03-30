@@ -1,0 +1,33 @@
+{
+  "name": "reactberry-docs",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "content:build": "node ./scripts/build-content-collections.mjs",
+    "build": "npm run content:build && next build",
+    "start": "next start",
+    "typecheck": "npm run content:build && tsc --noEmit"
+  },
+  "dependencies": {
+    "@content-collections/core": "^0.14.3",
+    "@content-collections/mdx": "^0.2.2",
+    "@content-collections/next": "^0.2.11",
+    "next": "^16.2.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "reactberry": "file:..",
+    "styled-components": "^6.3.12",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.37",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

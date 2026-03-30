@@ -16,7 +16,10 @@
     "npm": ">=9.0.0"
   },
   "scripts": {
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "docs:dev": "npm --prefix docs run dev",
+    "docs:build": "npm --prefix docs run build",
+    "docs:typecheck": "npm --prefix docs run typecheck"
   },
   "peerDependencies": {
     "next": "^16.0.0",

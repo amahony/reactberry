@@ -426,7 +426,7 @@ Box does NOT support typography props. Use Text instead.
 
 ---
 
-### Warning: "Unknown prop 'as' on <div> tag"
+### Warning: `Unknown prop 'as' on <div> tag`
 
 **Cause:** This is usually fine - styled-components handles 'as' prop correctly
 

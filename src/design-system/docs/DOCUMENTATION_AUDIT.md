@@ -296,7 +296,7 @@ Create automated checks for:
 - 95%+ prop documentation accuracy
 
 ### Qualitative
-- Developers can find information in <30 seconds
+- Developers can find information in under 30 seconds
 - New team members can be productive within 1 day
 - Community contributions increase
 - Support questions decrease
