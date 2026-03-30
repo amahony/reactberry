@@ -1,6 +1,6 @@
-# Reactberry Design System - AI Assistant Index
+# Reactberry - AI Assistant Index
 
-This is the primary reference document for AI assistants working with the Reactberry Design System. Start here to understand how to build interfaces correctly.
+This is the primary reference document for AI assistants working with Reactberry. Start here to understand how to build interfaces correctly.
 
 ## 🚀 New AI-Friendly Resources
 

@@ -1,10 +1,10 @@
 # Form Patterns Documentation
 
-Comprehensive examples and patterns for building accessible, user-friendly forms using the Reactberry Design System.
+Comprehensive examples and patterns for building accessible, user-friendly forms using Reactberry.
 
 ## Overview
 
-Forms are critical touchpoints in user interfaces. The Reactberry Design System provides patterns that ensure forms are accessible, consistent, and provide excellent user experience across all devices.
+Forms are critical touchpoints in user interfaces. Reactberry provides patterns that ensure forms are accessible, consistent, and provide excellent user experience across all devices.
 
 ## Basic Form Patterns
 

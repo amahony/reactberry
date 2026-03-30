@@ -1,6 +1,6 @@
 # Design System Reference Documentation
 
-**Purpose:** Complete reference materials for the Reactberry Design System
+**Purpose:** Complete reference materials for Reactberry
 
 This directory contains all reference documentation designed for both human developers and AI assistants.
 

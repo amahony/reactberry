@@ -1,6 +1,6 @@
 # Sidebar Navigation Examples
 
-Comprehensive sidebar navigation patterns using the Reactberry Design System components for application navigation and content organization.
+Comprehensive sidebar navigation patterns using Reactberry components for application navigation and content organization.
 
 ## Overview
 

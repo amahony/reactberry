@@ -1,4 +1,4 @@
-# Reactberry Design System - Complete Patterns Guide
+# Reactberry - Complete Patterns Guide
 
 This guide provides complete, production-ready patterns that you can copy and adapt for your needs. Each pattern follows best practices and includes all necessary imports and TypeScript types.
 

@@ -12,7 +12,7 @@ const humanize = (value: string) => value.replace(/[-_]/gu, " ").replace(/\b\w/g
 
 export const docsConfig = {
   siteTitle: "Reactberry Documentation",
-  siteDescription: "A docs site powered entirely by the same Reactberry design system it documents.",
+  siteDescription: "A docs site powered entirely by Reactberry itself.",
   mainNav: [
     { title: "Documentation", href: "/docs" },
     { title: "Guides", href: "/guides" },

@@ -1,6 +1,6 @@
 # Dashboard Layout Examples
 
-This document provides comprehensive examples for building dashboard layouts using the Reactberry Design System.
+This document provides comprehensive examples for building dashboard layouts using Reactberry.
 
 ## Basic Dashboard
 

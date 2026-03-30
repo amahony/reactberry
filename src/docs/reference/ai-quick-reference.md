@@ -1,4 +1,4 @@
-# Reactberry Design System - AI Assistant Quick Reference
+# Reactberry - AI Assistant Quick Reference
 
 ## Component Selection Matrix
 

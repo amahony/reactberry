@@ -1,6 +1,6 @@
 # reactberry
 
-`reactberry` is the single-package Next.js design system for Reactberry projects.
+`reactberry` is the single-package Next.js UI library for Reactberry projects.
 
 ## Package model
 
