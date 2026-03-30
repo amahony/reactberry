@@ -57,11 +57,11 @@
   "exports": {
     ".": "./src/index.ts",
     "./providers": "./src/providers/index.ts",
-    "./themes": "./src/design-system/themes/index.ts",
-    "./blocks": "./src/design-system/blocks/index.ts",
-    "./elements": "./src/design-system/elements/index.ts",
-    "./icons": "./src/design-system/icons/index.tsx",
-    "./charts": "./src/design-system/charts/index.ts",
+    "./themes": "./src/themes/index.ts",
+    "./blocks": "./src/blocks/index.ts",
+    "./elements": "./src/elements/index.ts",
+    "./icons": "./src/icons/index.tsx",
+    "./charts": "./src/charts/index.ts",
     "./package.json": "./package.json"
   },
   "keywords": [

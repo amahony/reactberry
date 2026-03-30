@@ -1,33 +1,105 @@
 ---
 title: Getting Started
-description: The quickest way to understand the structure of the docs app and begin adding curated documentation content.
+description: Install Reactberry and wire it into a Next.js app with the correct provider, Next config, and first component imports.
 navTitle: Getting Started
 order: 1
 ---
 
 # Getting Started
 
-Use this page as the first stop for building out the new docs experience.
+This guide shows the smallest useful setup for using Reactberry in a Next.js project.
 
-## Recommended flow
+## Requirements
 
-1. Read the [Documentation intro](/docs)
-2. Review the [Guides intro](/guides)
-3. Add new docs pages inside `docs/content/docs`
-4. Add new walkthroughs inside `docs/content/guides`
+- Next.js 16+
+- React 19+
+- `styled-components` 6+
 
-## Content locations
+## 1. Install the package
 
-- `docs/content/docs` for documentation pages
-- `docs/content/guides` for longer-form guides
-- `docs/config/docs.ts` for navigation metadata
+Install Reactberry and the styling dependency it expects.
 
-## Writing pages
+```bash
+npm install reactberry styled-components
+```
 
-You can author pages in Markdown or MDX.
+## 2. Transpile the package in Next.js
 
-Because the renderer is mapped to Reactberry primitives, MDX pages can gradually adopt design-system components where that helps explain usage.
+Reactberry ships source files, so your Next app should transpile it.
+
+In `next.config.ts`:
+
+```ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  transpilePackages: ["reactberry"],
+};
+
+export default nextConfig;
+```
+
+## 3. Wrap your app with the provider
+
+Use `DesignSystemProvider` in your root layout so Reactberry can register styled-components, provide the theme, and apply its global styles.
+
+In `app/layout.tsx`:
+
+```tsx
+import { DesignSystemProvider } from "reactberry/providers";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <DesignSystemProvider>{children}</DesignSystemProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+## 4. Start with the element primitives
+
+Import the core UI primitives from `reactberry/elements`.
+
+Example for `app/page.tsx`:
+
+```tsx
+import { Box, Button, Text } from "reactberry/elements";
+
+export default function HomePage() {
+  return (
+    <Box p="l" display="flex" flexDirection="column" gap="m">
+      <Text as="h1" fontSize="xxxl" fontWeight="700">
+        Hello Reactberry
+      </Text>
+      <Text as="p" color="secondary">
+        Your design system is now wired into Next.js.
+      </Text>
+      <Button variant="default">Get Started</Button>
+    </Box>
+  );
+}
+```
+
+## 5. Use the published subpath imports
+
+Prefer the package subpaths when building your app:
+
+- `reactberry/providers`
+- `reactberry/elements`
+- `reactberry/blocks`
+- `reactberry/themes`
+
+That keeps imports explicit and matches how the package is exported.
+
+## Notes
+
+- `DesignSystemProvider` includes the styled-components registry and theme setup.
+- The default theme is `light`.
+- You can pass `themeName` to the provider if you want to switch themes later.
 
 ## Next step
 
-If you are extending the site structure, the next useful page to expand is the guides intro so readers understand what belongs in guides versus core documentation.
+Once the provider and primitives are working, start building real pages with `Box`, `Text`, `Button`, and `Field`, then layer in larger patterns from `reactberry/blocks` as needed.

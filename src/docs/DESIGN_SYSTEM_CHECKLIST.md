@@ -172,10 +172,10 @@ When reviewing design system usage, ask:
 
 ## 📚 Quick References
 
-- **[Design System Index](../src/design-system/docs/index.md)** - AI assistant reference
-- **[Box API](../src/design-system/docs/api/Box.md)** - Layout component reference  
-- **[Text API](../src/design-system/docs/api/Text.md)** - Typography component reference
-- **[Theme Aliases](../src/design-system/docs/themes.md)** - All available theme tokens
+- **[Design System Index](./index.md)** - AI assistant reference
+- **[Box API](./api/Box.md)** - Layout component reference  
+- **[Text API](./api/Text.md)** - Typography component reference
+- **[Theme Aliases](./themes.md)** - All available theme tokens
 
 ## 🛠 Development Tools
 

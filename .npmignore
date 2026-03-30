@@ -1,6 +1,6 @@
 src/**/*.md
 src/**/*.mdx
-src/design-system/components.json
-src/design-system/docs/
-src/design-system/QUICK-START-AI.md
-src/design-system/ai-native-design-system-guide.md
+src/components.json
+src/docs/
+src/QUICK-START-AI.md
+src/ai-native-design-system-guide.md

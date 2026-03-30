@@ -6,7 +6,7 @@ This document describes how to transform the existing PocketAgent design system 
 
 If you are an LLM operating in this repository:
 
-- You are a **coding assistant** that generates or edits React/TypeScript UI code using the PocketAgent design system under `@/design-system`.
+- You are a **coding assistant** that generates or edits React/TypeScript UI code using the PocketAgent design system under `@/`.
 - Your top priority is to **respect the current design system contracts** and to gradually make the system more AI-friendly.
 - Treat the files referenced in this guide as **current sources of truth**, but assume the system is **not yet fully AI-native**: some components, blocks, tokens, or docs may be incomplete or missing.
 - When something is unclear or undocumented, you should **ask for clarification**, or clearly mark gaps and propose concrete follow-up changes instead of guessing.
@@ -36,7 +36,7 @@ The rest of this guide audits how close the current system is to that target and
 
 ## 2. Canonical AI resources (read these first)
 
-All paths are relative to `frontend/src/design-system`:
+All paths are relative to `src`:
 
 - `components.json` – machine-readable description of core elements, key blocks, tokens, and global rules
 - `types.ts` – exported TypeScript types for components and tokens, with usage guidance
@@ -59,7 +59,7 @@ AI tools should typically follow this workflow:
 The design system currently lives under:
 
 ```text
-frontend/src/design-system
+src
   components.json          # AI-facing component and token metadata
   types.ts                 # Shared TypeScript types + usage guides
   QUICK-START-AI.md        # High-priority AI quick start
@@ -161,7 +161,7 @@ AI assistants should:
 
 For static analysis or tooling:
 
-- Import from `"@/design-system/types"` to validate generated props.
+- Import from `"@/types"` to validate generated props.
 - Use `PropUsageGuide` comments as ground truth for **`size` vs `$size`** and required `as` props.
 
 > **Audit note:** As of early 2025, `components.json` and `types.ts` already provide a strong foundation, but coverage is not guaranteed to be complete (especially for some blocks and patterns). Audit agents should assume this metadata is **partially complete** and extend it where gaps are found.
@@ -267,7 +267,7 @@ Even before the system is fully AI-native, LLM code-generation agents should fol
 
 1. **Understand the task and constraints**
    - Identify whether the user is asking for **layout**, **text content**, **buttons/actions**, **form inputs**, or a **more complex pattern**.
-   - Default to using the design system (`@/design-system`) rather than raw HTML/CSS unless explicitly told otherwise.
+  - Default to using the design system (`@/`) rather than raw HTML/CSS unless explicitly told otherwise.
 
 2. **Select components using current metadata and decision trees**
    - Use the quick decision tree in `QUICK-START-AI.md` and the detailed trees in `docs/decision-trees/*`.
@@ -282,8 +282,8 @@ Even before the system is fully AI-native, LLM code-generation agents should fol
 
 4. **Generate code with correct imports**
    - Import from the documented paths, typically:
-     - `@/design-system/elements` for `Box`, `Text`, `Button`, `Field`.
-     - `@/design-system/blocks/...` for blocks.
+    - `@/elements` for `Box`, `Text`, `Button`, `Field`.
+    - `@/blocks/...` for blocks.
    - Do not introduce new top-level entry points unless they already exist in the repository.
 
 5. **Self-validate against metadata before returning code**
@@ -357,5 +357,5 @@ Use this checklist whenever you introduce or significantly change a design-syste
 - [ ] Decision trees / quick cards updated when the surface area changes
 - [ ] New behavior still respects the critical AI rules in `components.json.criticalRules`
 
-This guide should stay aligned with the actual structure of `frontend/src/design-system`. When you adjust the design system, treat updating this file as part of the same change.
+This guide should stay aligned with the actual structure of `src`. When you adjust the design system, treat updating this file as part of the same change.
 

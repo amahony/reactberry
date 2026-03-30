@@ -15,6 +15,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "@/design-system/*": ["./src/*"],
       "@/*": ["./src/*"]
     }
   },

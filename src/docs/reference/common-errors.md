@@ -484,7 +484,7 @@ import type { BoxProps, TextProps, ButtonProps, FieldProps } from '@/design-syst
 ### Check Component Metadata
 Review the component registry:
 ```
-frontend/src/design-system/components.json
+src/components.json
 ```
 
 ---

@@ -2,11 +2,11 @@
 
 The design system themes documentation has been moved to:
 
-**📄 [design-system/docs/themes.md](../docs/themes.md)**
+**📄 [src/docs/themes.md](../docs/themes.md)**
 
 ## New Documentation Structure
 
-All design system documentation is now centralized in the `design-system/docs/` folder for better organization and easier AI reference:
+All design system documentation is now centralized in the `src/docs/` folder for better organization and easier AI reference:
 
 - **[docs/elements.md](../docs/elements.md)** - Core components (Box, Text, Button, Field)
 - **[docs/blocks.md](../docs/blocks.md)** - Composed components (Card, Modal, etc.)

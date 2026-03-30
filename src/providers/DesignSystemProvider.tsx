@@ -3,9 +3,9 @@
 import { PropsWithChildren, useEffect, useMemo } from "react";
 import { ThemeProvider } from "styled-components";
 
-import GlobalStyles from "@/design-system/themes/pocketagent/global";
-import { themes, type ThemeName } from "@/design-system/themes";
-import { setCurrentTheme } from "@/design-system/themes/pocketagent/utils";
+import GlobalStyles from "@/themes/pocketagent/global";
+import { themes, type ThemeName } from "@/themes";
+import { setCurrentTheme } from "@/themes/pocketagent/utils";
 import StyledComponentsRegistry from "./StyledComponentsRegistry";
 
 interface DesignSystemProviderProps extends PropsWithChildren {
