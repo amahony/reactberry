@@ -1,35 +1,71 @@
 {
-  "name": "root",
-  "private": true,
-  "useWorkspaces": true,
-  "main": "index.js",
-  "workspaces": [
-    "packages/*",
-    "../packages/**/*"
+  "name": "reactberry",
+  "version": "0.1.0",
+  "description": "Reusable Next.js design system package for Reactberry projects.",
+  "type": "module",
+  "types": "./src/index.ts",
+  "files": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "README.md",
+    "tsconfig.json"
   ],
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=20.9.0",
+    "npm": ">=9.0.0"
   },
   "scripts": {
-    "build": "lerna run build",
-    "test": "lerna run test",
-    "clean": "lerna run clean",
-    "starter:prep": "yarn workspace @reactberry/core build && yarn workspace @reactberry/forms build",
-    "starter:dev": "yarn starter:prep && yarn workspace @reactberry/next-starter dev",
-    "starter:build": "yarn starter:prep && yarn workspace @reactberry/next-starter build",
-    "starter:start": "yarn workspace @reactberry/next-starter start",
-    "playground:legacy": "yarn starter:prep && cd packages/playground && yarn start",
-    "docs": "yarn docz dev",
-    "docz:build": "yarn docz build",
-    "docz:dev": "yarn docz dev",
-    "docz:serve": "yarn docz serve"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
-  "devDependencies": {
-    "lerna": "^3.16.4"
+  "peerDependencies": {
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "styled-components": "^6.1.0"
   },
   "dependencies": {
-    "docz": "2.0.0-rc.52",
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1"
-  }
+    "@floating-ui/react": "^0.26.28",
+    "@headlessui/react": "^2.2.9",
+    "@nivo/bar": "^0.99.0",
+    "@nivo/pie": "^0.99.0",
+    "@number-flow/react": "^0.5.14",
+    "@paper-design/shaders-react": "^0.0.69",
+    "chroma-js": "^2.4.2",
+    "motion": "^12.35.2",
+    "react-dropzone": "^14.4.1",
+    "react-number-format": "^5.4.4",
+    "react-swipeable": "^7.0.2",
+    "react-textarea-autosize": "^8.5.9",
+    "react-use-measure": "^2.1.7",
+    "styled-system": "^5.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/styled-system": "^5.1.22",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "styled-components": "^6.1.1",
+    "typescript": "^5"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./providers": "./src/providers/index.ts",
+    "./themes": "./src/design-system/themes/index.ts",
+    "./blocks": "./src/design-system/blocks/index.ts",
+    "./elements": "./src/design-system/elements/index.ts",
+    "./icons": "./src/design-system/icons/index.tsx",
+    "./charts": "./src/design-system/charts/index.ts",
+    "./package.json": "./package.json"
+  },
+  "keywords": [
+    "reactberry",
+    "design-system",
+    "nextjs",
+    "react",
+    "styled-components"
+  ]
 }
