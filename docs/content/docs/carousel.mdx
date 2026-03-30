@@ -1,0 +1,67 @@
+---
+title: Carousel
+description: Build horizontally scrollable rows of cards, steps, or media with Reactberry's Carousel block.
+navTitle: Carousel
+order: 4
+---
+
+# Carousel
+
+`Carousel` is a client-side block for rendering horizontally scrollable content with snap behavior and optional arrow controls.
+
+## Import
+
+```tsx
+import { Carousel } from "reactberry/blocks";
+```
+
+## When to use it
+
+Use Carousel when you need to present a sequence of items that should be explored horizontally, such as:
+
+- feature cards
+- onboarding steps
+- media or previews
+- compact, swipeable collections on smaller screens
+
+## Live examples
+
+<CarouselLiveExamples />
+
+## Basic usage
+
+The component accepts an `items` array of React nodes.
+
+```tsx
+import { Carousel } from "reactberry/blocks";
+import { Box, Text } from "reactberry/elements";
+
+const items = ["One", "Two", "Three"].map((label) => (
+  <Box key={label} minWidth="240px" p="m" skin="surface" shape="rounded">
+    <Text>{label}</Text>
+  </Box>
+));
+
+export default function Example() {
+  return <Carousel items={items} gap="m" />;
+}
+```
+
+## Useful props
+
+- `items` — array of slides to render
+- `gap` — spacing between slides
+- `onScroll` — callback with the current slide index
+- `showScrollbar` — reveals the horizontal scrollbar
+- `showArrows` — toggles the built-in arrow controls
+- `containerProps` — forwards layout and style props to the scroll container
+
+## Notes
+
+- Each item should have a stable width so snap behavior feels predictable.
+- `Carousel` works well with `Box`, `Text`, `Button`, and other Reactberry primitives inside each slide.
+- For richer composed experiences, you can combine it with blocks like `Container`, `Heading`, or `Divider`.
+
+## Next step
+
+If you want more narrative examples, continue into the [Guides](/guides) section and expand from this base pattern into app-specific flows.

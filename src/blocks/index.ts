@@ -64,6 +64,7 @@ export type { MaskPresetType, MaskedFieldProps } from "./MaskedField";
 export { default as Progress } from "./Progress";
 export { default as Gallery } from "./Gallery";
 export { Slideshow, wrap } from "./Slideshow";
+export { default as Carousel } from "./Carousel";
 export { default as Slider } from "./Slider";
 export { default as AnimatedCarousel } from "./AnimatedCarousel";
 export { default as Marquee } from "./Marquee";

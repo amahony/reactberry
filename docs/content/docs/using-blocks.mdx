@@ -1,0 +1,90 @@
+---
+title: Using Blocks
+description: Build larger UI patterns with Reactberry blocks after your provider and primitive elements are already in place.
+navTitle: Using Blocks
+order: 3
+---
+
+# Using Blocks
+
+After you have the provider wired up and are comfortable with `Box`, `Text`, `Button`, and `Field`, the next layer is `reactberry/blocks`.
+
+Blocks are higher-level components and patterns built on top of the primitives.
+
+## Importing blocks
+
+```tsx
+import { Container, Main, Heading, Divider } from "reactberry/blocks";
+```
+
+## When to use blocks
+
+Use blocks when you want more structure and behavior out of the box.
+
+Good examples include:
+
+- page shells and content containers
+- headings and layout helpers
+- overlays, drawers, popovers, and menus
+- tables, galleries, sliders, and other richer UI patterns
+
+## Blocks vs elements
+
+Use `reactberry/elements` for low-level building blocks:
+
+- `Box`
+- `Text`
+- `Button`
+- `Field`
+
+Use `reactberry/blocks` when you want a precomposed pattern with more opinionated structure or behavior.
+
+## Example page structure
+
+```tsx
+import { Box, Text, Button } from "reactberry/elements";
+import { Container, Main, Heading, Divider } from "reactberry/blocks";
+
+export default function DashboardPage() {
+  return (
+    <Container>
+      <Main>
+        <Box p="l" display="flex" flexDirection="column" gap="m">
+          <Heading>
+            <Text as="h1" fontSize="xxxl" fontWeight="700">
+              Dashboard
+            </Text>
+          </Heading>
+          <Text as="p" color="secondary">
+            Start with primitives, then use blocks to scale the layout.
+          </Text>
+          <Divider />
+          <Button variant="default">Create report</Button>
+        </Box>
+      </Main>
+    </Container>
+  );
+}
+```
+
+## Explore the available block categories
+
+Reactberry currently exports blocks in areas like:
+
+- layout and structure
+- interactive overlays
+- tables and data display
+- forms and input helpers
+- animation and visual effects
+- cards, media, and utility patterns
+
+## Recommended approach
+
+1. build the first screen with elements
+2. notice repeated layout or behavior patterns
+3. replace that repetition with blocks where they fit naturally
+4. keep custom composition for anything highly app-specific
+
+## Next step
+
+Once you are comfortable with blocks, continue into the [Guides](/guides) section for longer walkthroughs and implementation patterns.

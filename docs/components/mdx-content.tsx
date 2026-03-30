@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useMDXComponent } from "@content-collections/mdx/react";
 import { Box, Button, Text } from "reactberry/elements";
 
+import CarouselLiveExamples from "@/components/examples/carousel-live-examples";
 import { slugifyHeading } from "@/lib/toc";
 
 type MdxContentProps = {
@@ -133,6 +134,7 @@ function MdxImage({ alt, props, ...rest }: { alt?: string; props?: Record<string
 export default function MdxContent({ code, contentKind, sourcePath }: MdxContentProps) {
   const Component = useMDXComponent(code);
   const components = {
+    CarouselLiveExamples,
     Image: MdxImage,
     Box: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => <Box {...props}>{children}</Box>,
     Text: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => <Text {...props}>{children}</Text>,

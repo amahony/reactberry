@@ -1,0 +1,90 @@
+---
+title: Theming
+description: Use Reactberry's built-in themes and switch between light and dark mode with the design system provider.
+navTitle: Theming
+order: 2
+---
+
+# Theming
+
+Reactberry ships with theme support built into `DesignSystemProvider`.
+
+Right now the package exposes two built-in theme names:
+
+- `light`
+- `dark`
+
+## Basic usage
+
+If you do nothing, the provider uses the `light` theme by default.
+
+```tsx
+import { DesignSystemProvider } from "reactberry/providers";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <DesignSystemProvider>{children}</DesignSystemProvider>;
+}
+```
+
+## Switching themes
+
+Pass `themeName` to the provider.
+
+```tsx
+import { DesignSystemProvider } from "reactberry/providers";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <DesignSystemProvider themeName="dark">{children}</DesignSystemProvider>;
+}
+```
+
+## What the provider does
+
+`DesignSystemProvider` handles the design-system setup for you:
+
+- registers the styled-components server/client integration
+- provides the active theme through `ThemeProvider`
+- applies Reactberry global styles
+
+## Disabling global styles
+
+If you need to control global styling yourself, you can disable the built-in global styles.
+
+```tsx
+<DesignSystemProvider withGlobalStyles={false}>{children}</DesignSystemProvider>
+```
+
+## Working with theme-aware components
+
+Reactberry primitives and blocks read values from the active theme, so common props like these should come from the design system instead of custom one-off CSS where possible:
+
+- `color`
+- `skin`
+- `fontSize`
+- `fontWeight`
+- spacing props like `p`, `m`, `gap`
+- shape props like `shape`
+
+## Example page
+
+```tsx
+import { Box, Button, Text } from "reactberry/elements";
+
+export default function SettingsPage() {
+  return (
+    <Box p="l" display="flex" flexDirection="column" gap="m">
+      <Text as="h1" fontSize="xxl" fontWeight="700">
+        Theme-aware UI
+      </Text>
+      <Text as="p" color="secondary">
+        The active Reactberry theme controls typography, color, and surfaces.
+      </Text>
+      <Button variant="default">Save preferences</Button>
+    </Box>
+  );
+}
+```
+
+## Next step
+
+Once theming is in place, move on to [Using Blocks](/docs/using-blocks) to build larger UI patterns on top of the primitives.
