@@ -12,6 +12,12 @@
 
 Install `reactberry` together with its peer dependencies in your consuming app:
 
+```bash
+npm install reactberry@beta styled-components next react react-dom
+```
+
+If you want the exact current prerelease, install `reactberry@2.0.0-beta` instead.
+
 - `next`
 - `react`
 - `react-dom`
