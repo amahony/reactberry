@@ -16,7 +16,7 @@ Install `@reactberry/system` together with its peer dependencies in your consumi
 npm install @reactberry/system@beta styled-components next react react-dom
 ```
 
-If you want the exact current prerelease, install `@reactberry/system@2.0.0-beta` instead.
+If you want the exact current prerelease, install `@reactberry/system@2.0.0-beta.2` instead.
 
 - `next`
 - `react`

@@ -1,11 +1,15 @@
-import light from "./default/modes/light/theme";
-import dark from "./default/modes/dark/theme";
+import darkConfig from "./default/modes/dark/theme";
+import lightConfig from "./default/modes/light/theme";
 
-export const themes = {
-	dark,
-	light,
-	// Other themes can be added here
+import type { Theme, ThemeMap, ThemeName } from "./types";
+
+export const lightTheme: Theme = lightConfig;
+export const darkTheme: Theme = darkConfig;
+
+export const themes: ThemeMap = {
+  dark: darkTheme,
+  light: lightTheme,
+  // Other themes can be added here
 };
 
-export type ThemeName = keyof typeof themes;
-export type Theme = (typeof themes)[ThemeName];
+export type { Theme, ThemeMap, ThemeName } from "./types";
