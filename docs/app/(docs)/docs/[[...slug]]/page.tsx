@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Box, Text } from "reactberry/elements";
+import { Box, Text } from "@reactberry/system/elements";
 
 import MdxContent from "@/components/mdx-content";
 import Toc from "@/components/toc";

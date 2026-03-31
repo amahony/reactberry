@@ -7,14 +7,14 @@ order: 0
 
 # Blocks
 
-After you have the provider wired up and are comfortable with `Box`, `Text`, `Button`, and `Field`, the next layer is `reactberry/blocks`.
+After you have the provider wired up and are comfortable with `Box`, `Text`, `Button`, and `Field`, the next layer is `@reactberry/system/blocks`.
 
 Blocks are composed reusable structures built on top of elements.
 
 ## Importing blocks
 
 ```tsx
-import { Container, Main, Heading, Divider } from "reactberry/blocks";
+import { Container, Main, Heading, Divider } from "@reactberry/system/blocks";
 ```
 
 ## When to use blocks
@@ -30,20 +30,20 @@ Good examples include:
 
 ## Blocks vs elements
 
-Use `reactberry/elements` for foundational items:
+Use `@reactberry/system/elements` for foundational items:
 
 - `Box`
 - `Text`
 - `Button`
 - `Field`
 
-Use `reactberry/blocks` when you want a composed reusable structure with more opinionated behavior or layout built in.
+Use `@reactberry/system/blocks` when you want a composed reusable structure with more opinionated behavior or layout built in.
 
 ## Example page structure
 
 ```tsx
-import { Box, Text, Button } from "reactberry/elements";
-import { Container, Main, Heading, Divider } from "reactberry/blocks";
+import { Box, Text, Button } from "@reactberry/system/elements";
+import { Container, Main, Heading, Divider } from "@reactberry/system/blocks";
 
 export default function DashboardPage() {
   return (

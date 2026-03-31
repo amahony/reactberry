@@ -11,7 +11,7 @@ import plaintext from "highlight.js/lib/languages/plaintext";
 import typescript from "highlight.js/lib/languages/typescript";
 import xml from "highlight.js/lib/languages/xml";
 import yaml from "highlight.js/lib/languages/yaml";
-import { Box, Button, Text } from "reactberry/elements";
+import { Box, Button, Text } from "@reactberry/system/elements";
 
 type CodeBlockProps = {
     code: string;

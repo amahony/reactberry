@@ -1,4 +1,4 @@
-import { Box, Text } from "reactberry/elements";
+import { Box, Text } from "@reactberry/system/elements";
 
 import DocsNavLink from "@/components/docs-nav-link";
 import MdxContent from "@/components/mdx-content";

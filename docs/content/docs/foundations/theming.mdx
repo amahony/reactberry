@@ -19,7 +19,7 @@ Right now the package exposes two built-in theme names:
 If you do nothing, the provider uses the `light` theme by default.
 
 ```tsx
-import { DesignSystemProvider } from "reactberry/providers";
+import { DesignSystemProvider } from "@reactberry/system/providers";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return <DesignSystemProvider>{children}</DesignSystemProvider>;
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 Pass `themeName` to the provider.
 
 ```tsx
-import { DesignSystemProvider } from "reactberry/providers";
+import { DesignSystemProvider } from "@reactberry/system/providers";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return <DesignSystemProvider themeName="dark">{children}</DesignSystemProvider>;
@@ -68,7 +68,7 @@ Reactberry primitives and blocks read values from the active theme, so common pr
 ## Example page
 
 ```tsx
-import { Box, Button, Text } from "reactberry/elements";
+import { Box, Button, Text } from "@reactberry/system/elements";
 
 export default function SettingsPage() {
   return (

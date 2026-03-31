@@ -1,4 +1,4 @@
-import { Box, Text } from "reactberry/elements";
+import { Box, Text } from "@reactberry/system/elements";
 
 import MainNav from "@/components/main-nav";
 import { docsConfig } from "@/config/docs";

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Box, Text } from "reactberry/elements";
+import { Box, Text } from "@reactberry/system/elements";
 
 type DocsNavLinkProps = {
   href: string;

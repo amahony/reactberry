@@ -3,7 +3,7 @@ import { withContentCollections } from "@content-collections/next";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["reactberry"],
+  transpilePackages: ["@reactberry/system"],
   turbopack: {
     root: fileURLToPath(new URL("..", import.meta.url)),
   },

@@ -12,7 +12,7 @@ order: 1
 ## Import
 
 ```tsx
-import { Carousel } from "reactberry/blocks";
+import { Carousel } from "@reactberry/system/blocks";
 ```
 
 ## When to use it
@@ -33,8 +33,8 @@ Use Carousel when you need to present a sequence of items that should be explore
 The component accepts an `items` array of React nodes.
 
 ```tsx
-import { Carousel } from "reactberry/blocks";
-import { Box, Text } from "reactberry/elements";
+import { Carousel } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
 
 const items = ["One", "Two", "Three"].map((label) => (
   <Box key={label} minWidth="240px" p="m" skin="surface" shape="rounded">

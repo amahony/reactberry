@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Carousel } from "reactberry/blocks";
-import { Box, Button, Text } from "reactberry/elements";
+import { Carousel } from "@reactberry/system/blocks";
+import { Box, Button, Text } from "@reactberry/system/elements";
 
 const featuredCards = [
   { title: "Starter kit", description: "A compact slide with headline, copy, and action.", action: "Open starter" },

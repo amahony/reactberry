@@ -4,7 +4,7 @@ import { Children, isValidElement } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMDXComponent } from "@content-collections/mdx/react";
-import { Box, Button, Text } from "reactberry/elements";
+import { Box, Button, Text } from "@reactberry/system/elements";
 
 import CodeBlock from "@/components/code-block";
 import CarouselLiveExamples from "@/components/examples/carousel-live-examples";

@@ -1,4 +1,4 @@
-import { Box } from "reactberry/elements";
+import { Box } from "@reactberry/system/elements";
 
 import SidebarNav from "@/components/sidebar-nav";
 

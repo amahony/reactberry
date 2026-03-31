@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Box, Text } from "reactberry/elements";
+import { Box, Text } from "@reactberry/system/elements";
 
 import { getDocsPages, getGuides } from "@/lib/docs";
 

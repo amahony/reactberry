@@ -21,14 +21,14 @@ This guide shows the smallest useful setup for using Reactberry in a Next.js pro
 Install the current beta release of Reactberry and the styling dependency it expects.
 
 ```bash
-npm install reactberry@beta styled-components
+npm install @reactberry/system@beta styled-components
 ```
 
-If you prefer to pin the exact prerelease, install `reactberry@2.0.0-beta` instead.
+If you prefer to pin the exact prerelease, install `@reactberry/system@2.0.0-beta` instead.
 
 ## 2. Transpile the package in Next.js
 
-Reactberry ships source files, so your Next app should transpile it.
+`@reactberry/system` ships source files, so your Next app should transpile it.
 
 In `next.config.ts`:
 
@@ -36,7 +36,7 @@ In `next.config.ts`:
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["reactberry"],
+  transpilePackages: ["@reactberry/system"],
 };
 
 export default nextConfig;
@@ -49,7 +49,7 @@ Use `DesignSystemProvider` in your root layout so Reactberry can register styled
 In `app/layout.tsx`:
 
 ```tsx
-import { DesignSystemProvider } from "reactberry/providers";
+import { DesignSystemProvider } from "@reactberry/system/providers";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -64,12 +64,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ## 4. Start with the element primitives
 
-Import the core UI primitives from `reactberry/elements`.
+Import the core UI primitives from `@reactberry/system/elements`.
 
 Example for `app/page.tsx`:
 
 ```tsx
-import { Box, Button, Text } from "reactberry/elements";
+import { Box, Button, Text } from "@reactberry/system/elements";
 
 export default function HomePage() {
   return (
@@ -90,10 +90,10 @@ export default function HomePage() {
 
 Prefer the package subpaths when building your app:
 
-- `reactberry/providers`
-- `reactberry/elements`
-- `reactberry/blocks`
-- `reactberry/themes`
+- `@reactberry/system/providers`
+- `@reactberry/system/elements`
+- `@reactberry/system/blocks`
+- `@reactberry/system/themes`
 
 That keeps imports explicit and matches how the package is exported.
 

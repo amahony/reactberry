@@ -1,5 +1,5 @@
 {
-  "name": "reactberry",
+  "name": "@reactberry/system",
   "version": "2.0.0-beta",
   "description": "Reusable Next.js UI library package for Reactberry projects.",
   "type": "module",
