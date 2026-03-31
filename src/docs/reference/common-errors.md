@@ -400,12 +400,11 @@ or component doesn't respond to size prop
 
 **Solution:**
 ```tsx
-import { ThemeProvider } from '@/lib/theme-provider';
-import { theme } from '@reactberry/system/themes';
+import { DesignSystemProvider } from '@reactberry/system/providers';
 
-<ThemeProvider theme={theme}>
+<DesignSystemProvider>
   <App />
-</ThemeProvider>
+</DesignSystemProvider>
 ```
 
 ---

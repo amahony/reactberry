@@ -585,7 +585,7 @@ describe('Modal Component', () => {
 // __tests__/ContactForm.integration.test.tsx
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ContactForm } from '@/components/ContactForm';
+import { ContactForm } from './ContactForm';
 import { TestWrapper } from '../setupTests';
 
 describe('ContactForm Integration', () => {

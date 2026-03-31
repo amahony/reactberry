@@ -82,14 +82,13 @@ function WelcomeCard() {
 ### 3. Theme Integration
 
 ```jsx
-import { ThemeProvider } from '@/lib/theme-provider';
-import { theme } from '@reactberry/system/themes';
+import { DesignSystemProvider } from '@reactberry/system/providers';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <DesignSystemProvider>
       <WelcomeCard />
-    </ThemeProvider>
+    </DesignSystemProvider>
   );
 }
 ```
