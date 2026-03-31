@@ -1,6 +1,6 @@
 {
   "name": "reactberry",
-  "version": "0.1.0",
+  "version": "2.0.0-beta",
   "description": "Reusable Next.js UI library package for Reactberry projects.",
   "type": "module",
   "types": "./src/index.ts",
