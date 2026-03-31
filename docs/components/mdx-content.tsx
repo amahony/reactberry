@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useMDXComponent } from "@content-collections/mdx/react";
 import { Box, Button, Text } from "reactberry/elements";
 
+import CodeBlock from "@/components/code-block";
 import CarouselLiveExamples from "@/components/examples/carousel-live-examples";
 import { slugifyHeading } from "@/lib/toc";
 
@@ -131,9 +132,24 @@ function MdxImage({ alt, props, ...rest }: { alt?: string; props?: Record<string
   return <Image {...(imageProps as React.ComponentProps<typeof Image>)} />;
 }
 
+function MdxPre({ children, ...props }: { children: React.ReactNode; [key: string]: any }) {
+  if (isValidElement<{ className?: string; children?: React.ReactNode; filename?: string }>(children)) {
+    const code = flattenText(children.props.children);
+    const className = children.props.className ?? "";
+    const language = className.match(/language-([A-Za-z0-9#+_-]+)/u)?.[1];
+
+    if (code) {
+      return <CodeBlock code={code} language={language} filename={children.props.filename} />;
+    }
+  }
+
+  return <Box as="pre" p="m" skin="surface" shape="rounded" overflowX="auto" m="0" {...props}>{children}</Box>;
+}
+
 export default function MdxContent({ code, contentKind, sourcePath }: MdxContentProps) {
   const Component = useMDXComponent(code);
   const components = {
+    CodeBlock,
     CarouselLiveExamples,
     Image: MdxImage,
     Box: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => <Box {...props}>{children}</Box>,
@@ -165,8 +181,9 @@ export default function MdxContent({ code, contentKind, sourcePath }: MdxContent
     li: (props: any) => <Text as="li" fontSize="m" color="secondary" lineHeight="1.7" {...props} />,
     a: (props: any) => <MdxLink contentKind={contentKind} sourcePath={sourcePath} {...props} />,
     blockquote: (props: any) => <Box as="blockquote" p="m" skin="surface" shape="rounded" m="0" {...props} />,
-    pre: (props: any) => <Box as="pre" p="m" skin="surface" shape="rounded" overflowX="auto" m="0" {...props} />,
-    code: (props: any) => <Text as="code" fontSize="s" {...props} />,
+    pre: MdxPre,
+    code: ({ className, ...props }: { className?: string; [key: string]: any }) =>
+      className ? <code className={className} {...props} /> : <Text as="code" fontSize="s" px="xs" py="mini" skin="surface" shape="rounded" {...props} />,
     hr: (props: any) => <Box as="hr" border="0" borderTop="1px solid" my="l" {...props} />,
   };
 

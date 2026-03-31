@@ -2,7 +2,7 @@
 title: Theming
 description: Use Reactberry's built-in themes and switch between light and dark mode with the provider.
 navTitle: Theming
-order: 2
+order: 0
 ---
 
 # Theming
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ## What the provider does
 
-`DesignSystemProvider` handles the design-system setup for you:
+`DesignSystemProvider` handles the Reactberry setup for you:
 
 - registers the styled-components server/client integration
 - provides the active theme through `ThemeProvider`
@@ -87,4 +87,4 @@ export default function SettingsPage() {
 
 ## Next step
 
-Once theming is in place, move on to [Using Blocks](/docs/using-blocks) to build larger UI patterns on top of the primitives.
+Once theming is in place, continue with [Elements](/docs/elements) to understand the foundational layer, then [Blocks](/docs/blocks) for the composed reusable layer.

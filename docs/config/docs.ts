@@ -19,11 +19,9 @@ export const docsConfig = {
   ] satisfies MainNavItem[],
   sections: {
     overview: { title: "Overview", order: 0 },
-    "decision-trees": { title: "Decision Trees", order: 1 },
-    api: { title: "API", order: 2 },
+    foundations: { title: "Foundations", order: 1 },
+    elements: { title: "Elements", order: 2 },
     blocks: { title: "Blocks", order: 3 },
-    examples: { title: "Examples", order: 4 },
-    reference: { title: "Reference", order: 5 },
   } satisfies Record<string, DocsSectionMeta>,
 };
 

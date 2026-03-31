@@ -51,6 +51,7 @@ const basePageSchema = z
     title: z.string().optional(),
     description: z.string().optional(),
     navTitle: z.string().optional(),
+    section: z.string().optional(),
     published: z.boolean().optional(),
     order: z.number().optional(),
   })
@@ -73,7 +74,7 @@ const docs = defineCollection({
   transform: async (document, context) => {
     const body = await compileMDX(context, document);
     const routeSegments = toRouteSegments(document._meta.path);
-    const section = routeSegments[0] || "overview";
+    const section = document.section || routeSegments[0] || "overview";
 
     return {
       ...document,
