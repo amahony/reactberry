@@ -18,7 +18,7 @@ This guide provides complete, production-ready patterns that you can copy and ad
 ### Complete Form with Validation
 
 ```tsx
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 import { useState } from 'react';
 
 interface FormData {
@@ -170,7 +170,7 @@ export function ContactForm() {
 ### Search Input with Suggestions
 
 ```tsx
-import { Box, Text, Field } from '@/design-system/elements';
+import { Box, Text, Field } from '@reactberry/system/elements';
 import { useState, useRef, useEffect } from 'react';
 
 interface SearchSuggestion {
@@ -297,7 +297,7 @@ export function SearchInput() {
 ### Feature Card with Icon
 
 ```tsx
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -365,8 +365,8 @@ export function FeatureCard({ icon, title, description, action }: FeatureCardPro
 ### Profile Card
 
 ```tsx
-import { Box, Text, Button } from '@/design-system/elements';
-import { Avatar } from '@/design-system/blocks';
+import { Box, Text, Button } from '@reactberry/system/elements';
+import { Avatar } from '@reactberry/system/blocks';
 
 interface ProfileCardProps {
   name: string;
@@ -459,7 +459,7 @@ export function ProfileCard({ name, role, avatar, bio, stats }: ProfileCardProps
 ### Responsive Navigation Bar
 
 ```tsx
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 import { useState } from 'react';
 
 interface NavItem {
@@ -565,7 +565,7 @@ export function NavigationBar({ items, logo }: NavigationBarProps) {
 ### Breadcrumb Navigation
 
 ```tsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 interface BreadcrumbItem {
   label: string;
@@ -621,7 +621,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
 ### Dashboard Layout
 
 ```tsx
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 import { useState } from 'react';
 
 interface DashboardLayoutProps {
@@ -725,7 +725,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 ### Split Layout with Sticky Sidebar
 
 ```tsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 interface SplitLayoutProps {
   sidebar: React.ReactNode;
@@ -761,7 +761,7 @@ export function SplitLayout({ sidebar, content }: SplitLayoutProps) {
 ### Data Table
 
 ```tsx
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 
 interface TableColumn<T> {
   key: keyof T;
@@ -857,7 +857,7 @@ const columns: TableColumn<User>[] = [
 ### Stats Grid
 
 ```tsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 interface Stat {
   label: string;
@@ -938,7 +938,7 @@ export function StatsGrid({ stats }: StatsGridProps) {
 ### Modal Dialog
 
 ```tsx
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 import { useEffect } from 'react';
 
 interface ModalProps {
@@ -1061,7 +1061,7 @@ export function Modal({ isOpen, onClose, title, children, actions }: ModalProps)
 ### Toast Notification
 
 ```tsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 import { useEffect } from 'react';
 
 interface ToastProps {
@@ -1117,7 +1117,7 @@ export function Toast({ message, type, duration = 5000, onClose }: ToastProps) {
 ### Loading States
 
 ```tsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 // Skeleton loader
 export function SkeletonLoader() {

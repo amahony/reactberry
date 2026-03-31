@@ -16,13 +16,13 @@ The component hierarchy was restructured in 2.x for better composition:
 **Old (1.x):**
 ```jsx
 // Multiple base components
-import { Container, Typography, Interactive, Input } from '@/design-system';
+import { Container, Typography, Interactive, Input } from '@reactberry/system';
 ```
 
 **New (2.x):**
 ```jsx
 // Unified hierarchy: Box → Text → Button/Field
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 ```
 
 #### Prop Naming Standardization
@@ -86,10 +86,10 @@ npx @design-system/migrate --from=1.x --to=2.x src/
 **Step 1: Update Imports**
 ```jsx
 // Before
-import { Container, Typography, Button as DSButton, Input } from '@/design-system';
+import { Container, Typography, Button as DSButton, Input } from '@reactberry/system';
 
 // After
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 ```
 
 **Step 2: Convert Component Usage**
@@ -191,7 +191,7 @@ function LoginForm() {
 
 **After (Design System):**
 ```jsx
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 
 function LoginForm() {
   return (
@@ -281,7 +281,7 @@ const customTheme = {
 **After (Design System Theme):**
 ```javascript
 // Extend the design system theme
-import { defaultTheme } from '@/design-system/themes';
+import { defaultTheme } from '@reactberry/system/themes';
 
 const customTheme = {
   ...defaultTheme,
@@ -481,10 +481,10 @@ console.log(results.summary);
 #### "Component not found" errors
 ```jsx
 // Problem: Old import paths
-import { Container } from '@/design-system';
+import { Container } from '@reactberry/system';
 
 // Solution: Use new element imports
-import { Box } from '@/design-system/elements';
+import { Box } from '@reactberry/system/elements';
 ```
 
 #### Theme value errors
@@ -504,7 +504,7 @@ interface Props {
 }
 
 // Solution: Use design system types
-import { SpaceValue, FontSizeValue } from '@/design-system/types';
+import { SpaceValue, FontSizeValue } from '@reactberry/system/types';
 
 interface Props {
   p?: SpaceValue;

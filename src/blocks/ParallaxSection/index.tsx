@@ -2,7 +2,7 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import React, { useRef } from "react";
 import Image from "next/image";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 
 interface ParallaxSectionProps {
   image: string;

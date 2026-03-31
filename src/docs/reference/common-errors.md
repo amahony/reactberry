@@ -401,7 +401,7 @@ or component doesn't respond to size prop
 **Solution:**
 ```tsx
 import { ThemeProvider } from '@/lib/theme-provider';
-import { theme } from '@/design-system/themes';
+import { theme } from '@reactberry/system/themes';
 
 <ThemeProvider theme={theme}>
   <App />
@@ -478,7 +478,7 @@ When something isn't working, check:
 ### Use Type Definitions
 Import types for TypeScript validation:
 ```tsx
-import type { BoxProps, TextProps, ButtonProps, FieldProps } from '@/design-system/types';
+import type { BoxProps, TextProps, ButtonProps, FieldProps } from '@reactberry/system/types';
 ```
 
 ### Check Component Metadata

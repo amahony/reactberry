@@ -6,7 +6,7 @@ import {
   NumericFormatProps,
   PatternFormatProps,
 } from "react-number-format"
-import { Field } from "@/design-system/elements"
+import { Field } from "../../elements"
 
 // Preset configurations for common mask types
 export const maskPresets = {

@@ -1,6 +1,6 @@
 "use client"
-import { IconPencil } from "@/design-system/icons"
-import { Box, Text, Button, Field } from "@/design-system/elements"
+import { IconPencil } from "../../icons"
+import { Box, Text, Button, Field } from "../../elements"
 import React, { useState, useRef, useEffect } from "react"
 import Textarea from "react-textarea-autosize"
 import Group from "../Group"
@@ -10,7 +10,7 @@ import {
   type MaskPresetType,
 } from "../MaskedField"
 
-import { IconDCheck, IconERemove } from "@/design-system/icons"
+import { IconDCheck, IconERemove } from "../../icons"
 
 type InlineEditorProps = {
   id: string | number

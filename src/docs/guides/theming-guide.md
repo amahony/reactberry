@@ -202,7 +202,7 @@ skins: {
 ```javascript
 // themes/custom/theme.js
 import { merge } from 'lodash';
-import { defaultTheme } from '@/design-system/themes';
+import { defaultTheme } from '@reactberry/system/themes';
 
 const customTheme = merge({}, defaultTheme, {
   colors: {
@@ -335,7 +335,7 @@ const darkTheme = {
 ```jsx
 // ThemeProvider component
 import { ThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from '@/design-system/themes';
+import { lightTheme, darkTheme } from '@reactberry/system/themes';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -622,7 +622,7 @@ const creativeTheme = {
 ### Color Manipulation
 
 ```javascript
-import { lighten, darken, alpha } from '@/design-system/themes/utils';
+import { lighten, darken, alpha } from '@reactberry/system/themes/utils';
 
 const dynamicTheme = {
   colors: {

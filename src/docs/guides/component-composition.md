@@ -760,13 +760,13 @@ function DataList({ data, renderItem, emptyState }) {
 
 ```jsx
 import { render, screen } from '@testing-library/react';
-import { ThemeProvider } from '@/lib/theme-provider';
+import { DesignSystemProvider } from '@reactberry/system/providers';
 
 function TestWrapper({ children }) {
   return (
-    <ThemeProvider theme={theme}>
+    <DesignSystemProvider>
       {children}
-    </ThemeProvider>
+    </DesignSystemProvider>
   );
 }
 

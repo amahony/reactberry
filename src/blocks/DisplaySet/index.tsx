@@ -1,4 +1,4 @@
-import { Text } from "@/design-system/elements";
+import { Text } from "../../elements";
 export default function DisplaySet({
   label,
   content,

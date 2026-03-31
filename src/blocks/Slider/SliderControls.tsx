@@ -1,5 +1,5 @@
-import { Box } from "@/design-system/elements";
-import { IconArrowLeft, IconArrowRight } from "@/design-system/icons";
+import { Box } from "../../elements";
+import { IconArrowLeft, IconArrowRight } from "../../icons";
 import { AnimatePresence, motion } from "motion/react";
 import { Control } from "../Controls/Control";
 

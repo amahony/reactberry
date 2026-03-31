@@ -65,7 +65,7 @@ Example:
 
 ```tsx
 import { ThemeProvider } from "styled-components";
-import { themes } from "@/design-system/themes";
+import { themes } from "@reactberry/system/themes";
 
 const App = () => (
   <ThemeProvider theme={themes.dark}>

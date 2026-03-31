@@ -17,10 +17,10 @@
  */
 
 import { AnimatePresence, motion } from "motion/react";
-import { Box } from "@/design-system/elements";
-import { useKeypress } from "@/design-system/hooks/useKeypress";
-import { useOverlay } from "@/design-system/hooks/useOverlay";
-import { Backdrop } from "@/design-system/blocks/Overlay";
+import { Box } from "../../elements";
+import { useKeypress } from "../../hooks/useKeypress";
+import { useOverlay } from "../../hooks/useOverlay";
+import { Backdrop } from "../Overlay";
 import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
@@ -34,7 +34,7 @@ import {
 import { createPortal } from "react-dom";
 
 // Re-export for consumers that import these directly from Modal
-export { pushThemeColor, popThemeColor } from "@/design-system/utils/overlayTheme";
+export { pushThemeColor, popThemeColor } from "../../utils/overlayTheme";
 
 /**
  * Context that exposes the Modal's close function to children.

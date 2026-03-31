@@ -2,7 +2,7 @@
 
 **Component:** `Box`  
 **Category:** Layout & Container  
-**Path:** `@/design-system/elements`
+**Path:** `@reactberry/system/elements`
 
 ---
 
@@ -18,7 +18,7 @@ Box is the **foundation layout component** for structure and containers.
 ## 📥 Import
 
 ```tsx
-import { Box } from '@/design-system/elements';
+import { Box } from '@reactberry/system/elements';
 ```
 
 ---

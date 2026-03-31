@@ -1,7 +1,7 @@
 "use client";
 
-import { Box, Text } from "@/design-system/elements";
-import Field, { FieldProps } from "@/design-system/elements/field";
+import { Box, Text } from "../../elements";
+import Field, { FieldProps } from "../../elements/field";
 import { TextareaHTMLAttributes, forwardRef } from "react";
 
 type CommonProps = {

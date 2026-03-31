@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
 

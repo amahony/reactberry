@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 
 import Tooltip from "../Tooltip";
 import { motion } from "motion/react";

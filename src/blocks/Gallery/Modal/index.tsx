@@ -6,7 +6,7 @@ import {
   DialogBackdrop,
 } from "@headlessui/react";
 import { useRef, useState } from "react";
-import Box, { BoxProps } from "@/design-system/elements/box";
+import Box, { BoxProps } from "../../../elements/box";
 import { useRouter } from "next/navigation";
 
 type ModalProps = DialogProps<any> &

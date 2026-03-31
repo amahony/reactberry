@@ -1,12 +1,12 @@
 "use client";
 import React, { useRef } from "react";
 import { createPortal } from "react-dom";
-import { Box, Button, Text } from "@/design-system/elements";
+import { Box, Button, Text } from "../../elements";
 import { AnimatePresence, motion } from "motion/react";
-import { IconEAdd, IconERemove } from "@/design-system/icons";
-import { useSidebar } from "@/design-system/hooks/use-sidebar";
-import { useOverlay } from "@/design-system/hooks/useOverlay";
-import { Backdrop, OverscrollGuard } from "@/design-system/blocks/Overlay";
+import { IconEAdd, IconERemove } from "../../icons";
+import { useSidebar } from "../../hooks/use-sidebar";
+import { useOverlay } from "../../hooks/useOverlay";
+import { Backdrop, OverscrollGuard } from "../Overlay";
 
 interface DrawerProps {
   children: React.ReactNode;

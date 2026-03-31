@@ -259,7 +259,7 @@ For complex, pre-built UI patterns, use composed block components:
 
 ```tsx
 // Using Avatar block
-import { Avatar } from '@/design-system/blocks';
+import { Avatar } from '@reactberry/system/blocks';
 
 <Avatar 
   src="/user.jpg" 
@@ -268,7 +268,7 @@ import { Avatar } from '@/design-system/blocks';
 />
 
 // Using Table block
-import { Table, TableRow, TableCell } from '@/design-system/blocks';
+import { Table, TableRow, TableCell } from '@reactberry/system/blocks';
 
 <Table>
   <TableRow>

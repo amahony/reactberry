@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import { createPortal } from "react-dom";
-import { useClickOutside } from "@/design-system/hooks/useClickOutside";
+import { useClickOutside } from "../../hooks/useClickOutside";
 import {
   AnimatePresence,
   MotionConfig,

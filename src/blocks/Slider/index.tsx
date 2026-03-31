@@ -2,7 +2,7 @@
 import { motion, type PanInfo } from "motion/react";
 import { ReactNode, type WheelEvent } from "react";
 import useSlider, { ResponsiveConfig, SliderConfig } from "./useSlider";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import SliderControls from "./SliderControls";
 
 interface Props {

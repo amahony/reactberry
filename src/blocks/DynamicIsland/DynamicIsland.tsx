@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import { motion } from "motion/react";
 import { type ReactNode, useState } from "react";
 

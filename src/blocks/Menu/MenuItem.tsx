@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { motion } from "motion/react";
-import { Box, Text } from "@/design-system/elements";
+import { Box, Text } from "../../elements";
 import { useMenu } from "./MenuContext";
 import Link from "next/link";
 import { ThemeContext } from "styled-components";

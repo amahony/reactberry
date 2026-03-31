@@ -23,7 +23,7 @@ Reactberry is a package you install in your project rather than something bundle
 
 ```bash
 # Already available in your project
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 ```
 
 ## Your First Component
@@ -31,7 +31,7 @@ import { Box, Text, Button, Field } from '@/design-system/elements';
 Let's start with a simple example using the core elements:
 
 ```jsx
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 
 function WelcomeCard() {
   return (
@@ -146,7 +146,7 @@ Skins provide pre-defined styling combinations:
 Let's create a typical page layout:
 
 ```jsx
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 
 function ContactPage() {
   return (

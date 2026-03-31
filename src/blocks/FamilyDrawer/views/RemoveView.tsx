@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Box, Button, Text } from "@/design-system/elements";
-import { IconOWarning } from "@/design-system/icons";
+import { Box, Button, Text } from "../../../elements";
+import { IconOWarning } from "../../../icons";
 import { FamilyDrawerView } from "../index";
 
 interface RemoveViewProps {

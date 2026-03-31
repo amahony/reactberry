@@ -9,7 +9,7 @@ Text is the typography component that should be used for all text content, seman
 ## Import
 
 ```jsx
-import { Text } from '@/design-system/elements';
+import { Text } from '@reactberry/system/elements';
 ```
 
 ## Basic Usage
@@ -384,7 +384,7 @@ Use descriptive text and proper labeling:
 ## TypeScript
 
 ```tsx
-import { TextProps } from '@/design-system/elements';
+import { TextProps } from '@reactberry/system/elements';
 
 interface MyTextComponentProps extends TextProps {
   variant?: 'heading' | 'body' | 'caption';

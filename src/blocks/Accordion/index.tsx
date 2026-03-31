@@ -1,10 +1,10 @@
 "use client";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import { AnimatePresence, motion } from "motion/react";
 import React, { useState } from "react";
-import { useLocalStorage } from "@/design-system/hooks/use-local-storage";
+import { useLocalStorage } from "../../hooks/use-local-storage";
 
-import { IconArrowSmDown } from "@/design-system/icons";
+import { IconArrowSmDown } from "../../icons";
 import Group from "../Group";
 
 interface AccordionItem {

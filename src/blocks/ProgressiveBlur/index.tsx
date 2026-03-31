@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, HTMLMotionProps } from "motion/react";
-import Box, { BoxProps } from "@/design-system/elements/box";
+import Box, { BoxProps } from "../../elements/box";
 
 export const GRADIENT_ANGLES = {
   top: 0,

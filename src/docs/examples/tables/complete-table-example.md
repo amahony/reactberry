@@ -19,7 +19,7 @@ import {
   Text,
   Field,
   Button,
-} from '@/design-system';
+} from '@reactberry/system';
 
 // Sample data type
 interface User {

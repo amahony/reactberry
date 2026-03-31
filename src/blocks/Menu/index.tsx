@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import { MenuProvider, useMenu } from "./MenuContext";
 import { MenuItem } from "./MenuItem";
 import { MenuContent } from "./MenuContent";

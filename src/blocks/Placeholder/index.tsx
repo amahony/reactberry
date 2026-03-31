@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Text } from "@/design-system/elements";
+import { Box, Text } from "../../elements";
 import Icon from "../Icon";
 
 interface PlaceholderProps {

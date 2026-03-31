@@ -1,9 +1,9 @@
 "use client";
 
 import { MeshGradient } from "@paper-design/shaders-react";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import styled from "styled-components";
-import { useReducedMotion } from "@/design-system/hooks/useReducedMotion";
+import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 interface GradientMeshProps {
   /** Animation intensity level */

@@ -38,8 +38,8 @@ Box (base element)
 
 **Usage Pattern:**
 ```tsx
-import { Container, Group } from '@/design-system/blocks';
-import { Text, Button } from '@/design-system/elements';
+import { Container, Group } from '@reactberry/system/blocks';
+import { Text, Button } from '@reactberry/system/elements';
 
 <Container>
   <Group gap="m" alignItems="center">
@@ -61,8 +61,8 @@ import { Text, Button } from '@/design-system/elements';
 
 **Usage Pattern:**
 ```tsx
-import { Heading } from '@/design-system/blocks';
-import { Text } from '@/design-system/elements';
+import { Heading } from '@reactberry/system/blocks';
+import { Text } from '@reactberry/system/elements';
 
 <Heading level={1}>
   Main Title
@@ -88,8 +88,8 @@ import { Text } from '@/design-system/elements';
 
 **Usage Pattern:**
 ```tsx
-import { Avatar, Tag } from '@/design-system/blocks';
-import { Box, Text } from '@/design-system/elements';
+import { Avatar, Tag } from '@reactberry/system/blocks';
+import { Box, Text } from '@reactberry/system/elements';
 
 <Box display="flex" gap="s" alignItems="center">
   <Avatar src="/user.jpg" alt="User" />
@@ -115,8 +115,8 @@ import { Box, Text } from '@/design-system/elements';
 
 **Usage Pattern:**
 ```tsx
-import { Menu, MenuItem, Tooltip } from '@/design-system/blocks';
-import { Button, Text } from '@/design-system/elements';
+import { Menu, MenuItem, Tooltip } from '@reactberry/system/blocks';
+import { Button, Text } from '@reactberry/system/elements';
 
 <Menu>
   <MenuItem>
@@ -142,8 +142,8 @@ import { Button, Text } from '@/design-system/elements';
 
 **Usage Pattern:**
 ```tsx
-import { FieldSet, Controls } from '@/design-system/blocks';
-import { Field, Text, Button } from '@/design-system/elements';
+import { FieldSet, Controls } from '@reactberry/system/blocks';
+import { Field, Text, Button } from '@reactberry/system/elements';
 
 <form>
   <FieldSet legend="Personal Information">
@@ -174,8 +174,8 @@ import { Field, Text, Button } from '@/design-system/elements';
 
 **Usage Pattern:**
 ```tsx
-import { Table, TableRow, TableCell } from '@/design-system/blocks';
-import { Text } from '@/design-system/elements';
+import { Table, TableRow, TableCell } from '@reactberry/system/blocks';
+import { Text } from '@reactberry/system/elements';
 
 <Table>
   <TableRow>
@@ -207,8 +207,8 @@ import { Text } from '@/design-system/elements';
 
 **Usage Pattern:**
 ```tsx
-import { Fader, Ticker } from '@/design-system/blocks';
-import { Text, Box } from '@/design-system/elements';
+import { Fader, Ticker } from '@reactberry/system/blocks';
+import { Text, Box } from '@reactberry/system/elements';
 
 <Fader>
   <Box skin="card" p="m">
@@ -232,8 +232,8 @@ import { Text, Box } from '@/design-system/elements';
 
 **Usage Pattern:**
 ```tsx
-import { Await } from '@/design-system/blocks';
-import { Box, Text } from '@/design-system/elements';
+import { Await } from '@reactberry/system/blocks';
+import { Box, Text } from '@reactberry/system/elements';
 
 <Await promise={fetchData()}>
   {(data) => (
@@ -277,21 +277,21 @@ Theme provides tokens
 
 ```tsx
 // For basic layouts
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 // For forms
-import { Box, Text, Field, Button } from '@/design-system/elements';
+import { Box, Text, Field, Button } from '@reactberry/system/elements';
 
 // For interactive UI
-import { Box, Text, Button } from '@/design-system/elements';
-import { Menu, Tooltip } from '@/design-system/blocks';
+import { Box, Text, Button } from '@reactberry/system/elements';
+import { Menu, Tooltip } from '@reactberry/system/blocks';
 ```
 
 ### Complete Imports (Complex UIs)
 
 ```tsx
 // Full elements
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 
 // Specific blocks
 import { 
@@ -302,7 +302,7 @@ import {
   TableRow,
   TableCell,
   Tooltip 
-} from '@/design-system/blocks';
+} from '@reactberry/system/blocks';
 ```
 
 ---
@@ -335,7 +335,7 @@ import {
 ```tsx
 // MyBlock.tsx
 import { AnotherBlock } from './AnotherBlock';
-import { Box } from '@/design-system/elements';
+import { Box } from '@reactberry/system/elements';
 
 // AnotherBlock.tsx
 import { MyBlock } from './MyBlock'; // ❌ Circular dependency!
@@ -346,10 +346,10 @@ import { MyBlock } from './MyBlock'; // ❌ Circular dependency!
 ```tsx
 // Both blocks should depend on elements only
 // MyBlock.tsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 // AnotherBlock.tsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 // Compose them in your application code
 // App.tsx
@@ -381,12 +381,12 @@ Blocks ↔ Application
 
 ```tsx
 // ✅ CORRECT - Import from package entries
-import { Box, Text } from '@/design-system/elements';
-import { Avatar } from '@/design-system/blocks';
+import { Box, Text } from '@reactberry/system/elements';
+import { Avatar } from '@reactberry/system/blocks';
 
 // ❌ WRONG - Direct file imports (may cause issues)
-import Box from '@/design-system/elements/box';
-import Avatar from '@/design-system/blocks/Avatar/index';
+import Box from '@reactberry/system/elements';
+import Avatar from '@reactberry/system/blocks/Avatar/index';
 ```
 
 ---

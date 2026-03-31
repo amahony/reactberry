@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import StepIndicator from "./StepIndicator";
 import { BaseStepProps, StepThemeConfig, StepVariant } from "./types";
 

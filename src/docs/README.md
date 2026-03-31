@@ -53,10 +53,10 @@ docs/
 
 ```jsx
 // Core elements (fully documented)
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 
 // Composed blocks (documentation in progress)
-import { Avatar, Container, Heading } from '@/design-system/blocks';
+import { Avatar, Container, Heading } from '@reactberry/system/blocks';
 ```
 
 ### 2. Basic Usage
@@ -83,7 +83,7 @@ function WelcomeCard() {
 
 ```jsx
 import { ThemeProvider } from '@/lib/theme-provider';
-import { theme } from '@/design-system/themes';
+import { theme } from '@reactberry/system/themes';
 
 function App() {
   return (

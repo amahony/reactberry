@@ -4,8 +4,8 @@ import { useMemo, useRef } from "react";
 import { motion, type MotionValue, useScroll, useTransform } from "motion/react";
 import styled from "styled-components";
 
-import { Text, type TextProps } from "@/design-system/elements";
-import { useReducedMotion } from "@/design-system/hooks/useReducedMotion";
+import { Text, type TextProps } from "../../elements";
+import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 type ScrollOffset = NonNullable<Parameters<typeof useScroll>[0]>["offset"];
 

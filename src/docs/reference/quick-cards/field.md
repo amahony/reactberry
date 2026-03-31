@@ -2,7 +2,7 @@
 
 **Component:** `Field`  
 **Category:** Form Input  
-**Path:** `@/design-system/elements`
+**Path:** `@reactberry/system/elements`
 
 ---
 
@@ -18,7 +18,7 @@ Field is the **form input component** for user data entry.
 ## 📥 Import
 
 ```tsx
-import { Field } from '@/design-system/elements';
+import { Field } from '@reactberry/system/elements';
 ```
 
 ---

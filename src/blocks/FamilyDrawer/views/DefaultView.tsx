@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Box, Button, Text } from "@/design-system/elements";
-import { IconLock, IconOWarning, IconText } from "@/design-system/icons";
+import { Box, Button, Text } from "../../../elements";
+import { IconLock, IconOWarning, IconText } from "../../../icons";
 import { FamilyDrawerView } from "../index";
 
 interface DefaultViewProps {

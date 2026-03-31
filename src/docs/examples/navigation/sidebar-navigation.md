@@ -9,7 +9,7 @@ Sidebar navigation provides a persistent way to navigate through different secti
 ## Basic Sidebar Navigation
 
 ```jsx
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 
 function BasicSidebar({ items, activeItem, onItemClick }) {
   return (
@@ -96,7 +96,7 @@ function App() {
 
 ```jsx
 import { useState } from 'react';
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 
 function CollapsibleSidebar({ items, activeItem, onItemClick }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -211,7 +211,7 @@ function CollapsibleSidebar({ items, activeItem, onItemClick }) {
 
 ```jsx
 import { useState } from 'react';
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 
 function NestedSidebar({ sections, activeItem, onItemClick }) {
   const [expandedSections, setExpandedSections] = useState(new Set(['main']));
@@ -367,7 +367,7 @@ const nestedSections = [
 
 ```jsx
 import { useState, useEffect } from 'react';
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 
 function ResponsiveSidebar({ items, activeItem, onItemClick }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

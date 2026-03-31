@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { animate } from "motion";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import { ControlLeft, ControlRight } from "../Controls/Control";
 import Group from "../Group";
 

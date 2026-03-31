@@ -2,11 +2,11 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { Box, Text } from "@/design-system/elements";
-import Tooltip from "@/design-system/blocks/Tooltip";
+import { Box, Text } from "../../elements";
+import Tooltip from "../Tooltip";
 import { useHover } from "./hooks";
 import { StepThemeConfig } from "./types";
-import { IconDCheck } from "@/design-system/icons";
+import { IconDCheck } from "../../icons";
 
 interface StepIndicatorProps {
   /** Whether this step is currently active */

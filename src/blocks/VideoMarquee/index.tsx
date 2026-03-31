@@ -11,7 +11,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import useMeasure from "react-use-measure";
 
-import { Box, Text } from "@/design-system/elements";
+import { Box, Text } from "../../elements";
 import { ControlLeft, ControlRight } from "../Controls/Control";
 
 export interface VideoMarqueeItem {

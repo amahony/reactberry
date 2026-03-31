@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, BoxProps } from "@/design-system/elements";
+import { Box, BoxProps } from "../../../elements";
 
 type LogoProps = BoxProps & {};
 

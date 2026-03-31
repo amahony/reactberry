@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button } from "@/design-system/elements";
+import { Box, Button } from "../../elements";
 import {
   Popover as HeadlessPopover,
   PopoverPanel,

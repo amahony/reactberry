@@ -5,14 +5,14 @@ import { useState } from "react";
 import { variants } from "../utils/animationVariants";
 import downloadPhoto from "../utils/downloadPhoto";
 import { useSwipeable } from "react-swipeable";
-import Box from "@/design-system/elements/box";
+import Box from "../../../elements/box";
 import {
   IconArrowLeft,
   IconArrowRight,
   IconDownloadData,
   IconLaunch,
-} from "@/design-system/icons";
-import { useKeypress } from "@/design-system/hooks/useKeypress";
+} from "../../../icons";
+import { useKeypress } from "../../../hooks/useKeypress";
 import { Control } from "../../Controls/Control";
 
 export default function Carousel({

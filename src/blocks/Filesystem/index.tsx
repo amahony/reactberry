@@ -2,13 +2,13 @@
 
 import React, { useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
-import { Box, Button, Text } from "@/design-system/elements"
+import { Box, Button, Text } from "../../elements"
 import {
   Icon24Folder,
   IconArrowSmRight,
   IconDocFolder,
   IconFile,
-} from "@/design-system/icons"
+} from "../../icons"
 
 export type FilesystemNode = {
   name: string

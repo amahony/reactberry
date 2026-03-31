@@ -5,7 +5,7 @@ This document provides comprehensive examples for building dashboard layouts usi
 ## Basic Dashboard
 
 ```jsx
-import { Box, Text, Button } from '@/design-system/elements';
+import { Box, Text, Button } from '@reactberry/system/elements';
 
 function BasicDashboard() {
   return (

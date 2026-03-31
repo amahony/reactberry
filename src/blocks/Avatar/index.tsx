@@ -1,7 +1,7 @@
 "use client";
-import Box, { BoxProps } from "@/design-system/elements/box";
-import Text from "@/design-system/elements/text";
-import { pickColor } from "@/design-system/utils/pickColor";
+import Box, { BoxProps } from "../../elements/box";
+import Text from "../../elements/text";
+import { pickColor } from "../../utils/pickColor";
 import Image from "next/image";
 
 interface AvatarProps extends BoxProps {

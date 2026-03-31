@@ -1,5 +1,5 @@
 "use client";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import { motion, useInView, useScroll } from "motion/react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";

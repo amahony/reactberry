@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Box, { BoxProps } from "@/design-system/elements/box";
+import Box, { BoxProps } from "../../elements/box";
 import Image from "next/image";
 
 interface ThumbnailProps extends Omit<BoxProps, "as"> {

@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Box } from "@/design-system/elements";
+import { Button, Box } from "../../elements";
 import { UploadContainerProps } from "./types";
-import { IconDotsAnim, IconUpload } from "@/design-system/icons";
+import { IconDotsAnim, IconUpload } from "../../icons";
 
 function UploadBtn({
   children,

@@ -2,7 +2,7 @@
 
 **Component:** `Button`  
 **Category:** Interactive  
-**Path:** `@/design-system/elements`
+**Path:** `@reactberry/system/elements`
 
 ---
 
@@ -18,7 +18,7 @@ Button is the **interactive action component** for user-triggered actions.
 ## 📥 Import
 
 ```tsx
-import { Button } from '@/design-system/elements';
+import { Button } from '@reactberry/system/elements';
 ```
 
 ---

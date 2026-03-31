@@ -1,7 +1,7 @@
 "use client";
 
 import Icon from "../Icon";
-import { Box, Button } from "@/design-system/elements";
+import { Box, Button } from "../../elements";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 

@@ -288,12 +288,12 @@ circle        = 50%    // Perfect circle
 
 ## Import Statement
 ```jsx
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 ```
 
 ## TypeScript Usage
 ```tsx
-import { BoxProps, TextProps, ButtonProps, FieldProps } from '@/design-system/elements';
+import { BoxProps, TextProps, ButtonProps, FieldProps } from '@reactberry/system/elements';
 
 interface ComponentProps extends BoxProps {
   title: string;

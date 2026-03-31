@@ -1,4 +1,4 @@
-import { Text } from "@/design-system/elements";
+import { Text } from "../../elements";
 
 type TagProps = {
   [key: string]: any;

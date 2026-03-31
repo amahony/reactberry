@@ -9,7 +9,7 @@ Box is a versatile layout component designed for containers and structural eleme
 ## Import
 
 ```jsx
-import { Box } from '@/design-system/elements';
+import { Box } from '@reactberry/system/elements';
 ```
 
 ## Basic Usage
@@ -354,7 +354,7 @@ import { Box } from '@/design-system/elements';
 ## TypeScript
 
 ```tsx
-import { BoxProps } from '@/design-system/elements';
+import { BoxProps } from '@reactberry/system/elements';
 
 interface MyComponentProps extends BoxProps {
   customProp?: string;

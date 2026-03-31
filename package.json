@@ -62,6 +62,7 @@
     "./elements": "./src/elements/index.ts",
     "./icons": "./src/icons/index.tsx",
     "./charts": "./src/charts/index.ts",
+    "./types": "./src/types.ts",
     "./package.json": "./package.json"
   },
   "keywords": [

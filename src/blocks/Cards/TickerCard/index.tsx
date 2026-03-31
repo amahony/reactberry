@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Box, Text } from "@/design-system/elements";
+import { Box, Text } from "../../../elements";
 import Image from "next/image";
 
 interface TickerCardProps {

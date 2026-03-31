@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { Box, Button, Text } from "@/design-system/elements";
+import { Box, Button, Text } from "../../../elements";
 import {
   IconBan,
   IconCCheck,
   IconOWarning,
   IconText,
   IconUserFocus,
-} from "@/design-system/icons";
+} from "../../../icons";
 import { FamilyDrawerView } from "../index";
 
 interface PhraseViewProps {

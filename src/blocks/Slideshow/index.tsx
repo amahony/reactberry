@@ -1,6 +1,6 @@
 "use client";
-import { Box } from "@/design-system/elements";
-import type { ImageType } from "@/design-system/types";
+import { Box } from "../../elements";
+import type { ImageType } from "../../types";
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
 

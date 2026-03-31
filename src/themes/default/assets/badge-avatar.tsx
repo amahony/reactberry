@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "motion/react"
-import Box, { BoxProps } from "@/design-system/elements/box"
+import Box, { BoxProps } from "../../../elements/box"
 
 type BadgeAvatarProps = BoxProps & {
   /** Flip the smile upside down to show a sad face. */

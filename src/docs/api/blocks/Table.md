@@ -14,7 +14,7 @@ import {
   TableCell,
   SortableTableHeader,
   TablePagination
-} from '@/design-system/blocks';
+} from '@reactberry/system/blocks';
 ```
 
 ## Components
@@ -364,7 +364,7 @@ import type {
   SortableTableHeaderProps,
   TablePaginationProps,
   SortDirection
-} from '@/design-system/blocks';
+} from '@reactberry/system/blocks';
 ```
 
 ## Performance Considerations

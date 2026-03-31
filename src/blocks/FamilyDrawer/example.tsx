@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Box, Text, Button } from "@/design-system/elements";
-import { Container } from "@/design-system/blocks";
+import { Box, Text, Button } from "../../elements";
+import { Container } from "..";
 import FamilyDrawer from "./index";
 
 /**

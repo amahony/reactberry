@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styled, { css, keyframes } from "styled-components";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 
 type MarqueeProps = {
   children: React.ReactNode;

@@ -1,10 +1,10 @@
 "use client";
-import Box from "@/design-system/elements/box";
-import Text from "@/design-system/elements/text";
-import { BoxProps } from "@/design-system/elements/box";
+import Box from "../../elements/box";
+import Text from "../../elements/text";
+import { BoxProps } from "../../elements/box";
 import React from "react";
-import { IconERemove } from "@/design-system/icons";
-import { Button } from "@/design-system/elements";
+import { IconERemove } from "../../icons";
+import { Button } from "../../elements";
 
 interface ToastProps extends BoxProps {
   message: React.ReactNode;

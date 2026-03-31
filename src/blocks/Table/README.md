@@ -38,7 +38,7 @@ import {
   SortableTableHeader,
   TablePagination,
   useTableControls
-} from '@/design-system/blocks';
+} from '@reactberry/system/blocks';
 ```
 
 ## Basic Usage

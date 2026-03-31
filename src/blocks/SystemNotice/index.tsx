@@ -1,9 +1,9 @@
 "use client";
-import Box, { BoxProps } from "@/design-system/elements/box";
-import Text from "@/design-system/elements/text";
+import Box, { BoxProps } from "../../elements/box";
+import Text from "../../elements/text";
 import Divider from "../Divider";
 import React from "react";
-import { IconDotsAnim } from "@/design-system/icons";
+import { IconDotsAnim } from "../../icons";
 
 interface SystemNoticeProps extends BoxProps {
   message: React.ReactNode;

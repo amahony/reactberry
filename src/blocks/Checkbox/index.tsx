@@ -2,9 +2,9 @@
 
 import React from "react"
 import { motion } from "motion/react"
-import { Box } from "@/design-system/elements"
-import Group from "@/design-system/blocks/Group"
-import { IconDotsAnim } from "@/design-system/icons"
+import { Box } from "../../elements"
+import Group from "../Group"
+import { IconDotsAnim } from "../../icons"
 
 export interface CheckboxProps {
   /** Whether the checkbox is checked */

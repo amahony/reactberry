@@ -1,5 +1,5 @@
 "use client";
-import Box, { BoxProps } from "@/design-system/elements/box";
+import Box, { BoxProps } from "../../elements/box";
 import React, { useRef, useEffect } from "react";
 
 type ScrollContainerProps = BoxProps & {

@@ -7,7 +7,7 @@ The Table component provides a flexible and accessible way to display tabular da
 The simplest table with default styling:
 
 ```jsx
-import { Table, TableHeader, TableBody, TableRow, TableCell } from '@/design-system/blocks';
+import { Table, TableHeader, TableBody, TableRow, TableCell } from '@reactberry/system/blocks';
 
 function BasicTable() {
   return (
@@ -112,7 +112,7 @@ function ComplexTable() {
 A table with interactive elements:
 
 ```jsx
-import { Button, Text } from '@/design-system/elements';
+import { Button, Text } from '@reactberry/system/elements';
 
 function InteractiveTable() {
   const [selectedRows, setSelectedRows] = useState([]);
@@ -281,7 +281,7 @@ function CustomStyledTable() {
 Including a footer for totals or summaries:
 
 ```jsx
-import { TableFooter } from '@/design-system/blocks';
+import { TableFooter } from '@reactberry/system/blocks';
 
 function TableWithFooter() {
   const items = [
@@ -344,7 +344,7 @@ import {
   TableCell,
   SortableTableHeader,
   TablePagination 
-} from '@/design-system/blocks';
+} from '@reactberry/system/blocks';
 import { useState, useMemo } from 'react';
 
 function AdvancedTable() {

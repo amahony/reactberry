@@ -1,7 +1,7 @@
 "use client";
 import { motion, MotionConfig, useInView } from "motion/react";
 import NumberFlow, { useCanAnimate, Format } from "@number-flow/react";
-import { Text } from "@/design-system/elements";
+import { Text } from "../../elements";
 import { useEffect, useState, useRef } from "react";
 
 const MotionNumberFlow = motion.create(NumberFlow);

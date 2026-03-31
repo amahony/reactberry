@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { pushThemeColor, popThemeColor } from "@/design-system/utils/overlayTheme";
-import { useStandaloneMode } from "@/design-system/hooks/useStandaloneMode";
+import { pushThemeColor, popThemeColor } from "../utils/overlayTheme";
+import { useStandaloneMode } from "./useStandaloneMode";
 
 /**
  * Shared behavioral hook for overlay components (Modal, Drawer, etc.).

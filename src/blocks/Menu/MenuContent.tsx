@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Box, Text } from "@/design-system/elements";
+import { Box, Text } from "../../elements";
 import { useMenu } from "./MenuContext";
 
 interface MenuItem {

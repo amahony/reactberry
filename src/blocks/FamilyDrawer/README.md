@@ -15,7 +15,7 @@ A sophisticated drawer component with multiple animated views, perfect for walle
 ### Basic Usage
 
 ```tsx
-import { FamilyDrawer } from "@/design-system/blocks";
+import { FamilyDrawer } from "@reactberry/system/blocks";
 
 function MyComponent() {
   return (
@@ -27,8 +27,8 @@ function MyComponent() {
 ### Advanced Usage
 
 ```tsx
-import { FamilyDrawer } from "@/design-system/blocks";
-import { Button, Text } from "@/design-system/elements";
+import { FamilyDrawer } from "@reactberry/system/blocks";
+import { Button, Text } from "@reactberry/system/elements";
 
 function MyComponent() {
   const handleViewChange = (view) => {

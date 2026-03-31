@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { animate, motion, useMotionValue } from "motion/react";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import useMeasure from "react-use-measure";
 
 interface TickerProps {

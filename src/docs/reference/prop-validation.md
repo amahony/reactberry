@@ -475,7 +475,7 @@ function MyComponent() {
 If using TypeScript, import types to validate props:
 
 ```tsx
-import type { BoxProps, TextProps, ButtonProps } from '@/design-system/types';
+import type { BoxProps, TextProps, ButtonProps } from '@reactberry/system/types';
 
 const myBoxProps: BoxProps = {
   display: 'flex',

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Text } from "@/design-system/elements";
+import { Box, Button, Text } from "../../../elements";
 import { AnimatePresence, HTMLMotionProps, motion } from "motion/react";
 import Image from "next/image";
 import { useState } from "react";

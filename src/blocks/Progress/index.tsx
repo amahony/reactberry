@@ -1,4 +1,4 @@
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import { motion } from "motion/react";
 import React from "react";
 

@@ -30,7 +30,7 @@ This is the primary reference document for AI assistants working with Reactberry
 
 ### 1. Import Components
 ```jsx
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 ```
 
 ### 2. Component Selection Rules

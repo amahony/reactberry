@@ -543,12 +543,12 @@ function ResponsiveModal({ isOpen, onClose, title, children }) {
 ### Responsive Hooks
 
 ```jsx
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useBreakpoint } from '@reactberry/system';
 
 function ResponsiveComponent() {
-  const isMobile = useMediaQuery('(max-width: 768px)');
-  const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
-  const isDesktop = useMediaQuery('(min-width: 1025px)');
+  const isTablet = useBreakpoint('md');
+  const isDesktop = useBreakpoint('lg');
+  const isMobile = !isTablet;
 
   return (
     <Box>

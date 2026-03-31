@@ -1,9 +1,9 @@
 import { motion } from "motion/react";
 
-import Box, { BoxProps } from "@/design-system/elements/box";
-import { IconArrowLeft, IconArrowRight } from "@/design-system/icons";
-// import { IconDownloadData } from "@/design-system/icons";
-// import { IconLaunch } from "@/design-system/icons";
+import Box, { BoxProps } from "../../elements/box";
+import { IconArrowLeft, IconArrowRight } from "../../icons";
+// import { IconDownloadData } from "../../icons";
+// import { IconLaunch } from "../../icons";
 
 interface ControlProps extends BoxProps {
   children: React.ReactNode;

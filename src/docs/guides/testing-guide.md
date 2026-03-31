@@ -57,7 +57,7 @@ Unit Tests (Many)
 import '@testing-library/jest-dom';
 import { toHaveNoViolations } from 'jest-axe';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '@/design-system/themes';
+import { theme } from '@reactberry/system/themes';
 
 // Extend Jest matchers
 expect.extend(toHaveNoViolations);
@@ -86,7 +86,7 @@ export const TestWrapper = ({ children }) => (
 // __tests__/Box.test.tsx
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import { Box } from '@/design-system/elements';
+import { Box } from '@reactberry/system/elements';
 import { TestWrapper } from '../setupTests';
 
 describe('Box Component', () => {
@@ -193,7 +193,7 @@ describe('Box Component', () => {
 ```javascript
 // __tests__/Text.test.tsx
 import { render, screen } from '@testing-library/react';
-import { Text } from '@/design-system/elements';
+import { Text } from '@reactberry/system/elements';
 import { TestWrapper } from '../setupTests';
 
 describe('Text Component', () => {
@@ -280,7 +280,7 @@ describe('Text Component', () => {
 // __tests__/Button.test.tsx
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button } from '@/design-system/elements';
+import { Button } from '@reactberry/system/elements';
 import { TestWrapper } from '../setupTests';
 
 describe('Button Component', () => {
@@ -384,7 +384,7 @@ describe('Button Component', () => {
 // __tests__/Field.test.tsx
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Field } from '@/design-system/elements';
+import { Field } from '@reactberry/system/elements';
 import { TestWrapper } from '../setupTests';
 
 describe('Field Component', () => {
@@ -487,7 +487,7 @@ describe('Field Component', () => {
 // __tests__/Modal.test.tsx
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Modal } from '@/design-system/blocks';
+import { Modal } from '@reactberry/system/blocks';
 import { TestWrapper } from '../setupTests';
 
 describe('Modal Component', () => {
@@ -642,8 +642,8 @@ describe('ContactForm Integration', () => {
 // __tests__/ThemeIntegration.test.tsx
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { Box, Text } from '@/design-system/elements';
-import { lightTheme, darkTheme } from '@/design-system/themes';
+import { Box, Text } from '@reactberry/system/elements';
+import { lightTheme, darkTheme } from '@reactberry/system/themes';
 
 describe('Theme Integration', () => {
   test('components use light theme correctly', () => {
@@ -695,7 +695,7 @@ describe('Theme Integration', () => {
 // __tests__/accessibility.test.tsx
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import { Box, Text, Button, Field } from '@/design-system/elements';
+import { Box, Text, Button, Field } from '@reactberry/system/elements';
 import { TestWrapper } from '../setupTests';
 
 describe('Accessibility Tests', () => {
@@ -842,7 +842,7 @@ jobs:
 ```javascript
 // __tests__/performance.test.tsx
 import { render } from '@testing-library/react';
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 import { TestWrapper } from '../setupTests';
 
 describe('Performance Tests', () => {
@@ -900,7 +900,7 @@ describe('Performance Tests', () => {
 // utils/test-utils.tsx
 import { render, RenderOptions } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '@/design-system/themes';
+import { theme } from '@reactberry/system/themes';
 
 // Custom render function with theme provider
 export const renderWithTheme = (

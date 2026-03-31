@@ -17,6 +17,7 @@ export { default as Switch } from "./Switch";
 export { default as Tooltip } from "./Tooltip";
 export { default as Popover } from "./Popover";
 export { default as MorphingPopover } from "./MorphingPopover";
+export { default as Modal, useModalClose, pushThemeColor, popThemeColor } from "./Modal";
 export { Menu, MenuItem, MenuContent } from "./Menu";
 export { default as Accordion } from "./Accordion";
 export { Drawer, DrawerButton } from "./Drawer";

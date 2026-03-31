@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box, Text } from "@/design-system/elements";
+import { Box, Text } from "../../elements";
 import StepProgress from "./StepProgress";
 import { BaseStepProps } from "./types";
 import { useStepNavigation } from "./hooks";

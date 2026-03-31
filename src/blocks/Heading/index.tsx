@@ -1,5 +1,5 @@
 "use client";
-import Text, { TextProps } from "@/design-system/elements/text";
+import Text, { TextProps } from "../../elements/text";
 import { ThemeContext } from "styled-components";
 import React, { useContext } from "react";
 

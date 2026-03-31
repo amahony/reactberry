@@ -5,7 +5,7 @@
   "lastUpdated": "2025-01-09",
   "elements": {
     "Box": {
-      "path": "@/design-system/elements",
+      "path": "@reactberry/system/elements",
       "category": "layout",
       "description": "Layout and container component - use for non-text content only",
       "extends": null,
@@ -94,7 +94,7 @@
       "relatedComponents": ["Text", "Container", "Group", "Collection"]
     },
     "Text": {
-      "path": "@/design-system/elements",
+      "path": "@reactberry/system/elements",
       "category": "typography",
       "description": "Typography component for all text content",
       "extends": "Box",
@@ -166,7 +166,7 @@
       "relatedComponents": ["Box", "Button", "Heading"]
     },
     "Button": {
-      "path": "@/design-system/elements",
+      "path": "@reactberry/system/elements",
       "category": "interactive",
       "description": "Interactive button component for user actions",
       "extends": "Text",
@@ -225,7 +225,7 @@
       "relatedComponents": ["Text", "Field", "Controls"]
     },
     "Field": {
-      "path": "@/design-system/elements",
+      "path": "@reactberry/system/elements",
       "category": "form",
       "description": "Form input component for user data entry",
       "extends": "Text",
@@ -308,28 +308,28 @@
   },
   "blocks": {
     "Container": {
-      "path": "@/design-system/blocks",
+      "path": "@reactberry/system/blocks",
       "category": "layout",
       "description": "Page container with max-width constraints",
       "dependencies": ["Box"],
       "commonUse": "Page wrappers, content containers"
     },
     "Heading": {
-      "path": "@/design-system/blocks",
+      "path": "@reactberry/system/blocks",
       "category": "typography",
       "description": "Styled heading component",
       "dependencies": ["Text"],
       "commonUse": "Section headings, page titles"
     },
     "Avatar": {
-      "path": "@/design-system/blocks",
+      "path": "@reactberry/system/blocks",
       "category": "display",
       "description": "User avatar with image or initials",
       "dependencies": ["Box", "Text"],
       "commonUse": "User profiles, comment threads, team members"
     },
     "Menu": {
-      "path": "@/design-system/blocks",
+      "path": "@reactberry/system/blocks",
       "category": "interactive",
       "description": "Dropdown menu component",
       "dependencies": ["Box", "Text", "Button"],
@@ -337,21 +337,21 @@
       "commonUse": "Action menus, navigation dropdowns"
     },
     "Tooltip": {
-      "path": "@/design-system/blocks",
+      "path": "@reactberry/system/blocks",
       "category": "overlay",
       "description": "Contextual help tooltips",
       "dependencies": ["Box", "Text"],
       "commonUse": "Hover hints, help text"
     },
     "Modal": {
-      "path": "@/design-system/blocks",
+      "path": "@reactberry/system/blocks",
       "category": "overlay",
       "description": "Dialog and modal overlays",
       "dependencies": ["Box", "Text", "Button", "Underlay"],
       "commonUse": "Confirmations, forms, detail views"
     },
     "Table": {
-      "path": "@/design-system/blocks",
+      "path": "@reactberry/system/blocks",
       "category": "data",
       "description": "Data table with sorting and pagination",
       "dependencies": ["Box", "Text"],
@@ -359,7 +359,7 @@
       "commonUse": "Data grids, lists, records"
     },
     "FieldSet": {
-      "path": "@/design-system/blocks",
+      "path": "@reactberry/system/blocks",
       "category": "form",
       "description": "Grouped form fields with legend",
       "dependencies": ["Box", "Field", "Text"],

@@ -1,4 +1,4 @@
-import Box from "@/design-system/elements/box";
+import Box from "../../elements/box";
 
 export default function Divider(props: any) {
   return (

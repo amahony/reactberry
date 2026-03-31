@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Text } from "@/design-system/elements";
+import { Box, Text } from "../../elements";
 import { AnimatePresence, motion } from "motion/react";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";

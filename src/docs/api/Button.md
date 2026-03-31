@@ -9,7 +9,7 @@ Button is designed for all interactive actions and extends the Text component wi
 ## Import
 
 ```jsx
-import { Button } from '@/design-system/elements';
+import { Button } from '@reactberry/system/elements';
 ```
 
 ## Basic Usage
@@ -475,7 +475,7 @@ The Button component automatically applies these attributes:
 ## TypeScript
 
 ```tsx
-import { ButtonProps } from '@/design-system/elements';
+import { ButtonProps } from '@reactberry/system/elements';
 
 interface CustomButtonProps extends ButtonProps {
   loading?: boolean;

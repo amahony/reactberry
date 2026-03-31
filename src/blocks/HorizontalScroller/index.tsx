@@ -1,5 +1,5 @@
 "use client";
-import { Box, Text } from "@/design-system/elements";
+import { Box, Text } from "../../elements";
 import {
   animate,
   motion,

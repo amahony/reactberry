@@ -1,7 +1,7 @@
 // carousel.tsx
 "use client";
 
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import {
   AnimatePresence,
   MotionConfig,
@@ -10,7 +10,7 @@ import {
   useSpring,
 } from "motion/react";
 import { useEffect, useState } from "react";
-import type { ImageType } from "@/design-system/types";
+import type { ImageType } from "../../types";
 import { ControlLeft, ControlRight } from "../Controls/Control";
 
 const COLLAPSED_ASPECT_RATIO = 0.5;

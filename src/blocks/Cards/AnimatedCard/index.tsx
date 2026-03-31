@@ -7,8 +7,8 @@ import {
   useMotionValue,
   useSpring,
 } from "motion/react";
-import Box, { BoxProps } from "@/design-system/elements/box";
-import { useReducedMotion } from "@/design-system/hooks/useReducedMotion";
+import Box, { BoxProps } from "../../../elements/box";
+import { useReducedMotion } from "../../../hooks/useReducedMotion";
 
 interface AnimatedCardProps extends Omit<BoxProps, "ref" | "children"> {
   children: React.ReactNode;

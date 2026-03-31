@@ -1,7 +1,7 @@
 "use client";
 
-import { designSystemIcons, type DesignSystemIconName } from "@/design-system/icons";
-import { Box } from "@/design-system/elements";
+import { designSystemIcons, type DesignSystemIconName } from "../../icons";
+import { Box } from "../../elements";
 import { useMemo } from "react";
 
 interface IconComponentProps {

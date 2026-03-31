@@ -3,8 +3,8 @@
 import { Children, type ReactNode, useMemo, useRef } from "react";
 import { motion, type MotionValue, useScroll, useTransform } from "motion/react";
 
-import { Box, type BoxProps } from "@/design-system/elements";
-import { useReducedMotion } from "@/design-system/hooks/useReducedMotion";
+import { Box, type BoxProps } from "../../elements";
+import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 export interface StickySectionStackProps extends BoxProps {
   children: ReactNode;

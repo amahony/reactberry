@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
-import Box from "@/design-system/elements/box";
+import Box from "../../elements/box";
 import { useState } from "react";
 import Modal from "./Modal";
 import Carousel from "./Carousel";
 import Collection from "../Collection";
 import { motion } from "motion/react";
-import type { ImageType } from "@/design-system/types";
+import type { ImageType } from "../../types";
 
 type GalleryProps = {
   images: ImageType[];

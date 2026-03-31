@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 
 interface BackdropProps {
   onClick?: () => void;

@@ -1,10 +1,10 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useDragControls } from "motion/react";
-import { Box, Button, Text } from "@/design-system/elements";
-import { IconMove3 } from "@/design-system/icons";
-// import { IconCInfo } from "@/design-system/icons";
-import { useLocalStorage } from "@/design-system/hooks/use-local-storage";
+import { Box, Button, Text } from "../../elements";
+import { IconMove3 } from "../../icons";
+// import { IconCInfo } from "../../icons";
+import { useLocalStorage } from "../../hooks/use-local-storage";
 
 // PanelHeader Component
 interface PanelHeaderProps {

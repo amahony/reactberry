@@ -7,10 +7,10 @@ import {
   useMotionValue,
   useSpring,
 } from "motion/react";
-import Box, { BoxProps } from "@/design-system/elements/box";
+import Box, { BoxProps } from "../../../elements/box";
 import styled from "styled-components";
-import { useReducedMotion } from "@/design-system/hooks/useReducedMotion";
-import { useTouchDevice } from "@/design-system/hooks/useTouchDevice";
+import { useReducedMotion } from "../../../hooks/useReducedMotion";
+import { useTouchDevice } from "../../../hooks/useTouchDevice";
 
 interface FluorescentCardProps extends Omit<BoxProps, "ref" | "children"> {
   children: React.ReactNode;

@@ -167,7 +167,7 @@ Brief description and use cases
 
 ## Import
 ```jsx
-import { ComponentName } from '@/design-system/[path]';
+import { ComponentName } from '@reactberry/system/[path]';
 ```
 
 ## Basic Usage

@@ -1,6 +1,6 @@
 "use client"
-import { Box, Text } from "@/design-system/elements"
-import { IconDotsAnim } from "@/design-system/icons"
+import { Box, Text } from "../../elements"
+import { IconDotsAnim } from "../../icons"
 
 type TextBreakProps = {
   message?: string

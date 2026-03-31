@@ -14,7 +14,7 @@ export async function Await<T>({
 
 // Example usage
 // // src/app/stocks/[stockId]/page.tsx
-// import { Await } from "@/design-system/blocks";
+// import { Await } from "..";
 
 // export default async function Stock({
 //   params,

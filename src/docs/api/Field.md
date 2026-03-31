@@ -9,7 +9,7 @@ Field is designed for all form inputs and extends the Text component with input-
 ## Import
 
 ```jsx
-import { Field } from '@/design-system/elements';
+import { Field } from '@reactberry/system/elements';
 ```
 
 ## Basic Usage
@@ -676,7 +676,7 @@ function FocusableField() {
 ## TypeScript
 
 ```tsx
-import { FieldProps } from '@/design-system/elements';
+import { FieldProps } from '@reactberry/system/elements';
 
 interface CustomFieldProps extends FieldProps {
   label?: string;

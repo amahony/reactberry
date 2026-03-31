@@ -6,7 +6,7 @@ import {
   useMotionValue,
   useSpring,
 } from "motion/react";
-import Box, { BoxProps } from "@/design-system/elements/box";
+import Box, { BoxProps } from "../../elements/box";
 
 interface SpotlightProps extends Omit<BoxProps, "children"> {
   children: React.ReactNode;

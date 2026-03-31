@@ -9,7 +9,7 @@ Breadcrumbs provide users with a clear path of their current location within the
 ## Basic Breadcrumb
 
 ```jsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 function BasicBreadcrumb({ items }) {
   return (
@@ -79,7 +79,7 @@ const breadcrumbItems = [
 ## Icon-Enhanced Breadcrumb
 
 ```jsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 function IconBreadcrumb({ items }) {
   return (
@@ -164,7 +164,7 @@ const iconBreadcrumbItems = [
 ## Truncated Breadcrumb
 
 ```jsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 function TruncatedBreadcrumb({ items, maxItems = 4 }) {
   const shouldTruncate = items.length > maxItems;
@@ -269,7 +269,7 @@ const longBreadcrumbItems = [
 ## Responsive Breadcrumb
 
 ```jsx
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 function ResponsiveBreadcrumb({ items }) {
   return (
@@ -354,7 +354,7 @@ function ResponsiveBreadcrumb({ items }) {
 
 ```jsx
 import { useState } from 'react';
-import { Box, Text } from '@/design-system/elements';
+import { Box, Text } from '@reactberry/system/elements';
 
 function DropdownBreadcrumb({ items }) {
   const [showDropdown, setShowDropdown] = useState(false);

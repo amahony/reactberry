@@ -1,5 +1,5 @@
 "use client";
-import { Text } from "@/design-system/elements";
+import { Text } from "../../elements";
 import { motion, useAnimation } from "motion/react";
 import { useEffect } from "react";
 

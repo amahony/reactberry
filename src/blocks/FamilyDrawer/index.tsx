@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Box, Button, Text } from "@/design-system/elements";
-import { Drawer, DrawerButton } from "@/design-system/blocks/Drawer";
+import { Box, Button, Text } from "../../elements";
+import { Drawer, DrawerButton } from "../Drawer";
 import { AnimatePresence, motion } from "motion/react";
-import { IconGear } from "@/design-system/icons";
+import { IconGear } from "../../icons";
 import useMeasure from "react-use-measure";
 
 import { DefaultView } from "./views/DefaultView";

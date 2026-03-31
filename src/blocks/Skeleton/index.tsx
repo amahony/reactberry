@@ -1,8 +1,8 @@
 "use client";
-import { Text } from "@/design-system/elements";
+import { Text } from "../../elements";
 import { motion } from "motion/react";
-import Collection from "@/design-system/blocks/Collection";
-import Placeholder from "@/design-system/blocks/Placeholder";
+import Collection from "../Collection";
+import Placeholder from "../Placeholder";
 
 interface SkeletonProps {
   count?: number; // Number of placeholder items to show

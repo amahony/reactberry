@@ -1,6 +1,6 @@
 "use client"
 import { motion, AnimatePresence } from "motion/react"
-import Box, { BoxProps } from "@/design-system/elements/box"
+import Box, { BoxProps } from "../../elements/box"
 
 import Image from "next/image"
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { Box } from "@/design-system/elements";
+import { Box } from "../../elements";
 import { Pagination } from "./Pagination";
 
 interface PaginationListProps {
