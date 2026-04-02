@@ -19,7 +19,7 @@ export default function GuidesPage() {
         </Text>
       </Box>
 
-      {intro ? <MdxContent code={intro.body} contentKind="guides" sourcePath={intro.sourcePath} /> : null}
+      {intro ? <MdxContent code={intro.body} contentKind="guides" sourcePath={intro.sourcePath} suppressFirstH1 /> : null}
 
       {guides.length ? (
         <Box display="grid" gridTemplateColumns={["1fr", "1fr 1fr"]} gap="m">

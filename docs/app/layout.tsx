@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import "highlight.js/styles/github.css";
-import { DesignSystemProvider } from "@reactberry/system/providers";
+import { DocsThemeProvider } from "@/components/docs-theme-provider";
 
 const mainFont = Instrument_Sans({
   subsets: ["latin"],
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={mainFont.variable}>
-        <DesignSystemProvider>{children}</DesignSystemProvider>
+        <DocsThemeProvider>{children}</DocsThemeProvider>
       </body>
     </html>
   );

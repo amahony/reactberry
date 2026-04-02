@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Text } from "../../elements";
 import { Switch as HeadlessSwitch } from "@headlessui/react";
 import { motion } from "motion/react";

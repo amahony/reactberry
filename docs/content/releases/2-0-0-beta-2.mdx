@@ -1,0 +1,31 @@
+---
+title: Standalone package beta
+description: The first standalone Reactberry package release, including docs, exports, and reusable provider setup.
+version: 2.0.0-beta.2
+date: April 1, 2026
+featured: true
+breaking: false
+published: true
+order: 0
+---
+
+## Highlights
+
+- Extracted Reactberry into its own standalone package repository.
+- Added package exports for `elements`, `blocks`, `providers`, `themes`, `icons`, and `charts`.
+- Added a docs site that renders using Reactberry primitives.
+- Added MDX-powered content collections for documentation, guides, and releases.
+
+## What shipped
+
+- A reusable `DesignSystemProvider` for Next.js apps.
+- A dedicated docs navigation system for docs, guides, and releases.
+- Initial package metadata for local package usage and npm preparation.
+
+## Upgrade notes
+
+Install the package into a Next.js app, wrap your app with `DesignSystemProvider`, and import components from `@reactberry/system`.
+
+## Next steps
+
+Future releases can add more refined build output, publishing ergonomics, and additional component documentation.

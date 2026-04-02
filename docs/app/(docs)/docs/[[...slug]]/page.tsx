@@ -51,7 +51,7 @@ export default async function DocumentationPage({ params }: DocsPageProps) {
             </Text>
           ) : null}
         </Box>
-        <MdxContent code={page.body} contentKind="docs" sourcePath={page.sourcePath} />
+        <MdxContent code={page.body} contentKind="docs" sourcePath={page.sourcePath} suppressFirstH1 />
       </Box>
       <Box as="aside" display={["none", "none", "block"]} position="sticky" top="88px">
         <Toc toc={toc} />

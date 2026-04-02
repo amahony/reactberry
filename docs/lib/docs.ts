@@ -1,4 +1,4 @@
-import { allDocs, allGuides } from "content-collections";
+import { allDocs, allGuides, allReleases } from "content-collections";
 
 import { getDocsSectionMeta } from "@/config/docs";
 
@@ -6,7 +6,7 @@ type CollectionValue<T> = T[] | (() => T[]);
 
 type BasePage = {
   _meta: { path: string; directory: string; fileName: string };
-  kind: "docs" | "guides";
+  kind: "docs" | "guides" | "releases";
   title: string;
   navTitle?: string;
   description?: string;
@@ -31,6 +31,14 @@ export type GuidePage = BasePage & {
   date?: string;
 };
 
+export type ReleasePage = BasePage & {
+  kind: "releases";
+  featured: boolean;
+  breaking: boolean;
+  version: string;
+  date?: string;
+};
+
 const resolveCollection = <T,>(value: CollectionValue<T>): T[] =>
   typeof value === "function" ? value() : value;
 
@@ -47,6 +55,7 @@ const toTime = (value?: string) => {
 
 export const toDocsHref = (path: string) => (path === "index" ? "/docs" : `/docs/${path}`);
 export const toGuideHref = (path: string) => (path === "index" ? "/guides" : `/guides/${path}`);
+export const toReleaseHref = (path: string) => (path === "index" ? "/releases" : `/releases/${path}`);
 
 export const getDocsPages = (): DocsPage[] =>
   resolveCollection(allDocs as CollectionValue<DocsPage>)
@@ -74,6 +83,24 @@ export const getGuides = (): GuidePage[] =>
     });
 
 export const getGuide = (path: string) => getGuides().find((page) => page.path === path || page.sourcePath === path);
+
+export const getReleases = (): ReleasePage[] =>
+  resolveCollection(allReleases as CollectionValue<ReleasePage>)
+    .filter((page) => page.published)
+    .slice()
+    .sort((left, right) => {
+      if (left.featured !== right.featured) {
+        return left.featured ? -1 : 1;
+      }
+
+      const dateDelta = toTime(right.date) - toTime(left.date);
+      return dateDelta || left.order - right.order || compareText(left.version, right.version);
+    });
+
+export const getRelease = (path: string) =>
+  getReleases().find((page) => page.path === path || page.sourcePath === path);
+
+export const getLatestRelease = () => getReleases().find((page) => page.path !== "index");
 
 export const getDocsSections = () => {
   const grouped = new Map<string, DocsPage[]>();

@@ -12,8 +12,9 @@ import { slugifyHeading } from "@/lib/toc";
 
 type MdxContentProps = {
   code: string;
-  contentKind: "docs" | "guides";
+  contentKind: "docs" | "guides" | "releases";
   sourcePath: string;
+  suppressFirstH1?: boolean;
 };
 
 const isExternalHref = (href: string) => /^(https?:|mailto:|tel:)/iu.test(href);
@@ -36,7 +37,7 @@ const flattenText = (value: React.ReactNode): string =>
 const normalizeContentPath = (path: string) =>
   path.replace(/^\/content\//u, "").replace(/\.(md|mdx)$/iu, "").replace(/\/index$/iu, "").replace(/\/$/u, "");
 
-function resolveHref(href: string, contentKind: "docs" | "guides", sourcePath: string) {
+function resolveHref(href: string, contentKind: "docs" | "guides" | "releases", sourcePath: string) {
   if (!href || href.startsWith("#") || href.startsWith("/")) {
     return href;
   }
@@ -59,6 +60,11 @@ function resolveHref(href: string, contentKind: "docs" | "guides", sourcePath: s
     return `${target ? `/docs/${target}` : "/docs"}${resolved.hash}`;
   }
 
+  if (normalizedPath === "releases" || normalizedPath.startsWith("releases/")) {
+    const target = normalizedPath.replace(/^releases\/?/u, "");
+    return `${target ? `/releases/${target}` : "/releases"}${resolved.hash}`;
+  }
+
   return `${normalizedPath ? `/docs/${normalizedPath}` : "/docs"}${resolved.hash}`;
 }
 
@@ -70,7 +76,7 @@ function MdxLink({
 }: {
   href?: string;
   children: React.ReactNode;
-  contentKind: "docs" | "guides";
+  contentKind: "docs" | "guides" | "releases";
   sourcePath: string;
 }) {
 
@@ -98,7 +104,7 @@ function MdxButton({
 }: {
   href?: string;
   children: React.ReactNode;
-  contentKind: "docs" | "guides";
+  contentKind: "docs" | "guides" | "releases";
   sourcePath: string;
   [key: string]: any;
 }) {
@@ -146,8 +152,9 @@ function MdxPre({ children, ...props }: { children: React.ReactNode; [key: strin
   return <Box as="pre" p="m" skin="surface" shape="rounded" overflowX="auto" m="0" {...props}>{children}</Box>;
 }
 
-export default function MdxContent({ code, contentKind, sourcePath }: MdxContentProps) {
+export default function MdxContent({ code, contentKind, sourcePath, suppressFirstH1 = false }: MdxContentProps) {
   const Component = useMDXComponent(code);
+  let headingIndex = 0;
   const components = {
     CodeBlock,
     CarouselLiveExamples,
@@ -155,11 +162,19 @@ export default function MdxContent({ code, contentKind, sourcePath }: MdxContent
     Box: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => <Box {...props}>{children}</Box>,
     Text: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => <Text {...props}>{children}</Text>,
     Button: (props: any) => <MdxButton contentKind={contentKind} sourcePath={sourcePath} {...props} />,
-    h1: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => (
-      <Text as="h1" id={props.id ?? slugifyHeading(flattenText(children))} fontSize="xxxl" fontWeight="700" m="0" {...props}>
-        {children}
-      </Text>
-    ),
+    h1: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => {
+      headingIndex += 1;
+
+      if (suppressFirstH1 && headingIndex === 1) {
+        return null;
+      }
+
+      return (
+        <Text as="h1" id={props.id ?? slugifyHeading(flattenText(children))} fontSize="xxxl" fontWeight="700" m="0" {...props}>
+          {children}
+        </Text>
+      );
+    },
     h2: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => (
       <Text as="h2" id={props.id ?? slugifyHeading(flattenText(children))} fontSize="xxl" fontWeight="700" mt="l" mb="s" {...props}>
         {children}

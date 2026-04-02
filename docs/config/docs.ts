@@ -16,6 +16,8 @@ export const docsConfig = {
   mainNav: [
     { title: "Documentation", href: "/docs" },
     { title: "Guides", href: "/guides" },
+    { title: "Releases", href: "/releases" },
+    { title: "Styleguide", href: "/styleguide" },
   ] satisfies MainNavItem[],
   sections: {
     overview: { title: "Overview", order: 0 },

@@ -40,7 +40,7 @@ const toLookupPath = (path: string) => {
   return segments.join("/") || "index";
 };
 
-const toHref = (base: "docs" | "guides", path: string) => {
+const toHref = (base: "docs" | "guides" | "releases", path: string) => {
   const segments = toRouteSegments(path);
   return segments.length ? `/${base}/${segments.join("/")}` : `/${base}`;
 };
@@ -63,6 +63,15 @@ const guidePageSchema = basePageSchema
   .extend({
     date: z.string().optional(),
     featured: z.boolean().optional(),
+  })
+  .passthrough();
+
+const releasePageSchema = basePageSchema
+  .extend({
+    version: z.string().optional(),
+    date: z.string().optional(),
+    featured: z.boolean().optional(),
+    breaking: z.boolean().optional(),
   })
   .passthrough();
 
@@ -124,6 +133,37 @@ const guides = defineCollection({
   },
 });
 
+const releases = defineCollection({
+  name: "releases",
+  directory: "./content/releases",
+  include: includePattern,
+  schema: releasePageSchema,
+  transform: async (document, context) => {
+    const body = await compileMDX(context, document);
+    const routeSegments = toRouteSegments(document._meta.path);
+
+    return {
+      ...document,
+      kind: "releases",
+      body,
+      rawContent: Buffer.from(document.content, "utf8").toString("base64"),
+      sourcePath: document._meta.path,
+      path: toLookupPath(document._meta.path),
+      href: toHref("releases", document._meta.path),
+      slug: routeSegments,
+      navTitle: document.navTitle,
+      published: document.published ?? true,
+      order: document.order ?? 0,
+      featured: document.featured ?? false,
+      breaking: document.breaking ?? false,
+      version: document.version || document.title || humanize(document._meta.fileName),
+      date: document.date,
+      title: document.title || extractTitle(document.content, humanize(document._meta.fileName)),
+      description: document.description || extractDescription(document.content),
+    };
+  },
+});
+
 export default defineConfig({
-  content: [docs, guides],
+  content: [docs, guides, releases],
 });
