@@ -7,7 +7,7 @@ const colorsConfig = {
   mode: "oklab", // TBD add more modes as examples from chroma-js
   brandColor: chroma.hsl(196, 0.6, 0.5).hex(), // dominant UI color
   accentColor: chroma.hsl(256, 0.9, 0.66).hex(), // secondary UI color
-  systemColor: chroma.hsl(228, 0.08, 0.88).hex(), // base UI color
+  systemColor: chroma.hsl(228, 0.4, 0.9).hex(), // base UI color
   baseSaturation: 0.25, // 0 - 1, controls overall system color saturation
   lightPaletteLightness: 0.08, // 0 - 1, controls light point lightness
   darkPaletteLightness: 0.96, // 0 - 1, controls dark point lightness

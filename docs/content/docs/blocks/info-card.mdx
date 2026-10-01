@@ -1,0 +1,88 @@
+---
+title: InfoCard
+description: Render an image card with a title and description, plus an optional toggle that reveals tinted detail text.
+navTitle: InfoCard
+order: 1
+---
+
+`InfoCard` is a client component that renders a 4:3 card with a blurred header, a cover image or custom children, and an optional round toggle button that opens a full-card detail overlay. It depends on `motion/react` and `next/image`.
+
+## Import
+
+```tsx
+import { InfoCard } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <Box width="18rem">
+    <InfoCard
+      title="Lisbon"
+      description="Hills, trams and tiled facades."
+      detailContent="Visit in spring for mild weather and fewer crowds."
+      tintColor="#0b5c7a"
+      imageSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop stop-color='%230b5c7a'/%3E%3Cstop offset='1' stop-color='%2399d5c9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3C/svg%3E"
+      imageAlt="Teal gradient"
+    />
+  </Box>
+  <Box width="18rem">
+    <InfoCard title="Live view" description="Custom children replace the image.">
+      <Box position="absolute" top="0" left="0" width="100%" height="100%" bg="neutral" />
+    </InfoCard>
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { InfoCard } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+export default function Destinations() {
+  return (
+    <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap="m">
+      <InfoCard
+        title="Lisbon"
+        description="Hills, trams and tiled facades."
+        detailContent="Visit in spring for mild weather and fewer crowds."
+        imageSrc="/images/lisbon.jpg"
+        tintColor="#0b5c7a"
+      />
+      <InfoCard title="Kyoto" description="Temples and gardens." imageSrc="/images/kyoto.jpg" />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `title` (`string`, required) — heading rendered as an `h2`; also the fallback image `alt`.
+- `description` (`string`, default `""`) — text below the title.
+- `detailContent` (`string`, default `""`) — text shown in the detail overlay. The toggle button only renders when this is non-empty.
+- `tintColor` (`string`, default `"#000000"`) — background of the detail overlay and the button icon stroke while open.
+- `imageSrc` (`string`) — cover image source passed to `next/image`.
+- `imageAlt` (`string`) — image alt text; defaults to `title`.
+- `imageSizes` (`string`, default `"100vh"`) — `sizes` attribute for the image.
+- `children` (`React.ReactNode`) — replaces the image when provided.
+
+All remaining props are typed as `HTMLMotionProps<"div">` and spread onto the outer Motion `Box`. Box style props such as `p` or `width` are not part of this type.
+
+## Examples
+
+Custom media instead of an image:
+
+```tsx
+<InfoCard title="Live view" description="Updated every minute.">
+  <Box position="absolute" top="0" left="0" width="100%" height="100%" bg="neutral" />
+</InfoCard>
+```
+
+## Notes
+
+- The card defaults to `aspect="4/3"`, `shape="rounded"`, `overflow="hidden"` and a column flex layout.
+- The header has a fixed `backdrop-filter: blur(8px)` with a fading mask, and sits above the media at `zIndex` 2.
+- The toggle switches the card between `main` and `detail` animation states. The button rotates 45 degrees and inverts its colours; the overlay fades in and the text slides down after a 0.3 s delay.
+- Detail text is rendered in white at `fontSize="large"`, so choose a `tintColor` with sufficient contrast.
+- There is no reduced-motion handling.
+- Remote image URLs must be allowed in your Next.js `images` configuration.

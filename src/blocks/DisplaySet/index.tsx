@@ -3,12 +3,16 @@ export default function DisplaySet({
   label,
   content,
   flow = "row",
+  placeholder = "not set",
+  customFlow,
   contentProps = {},
   ...props
 }: {
   label?: string | React.ReactNode;
   content: any;
   flow?: "row" | "column";
+  customFlow?: string;
+  placeholder?: string | React.ReactNode;
   contentProps?: Record<string, any>;
   [key: string]: any;
 }) {
@@ -17,7 +21,7 @@ export default function DisplaySet({
       as="div"
       display={"grid"}
       gap="xxsmall"
-      gridTemplateColumns={flow === "column" ? "1fr" : "1fr 1fr"}
+      gridTemplateColumns={flow === "column" ? "1fr" : customFlow || "1fr 1fr"}
       color="secondary"
       fontWeight={700}
       {...props}
@@ -35,7 +39,7 @@ export default function DisplaySet({
         }
         {...contentProps}
       >
-        {content !== null && content !== undefined ? content : "not set"}
+        {content !== null && content !== undefined ? content : placeholder}
       </Text>
     </Text>
   );

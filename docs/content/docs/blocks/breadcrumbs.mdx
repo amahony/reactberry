@@ -1,0 +1,58 @@
+---
+title: Breadcrumbs
+description: Render a Linear-style breadcrumb trail with links, dropdown menus, and Home/Back controls.
+navTitle: Breadcrumbs
+order: 1
+---
+
+`Breadcrumbs` is a client-side, data-driven breadcrumb trail built for the Next.js App Router.
+
+## Import
+
+```tsx
+import { Breadcrumbs, pathToBreadcrumbItems } from "@reactberry/system/blocks";
+```
+
+## Live examples
+
+<BreadcrumbsLiveExamples />
+
+## Basic usage
+
+```tsx
+<Breadcrumbs
+  showHome
+  items={[
+    { label: "Projects", href: "/projects" },
+    { label: "Website", current: true },
+  ]}
+  actions={<Button variant="ghost">Share</Button>}
+/>
+```
+
+## Useful props
+
+- `items` — ordered `BreadcrumbItem[]`, root first
+- `separator` — node rendered between crumbs (defaults to a right chevron)
+- `showHome` / `homeHref` — leading Home button
+- `showBack` / `onBack` — leading Back button (defaults to `router.back()`)
+- `actions` — right-aligned actions
+- `dataTest` — prefix for `data-test` hooks
+
+Extra props spread onto the container `Group`.
+
+## BreadcrumbItem
+
+- `label` — crumb text
+- `href` — renders a Next.js `Link` unless the crumb is `current`
+- `onClick` — action used when there is no `href`
+- `icon` — leading visual
+- `render` — fully custom crumb content
+- `menu` — dropdown content, or a function receiving `{ close }`
+- `current` — current-page styling and `aria-current`
+- `maxWidth` — label truncation width (default `"12rem"`)
+
+## Helpers
+
+- `pathToBreadcrumbItems(pathname, { labels, exclude, markLastCurrent })` — build crumbs from a pathname
+- `humanizeSegment(segment)` — `"project-templates"` → `"Project Templates"`

@@ -1,0 +1,112 @@
+---
+title: Draggable
+description: Float a draggable, translucent panel over the page that stays within its bounds and remembers its position.
+navTitle: Draggable
+order: 1
+---
+
+The Draggable module exports three client components: `DraggableContainer`, `DraggablePanel`, and `PanelHeader`. The panel is dragged by its header using `motion` drag controls, is clamped inside a parent element, and persists its position in `localStorage`. There is no `Draggable` export. Components should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { DraggableContainer, DraggablePanel, PanelHeader } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+Drag the panel by its header. It stays inside the dashed area.
+
+<Preview p="0" alignItems="stretch">
+  <State initial={{ current: null }}>
+    {(areaRef) => (
+      <Box ref={areaRef} position="relative" width="100%" height="20rem" border="1px dashed" borderColor="base">
+        <DraggablePanel parentRef={areaRef} label="Layers preview" initial={{ width: "14rem", x: 0, y: 0 }} zIndex={1}>
+          <Box p="s" display="flex" flexDirection="column" gap="xs">
+            <Text fontSize="s">Header layer</Text>
+            <Text fontSize="s">Hero image layer</Text>
+            <Text fontSize="s">Footer layer</Text>
+          </Box>
+        </DraggablePanel>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { DraggableContainer } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function Inspector() {
+  return (
+    <DraggableContainer>
+      <Box p="m" overflow="auto">
+        <Text>Selection details</Text>
+      </Box>
+    </DraggableContainer>
+  );
+}
+```
+
+## Props
+
+`DraggableContainer`:
+
+- `children` (`React.ReactNode`, required) — panel content.
+
+`DraggableContainer` accepts no other props. It renders a fixed, full-viewport (`100vw` by `100vh`) layer with `zIndex` 9999 and `pointerEvents: "none"`, and places a `DraggablePanel` with default props inside it.
+
+## Related exports
+
+`DraggablePanel` — the draggable panel itself, for use inside a custom bounding element:
+
+- `children` (`React.ReactNode`, required) — content rendered below the header.
+- `parentRef` (`React.RefObject<HTMLDivElement>`, required) — element whose bounds constrain dragging.
+- `label` (`string`, default `"Panel"`) — header text; also used to build the storage key.
+- `safeZone` (`{ top?: number; left?: number; bottom?: number; right?: number }`, default `16` on every side) — inset in pixels kept between the panel and the parent's edges.
+- `initial` (`{ width?: string; maxHeight?: string; x?: number; y?: number }`, default `{ width: "30rem", maxHeight: "40rem", x: 64, y: 64 }`) — panel size and starting offset. The starting position is `initial.x + safeZone.left` and `safeZone.top + initial.y`.
+- `topSafeZone` (`number`, default `16`) — declared but not used in any calculation.
+- All remaining props are spread onto the panel's `motion` `Box` after its defaults, so they can override styling and drag settings.
+
+```tsx
+"use client";
+
+import { useRef } from "react";
+import { DraggablePanel } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function Canvas() {
+  const areaRef = useRef<HTMLDivElement>(null!);
+
+  return (
+    <Box ref={areaRef} position="relative" width="100%" height="40rem">
+      <DraggablePanel parentRef={areaRef} label="Layers" initial={{ width: "18rem", x: 0, y: 0 }}>
+        <Box p="m"><Text>Layer list</Text></Box>
+      </DraggablePanel>
+    </Box>
+  );
+}
+```
+
+`PanelHeader` — the header bar used by `DraggablePanel`:
+
+- `label` (`string`, required in the type; default `"Panel Label"` in code) — centred title.
+- `leftControls` (`React.ReactNode`) — rendered on the left.
+- `rightControls` (`React.ReactNode`) — rendered on the right, with `pointerEvents: "auto"`.
+- `onPointerDown` (`(e: React.PointerEvent) => void`) — pointer-down handler on the header.
+- `style` (`React.CSSProperties`) — inline styles for the header.
+
+## Notes
+
+- Dragging starts only from the header (`dragListener` is `false`). Momentum and elasticity are disabled.
+- Constraints are recalculated on mount, at drag start, on window resize, and when the parent resizes (via `ResizeObserver`). The panel is clamped back inside the bounds when they shrink.
+- The position is stored in `localStorage` under `draggable-pos-` followed by the lowercased label with spaces replaced by hyphens. Panels sharing a label share a stored position.
+- During server rendering and before mount the panel uses the default position; the stored position is applied after mount.
+- `DraggablePanel` always renders a move icon button on the left and an empty icon button on the right of the header. These buttons have no accessible label, and dragging has no keyboard alternative.
+- `topSafeZone` only appears in an effect dependency list; use `safeZone.top` to control the top inset.
+- The panel's `initial` prop is consumed by the component, and `motion`'s own `initial` is set to `false`.
+- Drag movement follows the pointer directly; there is no reduced-motion handling.

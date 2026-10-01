@@ -1,0 +1,177 @@
+---
+title: Steps
+description: A step progress tracker with optional navigation buttons, validation, and controlled or uncontrolled state.
+navTitle: Steps
+order: 1
+---
+
+`Steps` is a client component that renders a `StepProgress` track of numbered indicators and, optionally, previous/next buttons with a step counter. Indicators animate with `motion/react` and show labels in Reactberry's `Tooltip`; no provider is required.
+
+## Import
+
+```tsx
+import { Steps } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={1}>
+    {(step, setStep) => (
+      <Box display="flex" flexDirection="column" gap="m">
+        <Steps
+          config={[{ label: "Account" }, { label: "Profile" }, { label: "Billing" }, { label: "Review" }]}
+          controlled
+          activeStep={step}
+          onStepChange={(next) => setStep(Math.max(0, Math.min(3, next)))}
+        />
+        <Box display="flex" justifyContent="center" gap="s">
+          <Button type="button" onClick={() => setStep(Math.max(0, step - 1))}>Back</Button>
+          <Button type="button" onClick={() => setStep(Math.min(3, step + 1))}>Continue</Button>
+        </Box>
+      </Box>
+    )}
+  </State>
+  <Steps
+    config={[{ label: "Cart" }, { label: "Shipping" }, { label: "Payment" }]}
+    showNavigation
+    variant="light"
+  />
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { Steps, type StepConfig } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+const steps: StepConfig[] = [
+  { label: "Account" },
+  { label: "Profile" },
+  { label: "Billing" },
+  { label: "Review" },
+];
+
+export default function Onboarding() {
+  return (
+    <Box maxWidth="40rem" mx="auto" p="l">
+      <Steps
+        config={steps}
+        showNavigation
+        validateStep={(from, to) => to <= from + 1}
+        onStepChange={(step) => console.log("Step", step)}
+        onComplete={() => console.log("Done")}
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+### Steps
+
+`StepsProps` extends `Omit<BaseStepProps, "active">`, so it accepts every `BaseStepProps` field except `active`.
+
+- `config` (`StepConfig[]`, required) — one entry per step.
+- `initialStep` (`number`, default `0`) — initial 0-based step in uncontrolled mode.
+- `controlled` (`boolean`, default `false`) — use `activeStep` instead of internal state.
+- `activeStep` (`number`) — current step when `controlled`; falls back to `0` if undefined.
+- `onStepChange` (`(step: number) => void`) — called with the target step on indicator click, next, and previous.
+- `showNavigation` (`boolean`, default `false`) — renders previous/next buttons and an "N of M" counter.
+- `navigationLabels` (`{ next?: string; previous?: string; finish?: string }`, default `{ next: "Next", previous: "Previous", finish: "Finish" }`) — button text. Passing the object replaces all defaults.
+- `allowStepClick` (`boolean`, default `true`) — lets indicators navigate on click.
+- `validateStep` (`(fromStep: number, toStep: number) => boolean | Promise<boolean>`) — navigation is cancelled when it returns or resolves `false`.
+- `loading` (`boolean`, default `false`) — disables both buttons and shows `"Loading..."` on the next button.
+- `onComplete` (`() => void`) — called instead of advancing when next is pressed on the last step.
+- `variant` (`StepVariant`, default `"light"`), `skin`, `simple` (default `false`), `showLabels` (default `true`), `showEdges` (default `true`), `showTooltip` (default `true`), `childProps` — passed to `StepProgress`.
+
+Remaining props are spread onto `StepProgress`, which spreads them onto its container `Box`.
+
+### StepProgress
+
+Renders a CSS grid with one `StepIndicator` per step, an optional pair of edge circles, and a progress track filled up to the active step. Props are `BaseStepProps` plus:
+
+- `active` (`number`, required) — 0-based active step. Earlier steps render as completed.
+- `completed` (`number`) — declared; not used by the component.
+- `skin` (`StepThemeConfig`) — replaces the built-in theme for `variant` entirely.
+- `childProps` (`Record<string, any>`) — spread onto every `StepIndicator` after the step's own config.
+- `setActive` (`(index: number) => void`) — called with the 0-based index when an indicator is clicked.
+
+Remaining props, including `completed`, are spread onto the container `Box`.
+
+### StepsNav
+
+A thin wrapper around `StepProgress` for externally managed state. Props are `BaseStepProps` plus `mt` (`string | number | object`, default `"medium"`). `showLabels` defaults to `true`. All other props are passed to `StepProgress`.
+
+```tsx
+<StepsNav config={steps} active={current} setActive={setCurrent} variant="dark" />
+```
+
+## Examples
+
+Controlled:
+
+```tsx
+const [step, setStep] = useState(0);
+
+<Steps config={steps} controlled activeStep={step} onStepChange={setStep} allowStepClick={false} />;
+```
+
+Compact track without labels, numbers, or tooltips:
+
+```tsx
+<Steps config={steps} simple showLabels={false} showTooltip={false} showEdges={false} />
+```
+
+## Related exports
+
+### StepIndicator
+
+Renders one step: a circular dot and an optional label, wrapped in `Tooltip` (showing `label`) when `showTooltip` is true.
+
+- `active` (`boolean`, required) — scales the dot up and shows the step number.
+- `index` (`number`, required) — 1-based step number.
+- `label` (`string`, required) — label and tooltip text.
+- `completed` (`boolean`, required) — shows a check icon.
+- `variant` (`StepThemeConfig`, required) — the resolved theme object, not a `StepVariant` string.
+- `simple` (`boolean`, default `false`) — hides the number and check icon.
+- `showLabels` (`boolean`, default `true`) — shows the label below the dot from the second breakpoint up.
+- `showTooltip` (`boolean`, default `true`) — wraps the indicator in `Tooltip`.
+- `setActive` (`(index: number) => void`) — called with `index - 1` on click; also switches the cursor to `pointer`.
+
+Remaining props are spread onto the indicator `Box`.
+
+### useStepNavigation
+
+`useStepNavigation(totalSteps: number, initialStep = 0)` returns:
+
+- `activeStep` — current 0-based step.
+- `nextStep()` / `prevStep()` — move by one, clamped to `0` and `totalSteps - 1`.
+- `goToStep(step)` — sets the step if it is within range; otherwise does nothing.
+- `isFirst`, `isLast` — booleans for the current position.
+- `progress` — `((activeStep + 1) / totalSteps) * 100`, or `0` when there are no steps.
+- `setActiveStep` — the raw state setter, without clamping.
+
+### useHover
+
+`useHover()` returns `[ref, isHovered]`, where `ref` is a `React.RefObject<HTMLElement | null>`. Attach `ref` to an element; `isHovered` tracks `mouseenter`/`mouseleave`. Listeners are attached once on mount, so the element must be rendered when the component mounts.
+
+### Types
+
+- `StepConfig` — `label` (`string`, required), `path` (`string`), `canNavigate` (`boolean`), plus any other keys.
+- `StepVariant` — `"light" | "dark"`.
+- `StepThemeConfig` — `baseColor` (active label colour), `textColor` (label colour), `borderColor` (dot and edge border), `trackColor`, `completedTrackColor`, `size` and `unit` (track height; dots are `size * 8` in `unit`), `fontSize`, and `presets` with `active`, `completed`, and `default` entries of `{ bg: string; color: string }`. All fields are required strings.
+- `BaseStepProps` — `config` (required), `active` (`number`, required), `skin`, `variant`, `showLabels`, `showEdges`, `showTooltip`, `simple`, `childProps`, `setActive`, plus any other keys.
+
+Built-in themes: `light` uses an `accent` completed track and `accent` active/completed dots; `dark` uses a `brand` completed track, white active dots, and `primary` completed dots. Both use a `0.3rem` track and `fontSize` `"small"`.
+
+## Notes
+
+- Each `StepConfig` object is spread onto its `StepIndicator`, so extra keys (including `path` and `canNavigate`) reach the indicator `Box` and the DOM. `path` and `canNavigate` are declared but not used; `canNavigate: false` does not block navigation.
+- In controlled mode, `isFirst` and `isLast` still come from the internal step state (seeded by `initialStep`), so the previous button visibility, the finish label, and `onComplete` do not follow `activeStep`. `validateStep` is not called for the next button in controlled mode.
+- A `setActive` prop passed to `Steps` is spread after the internal click handler and replaces it.
+- The navigation buttons have `type="button"`, so they do not submit an enclosing `form`.
+- Labels are hidden on the smallest breakpoint (`display` of `["none", "flex"]`).

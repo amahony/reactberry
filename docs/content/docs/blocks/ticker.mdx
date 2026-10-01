@@ -1,0 +1,87 @@
+---
+title: Ticker
+description: Scroll children in an endless horizontal loop that slows down on hover.
+navTitle: Ticker
+order: 1
+---
+
+`Ticker` is a client component that renders its children twice in a row and animates the row's `x` position with `motion`, measuring its width with `react-use-measure`. Hovering switches to a slower speed. It should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { Ticker } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Ticker gap="l" fastDuration={20} slowDuration={60}>
+    {["Markets open higher", "New office in Leeds", "Q3 results published", "Hiring: senior designer", "Version 2.1 released"].map((headline) => (
+      <Tag key={headline} skin="panel" whiteSpace="nowrap">{headline}</Tag>
+    ))}
+  </Ticker>
+  <Ticker gap="m" direction="right">
+    {["React", "Next.js", "styled-components", "Motion", "TypeScript", "Floating UI"].map((name) => (
+      <Text key={name} fontWeight="600" color="secondary" whiteSpace="nowrap">{name}</Text>
+    ))}
+  </Ticker>
+</Preview>
+
+## Usage
+
+```tsx
+import { Ticker } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+const headlines = ["Markets open higher", "New office in Leeds", "Q3 results published"];
+
+export default function NewsTicker() {
+  return (
+    <Box py="s" skin="surface">
+      <Ticker gap="l" fastDuration={30} slowDuration={90}>
+        {headlines.map((headline) => (
+          <Text key={headline} whiteSpace="nowrap">
+            {headline}
+          </Text>
+        ))}
+      </Ticker>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — items to scroll. Converted with `React.Children.toArray` and each wrapped in a `Box`.
+- `fastDuration` (`number`, default `25`) — seconds for one loop when not hovered.
+- `slowDuration` (`number`, default `75`) — seconds for one loop while hovered.
+- `direction` (`"left" | "right"`, default `"left"`) — scroll direction.
+- `gap` (`string | number`, default `"medium"`) — space between items and between the two copies.
+- `className` (`string`) — declared but not used.
+
+No other props are accepted and nothing is spread.
+
+## Examples
+
+Scrolling to the right:
+
+```tsx
+<Ticker direction="right">
+  <Text>Item one</Text>
+  <Text>Item two</Text>
+</Ticker>
+```
+
+## Related exports
+
+None.
+
+## Notes
+
+- One loop translates the row by half its measured width, then resets to `0`, so each copy must be at least as wide as the visible area for a seamless loop.
+- On hover start and end, the current pass finishes at the new speed before the loop restarts with the new duration.
+- The second copy of the children is not `aria-hidden`, so assistive technology encounters the content twice.
+- The root is `width: 100%`, `height: 100%`, and clips overflow.
+- `className` is declared in the props type but is not destructured or applied.
+- The animation does not check for reduced-motion preferences and cannot be paused.

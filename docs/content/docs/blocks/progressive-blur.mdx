@@ -1,0 +1,94 @@
+---
+title: ProgressiveBlur
+description: Overlay stacked backdrop-filter layers that increase blur towards one edge of a container.
+navTitle: ProgressiveBlur
+order: 1
+---
+
+`ProgressiveBlur` is a client component that renders its children followed by a series of masked `backdrop-filter` layers, producing a blur that grows towards the chosen edge. It depends on `motion/react`.
+
+## Import
+
+```tsx
+import { ProgressiveBlur } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Box position="relative" height="16rem" overflow="hidden" shape="rounded">
+    <Box height="100%" overflow="auto" p="m" display="flex" flexDirection="column" gap="s">
+      {["Morning standup", "Design review", "Release planning", "Lunch break", "Customer call", "Code review", "Retrospective", "Wrap up"].map((item) => (
+        <Box key={item} skin="surface" shape="rounded" p="s">
+          <Text>{item}</Text>
+        </Box>
+      ))}
+    </Box>
+    <ProgressiveBlur position="absolute" left="0" right="0" bottom="0" height="6rem" direction="bottom" blurIntensity={1} />
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { ProgressiveBlur } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function Feed() {
+  return (
+    <Box position="relative" height="400px" overflow="hidden" shape="rounded">
+      <Box height="100%" overflow="auto" p="m">
+        <Text as="p">Long scrolling content…</Text>
+      </Box>
+      <ProgressiveBlur
+        position="absolute"
+        left="0"
+        right="0"
+        bottom="0"
+        height="120px"
+        direction="bottom"
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `direction` (`"top" | "right" | "bottom" | "left"`, default `"bottom"`) — edge with the strongest blur.
+- `blurLayers` (`number`, default `8`) — number of blur layers. At least 2 layers are always rendered.
+- `blurIntensity` (`number`, default `0.25`) — blur step in pixels; layer `i` uses `blur(i * blurIntensity px)`.
+- `children` (`React.ReactNode`) — rendered before the blur layers.
+- `motionProps` (`Omit<HTMLMotionProps<"div">, "style">`) — spread onto every blur layer, for example to animate opacity.
+
+All remaining `BoxProps` are spread onto the wrapper `Box`, which defaults to `position="relative"`.
+
+## Examples
+
+Stronger blur along the top edge:
+
+```tsx
+<ProgressiveBlur direction="top" blurLayers={10} blurIntensity={1} height="80px" />
+```
+
+Fade the blur in on mount:
+
+```tsx
+<ProgressiveBlur
+  height="120px"
+  motionProps={{ initial: { opacity: 0 }, animate: { opacity: 1 } }}
+/>
+```
+
+## Related exports
+
+- `ProgressiveBlurProps` — the props type, exported from `@reactberry/system/blocks`.
+- `GRADIENT_ANGLES` is exported from the component module but not from `@reactberry/system/blocks`.
+
+## Notes
+
+- Each layer is absolutely positioned over the wrapper with `pointer-events: none` and `borderRadius="inherit"`, and masked with a linear gradient at 0, 90, 180 or 270 degrees.
+- The first layer has 0px blur.
+- Segment size is computed from `blurLayers`, not the clamped layer count, so values below 2 produce uneven masks.
+- `backdrop-filter` blurs what is behind the layers, including `children`. Many layers or high intensity can be expensive to render.
+- There is no reduced-motion handling; the effect is static unless `motionProps` adds animation.

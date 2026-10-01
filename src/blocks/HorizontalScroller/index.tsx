@@ -8,7 +8,7 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "motion/react";
-import { useRef, ReactNode } from "react";
+import { useEffect, useRef, useState, ReactNode } from "react";
 
 interface HorizontalScrollerProps {
   items: any[]; // Array of items to scroll through
@@ -27,9 +27,23 @@ export default function HorizontalScroller({
   progressIndicator = true,
   withMask = true,
 }: HorizontalScrollerProps) {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const { scrollXProgress } = useScroll({ container: containerRef });
   const maskImage = useScrollOverflowMask(scrollXProgress);
+
+  // Only fade the edges when the content actually overflows. Otherwise the
+  // scroll-progress mask can settle on an edge fade (e.g. a single item), so a
+  // non-scrollable list would show a phantom gradient over its content.
+  const [isScrollable, setIsScrollable] = useState(false);
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => setIsScrollable(el.scrollWidth - el.clientWidth > 1);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [items]);
 
   return (
     <Box width="100%" position="relative" maxWidth="100%" overflow="hidden">
@@ -38,7 +52,6 @@ export default function HorizontalScroller({
         display="flex"
         alignItems={"center"}
         justifyContent={"space-between"}
-        py="xsmall"
       >
         {title && (
           <Text as="h3" m="0">
@@ -81,12 +94,11 @@ export default function HorizontalScroller({
         ref={containerRef}
         display="flex"
         overflowX="scroll"
-        pb="medium"
         gap={gap}
         width="100%"
         position="relative"
         zIndex="2"
-        style={withMask ? { maskImage } : undefined}
+        style={withMask && isScrollable ? { maskImage } : undefined}
       >
         {items.map((item, index) => (
           <Box key={index}>{renderItem(item, index)}</Box>

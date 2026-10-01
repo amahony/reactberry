@@ -1,0 +1,86 @@
+---
+title: DisplaySet
+description: Show a read-only label and value pair in a two-column or stacked grid, with a placeholder for missing values.
+navTitle: DisplaySet
+order: 1
+---
+
+`DisplaySet` renders a label and its value as a CSS grid built from `Text`. It has no `"use client"` directive, no state, and no effects, so it can render in server components. It reads theme tokens and should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { DisplaySet } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Box display="flex" flexDirection="column" gap="s" maxWidth="28rem" width="100%" mx="auto">
+    <DisplaySet label="Name" content="Ada Lovelace" />
+    <DisplaySet label="Email" content="ada@example.com" />
+    <DisplaySet label="Phone" content={null} placeholder="No phone number" />
+    <DisplaySet label="Status" content="Active" customFlow="8rem 1fr" contentProps={{ color: "success" }} />
+    <DisplaySet flow="column" label="Notes" content="Deliver to the side entrance." />
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { DisplaySet } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+type Customer = { name: string; email: string; phone?: string | null };
+
+export default function CustomerDetails({ customer }: { customer: Customer }) {
+  return (
+    <Box display="flex" flexDirection="column" gap="s">
+      <DisplaySet label="Name" content={customer.name} />
+      <DisplaySet label="Email" content={customer.email} />
+      <DisplaySet label="Phone" content={customer.phone} placeholder="No phone number" />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `content` (`any`, required) — value to display. When `null` or `undefined`, `placeholder` is shown instead.
+- `label` (`string | React.ReactNode`) — rendered as an `h4`. Omitted when falsy.
+- `flow` (`"row" | "column"`, default `"row"`) — `"row"` places label and value side by side; `"column"` stacks them in a single column.
+- `customFlow` (`string`) — `gridTemplateColumns` value used when `flow` is `"row"`. Falls back to `"1fr 1fr"`.
+- `placeholder` (`string | React.ReactNode`, default `"not set"`) — shown when `content` is `null` or `undefined`.
+- `contentProps` (`Record<string, any>`, default `{}`) — spread onto the value `Text`, after its default `fontWeight` and `color`.
+
+All remaining props are spread onto the outer `Text` (rendered as a `div`), after its defaults, so they can override `display`, `gap`, `gridTemplateColumns`, `color`, and `fontWeight`.
+
+## Examples
+
+Stacked layout:
+
+```tsx
+<DisplaySet flow="column" label="Notes" content="Deliver to the side entrance." />
+```
+
+Narrow label column with a styled value:
+
+```tsx
+<DisplaySet
+  label="Status"
+  content="Active"
+  customFlow="8rem 1fr"
+  contentProps={{ color: "success" }}
+/>
+```
+
+## Related exports
+
+None.
+
+## Notes
+
+- The outer element uses `color="secondary"`, `fontWeight` 700, and `gap="xxsmall"`. The label `h4` has `m="0"` and inherits these styles.
+- The value uses `fontWeight` 400 and `color="primary"`, or `color="tertiary"` when the placeholder is shown.
+- Only `null` and `undefined` trigger the placeholder. Values such as `0`, `false`, and `""` are passed through as content; `false` and `""` render nothing.
+- `customFlow` is ignored when `flow` is `"column"`.

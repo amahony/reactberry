@@ -7,10 +7,16 @@ import Group from "../Group"
 import {
   MaskedField,
   maskPresets,
+  formatWithPreset,
   type MaskPresetType,
 } from "../MaskedField"
 
 import { IconDCheck, IconERemove } from "../../icons"
+
+const getErrorMessage = (error: unknown) =>
+  error instanceof Error && error.message
+    ? error.message
+    : "Something went wrong. Please try again."
 
 type InlineEditorProps = {
   id: string | number
@@ -26,6 +32,17 @@ type InlineEditorProps = {
   controlSize?: string
   buttonConfig?: any
   maskPreset?: string
+  /**
+   * Native input type (e.g. "email", "url", "tel"). Renders a single-line
+   * input instead of the autosizing textarea, so the browser applies its own
+   * keyboard and validation. Ignored when `maskPreset` resolves to a mask.
+   */
+  inputType?: string
+  /**
+   * Text shown when not editing, for fields whose stored value is not the
+   * human-readable form (e.g. a date input's `YYYY-MM-DD`).
+   */
+  displayText?: string | null
 }
 
 const InlineEditor: React.FC<InlineEditorProps> = ({
@@ -52,24 +69,31 @@ const InlineEditor: React.FC<InlineEditorProps> = ({
     },
   },
   maskPreset,
+  inputType,
+  displayText,
 }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false)
   const [tempText, setTempText] = useState(initialText || "")
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const editRef = useRef<HTMLTextAreaElement | HTMLInputElement>(null)
+  const errorId = `inline-editor-error-${String(id)}`
 
   const handleEditClick = () => {
     setTempText(initialText || "")
+    setErrorMessage(null)
     setIsEditing(true)
   }
 
   const handleSaveClick = async () => {
+    setErrorMessage(null)
     setIsLoading(true)
     try {
       await onSave(String(id), String(tempText))
       setIsEditing(false)
     } catch (error) {
       console.error("Error saving text:", error)
+      setErrorMessage(getErrorMessage(error))
     } finally {
       setIsLoading(false)
     }
@@ -78,12 +102,14 @@ const InlineEditor: React.FC<InlineEditorProps> = ({
   const handleCancelClick = () => {
     setIsEditing(false)
     setTempText(initialText || "")
+    setErrorMessage(null)
   }
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     setTempText(e.target.value)
+    setErrorMessage(null)
   }
 
   const validMaskPreset =
@@ -91,9 +117,15 @@ const InlineEditor: React.FC<InlineEditorProps> = ({
       ? (maskPreset as MaskPresetType)
       : null
 
+  const readOnlyText =
+    displayText ??
+    (validMaskPreset
+      ? formatWithPreset(String(initialText || ""), validMaskPreset)
+      : initialText)
+
   useEffect(() => {
-    if (isEditing && !validMaskPreset && textAreaRef.current) {
-      textAreaRef.current.focus()
+    if (isEditing && !validMaskPreset && editRef.current) {
+      editRef.current.focus()
     }
     setTempText(initialText || "")
   }, [initialText, isEditing, validMaskPreset])
@@ -116,11 +148,21 @@ const InlineEditor: React.FC<InlineEditorProps> = ({
         color="secondary"
         {...headerProps}
       >
-        {label && (
-          <Text fontWeight={600}>
-            {label} {isLoading && "(Wait...)"}
-          </Text>
-        )}
+        {label &&
+          (typeof label === "string" ? (
+            <Text fontWeight={600}>
+              {label} {isLoading && "(Wait...)"}
+            </Text>
+          ) : (
+            <Box display="flex" alignItems="center" gap="xxsmall">
+              {label}
+              {isLoading && (
+                <Text as="span" fontWeight={600} color="inherit">
+                  (Wait...)
+                </Text>
+              )}
+            </Box>
+          ))}
         <Group flex="none" gap="xs" ml="auto">
           {isEditing ? (
             <>
@@ -169,8 +211,27 @@ const InlineEditor: React.FC<InlineEditorProps> = ({
               onChange={handleChange}
               placeholder={placeholder}
               disabled={isDisabled}
+              aria-describedby={errorMessage ? errorId : undefined}
               variant="ghost"
               $size=""
+              width="100%"
+              {...fieldProps}
+            />
+          ) : inputType ? (
+            <Field
+              autoFocus
+              as="input"
+              type={inputType}
+              ref={editRef}
+              placeholder={placeholder}
+              value={tempText}
+              onChange={handleChange}
+              disabled={isDisabled}
+              aria-describedby={errorMessage ? errorId : undefined}
+              flex="auto"
+              variant="ghost"
+              $size=""
+              minHeight={"2.25rem"}
               width="100%"
               {...fieldProps}
             />
@@ -178,11 +239,12 @@ const InlineEditor: React.FC<InlineEditorProps> = ({
             <Field
               autoFocus
               as={Textarea}
-              ref={textAreaRef}
+              ref={editRef}
               placeholder={placeholder}
               value={tempText}
               onChange={handleChange}
               disabled={isDisabled}
+              aria-describedby={errorMessage ? errorId : undefined}
               flex="auto"
               variant="ghost"
               $size=""
@@ -195,12 +257,35 @@ const InlineEditor: React.FC<InlineEditorProps> = ({
               {...fieldProps}
             />
           )}
+          {errorMessage && (
+            <Text id={errorId} as="p" role="alert" color="error" mt="xs">
+              {errorMessage}
+            </Text>
+          )}
         </Box>
       ) : (
-        <Box minHeight={"auto"} border="1px solid transparent" minWidth="0">
-          {initialText ? (
+        <Box
+          minHeight={"auto"}
+          border="1px solid transparent"
+          minWidth="0"
+          onClick={isDisabled ? undefined : handleEditClick}
+          role={isDisabled ? undefined : "button"}
+          tabIndex={isDisabled ? undefined : 0}
+          onKeyDown={
+            isDisabled
+              ? undefined
+              : (e: React.KeyboardEvent) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault()
+                    handleEditClick()
+                  }
+                }
+          }
+          cursor={isDisabled ? "default" : "pointer"}
+        >
+          {readOnlyText ? (
             <Text style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>
-              {initialText}
+              {readOnlyText}
             </Text>
           ) : (
             <Text color="secondary" fontStyle="italic">

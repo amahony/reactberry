@@ -1,0 +1,77 @@
+---
+title: FluorescentCard
+description: Render a translucent white card with a saturated backdrop, pointer-driven 3D tilt and a cursor spotlight.
+navTitle: FluorescentCard
+order: 1
+---
+
+`FluorescentCard` is a client component that wraps its children in a translucent card with spring-based 3D tilt and a radial spotlight on hover. It is intended for use over gradient or colourful backgrounds and depends on `motion/react` and `styled-components`.
+
+## Import
+
+```tsx
+import { FluorescentCard } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview p="0" alignItems="stretch">
+  <Box position="relative" width="100%" p="xl" overflow="hidden" display="flex" justifyContent="center">
+    <GradientMesh position="absolute" top="0" left="0" width="100%" height="100%" />
+    <FluorescentCard p="l" maxWidth="360px">
+      <Text as="p" fontSize="l" fontWeight="700" m="0">Weekly insights</Text>
+      <Text as="p" m="0">Move the pointer over the card to tilt it and follow the spotlight.</Text>
+    </FluorescentCard>
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { FluorescentCard, GradientMesh } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function Showcase() {
+  return (
+    <Box position="relative" p="xl" overflow="hidden">
+      <GradientMesh position="absolute" top="0" left="0" width="100%" height="100%" />
+      <FluorescentCard p="l" maxWidth="360px">
+        <Text as="h3" fontSize="l" fontWeight="700">
+          Insights
+        </Text>
+        <Text as="p">Weekly summaries delivered to your inbox.</Text>
+      </FluorescentCard>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — card content.
+- `spotlightColor` (`string`, default `"rgba(255, 255, 255, 0.2)"`) — inner colour of the spotlight gradient. Used directly in CSS, so theme tokens are not resolved.
+- `spotlightSize` (`number`, default `300`) — spotlight radius in pixels.
+- `tiltEnabled` (`boolean`, default `true`) — enables the 3D tilt.
+- `maxTilt` (`number`, default `2.3`) — maximum rotation in degrees on each axis.
+- `stiffness` (`number`, default `300`) — spring stiffness for tilt and spotlight position.
+- `damping` (`number`, default `30`) — spring damping for tilt and spotlight position.
+
+All remaining `BoxProps` (except `ref` and `children`) are spread onto the outer container, after its defaults: `shape="rounded"`, `$shadow="medium"`, `position="relative"` and `overflow="hidden"`.
+
+## Examples
+
+Static tilt with a larger spotlight:
+
+```tsx
+<FluorescentCard tiltEnabled={false} spotlightSize={500} p="l">
+  <Text>No tilt</Text>
+</FluorescentCard>
+```
+
+## Notes
+
+- Effects are disabled when the user prefers reduced motion or when touch is the primary input (detected with `useTouchDevice`). In that case the card renders without transforms, hover lift, or spotlight.
+- Unlike `AnimatedCard`, there is no `spotlightEnabled` prop; the spotlight is shown whenever effects are active.
+- The container styles set `background-color: rgba(255, 255, 255, 0.95)` and `backdrop-filter: saturate(1.5) brightness(1.75)`. These are defined in the component's styled wrapper, so a `bg` prop may not override them.
+- On hover the content layer moves to `translateZ(24px)` over 0.3 s, and the spotlight (`zIndex` 2, `pointer-events: none`) fades in above the content.
+- Passing `style` replaces the inline style, including the tilt transform.

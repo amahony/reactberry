@@ -49,6 +49,7 @@ export default function Collection({
     <Box
       display="grid"
       gap="small"
+      placeItems="stretch"
       gridTemplateColumns={colSizes[colsize]}
       {...theme?.collection}
       {...props}

@@ -1,0 +1,44 @@
+---
+title: Screen
+description: Render one implementation per viewport class inside consistent page chrome.
+navTitle: Screen
+order: 1
+---
+
+`Screen` is a page-level wrapper. Instead of bundling responsive branches into one tree, a screen passes `desktop`, `tablet`, and `phone` components; missing variants fall back to the closest supplied one.
+
+## Import
+
+```tsx
+import { Screen } from "@reactberry/system/blocks";
+```
+
+## Live examples
+
+<ScreenLiveExamples />
+
+## Basic usage
+
+```tsx
+<Screen preset="framed" desktop={ProjectDesktop} phone={ProjectPhone} pass={{ projectId }} />
+```
+
+## Presets
+
+- `framed` (default) — gutter plus card surface; on desktop the gutter is pinned to the viewport and the card scrolls
+- `page` — centred page column, chrome read from the theme's `container`
+- `clean` — no gutter or surface, for screens that own their shell
+
+## Useful props
+
+- `desktop` / `tablet` / `phone` — viewport-specific components
+- `pass` — props forwarded to whichever variant renders
+- `insets` — reserve room for fixed mobile chrome and safe areas (default `true` on phone and tablet)
+- `children` — rendered when no variant is supplied
+- All Box props are applied to the surface
+
+## Notes
+
+- `Screen` reads the viewport from `useBreakpoint`, so it must render inside `BreakpointProvider` (exported from `@reactberry/system`), typically mounted once in the root layout.
+- Variants mount exclusively. State shared between them must live in a hook above the `Screen`, since switching viewport unmounts the previous variant.
+- `ScreenDesktop`, `ScreenTablet`, and `ScreenPhone` are exported for rendering a specific shell directly.

@@ -1,0 +1,89 @@
+---
+title: Placeholder
+description: Render a centred icon and message for empty states.
+navTitle: Placeholder
+order: 1
+---
+
+`Placeholder` is a client component (`"use client"`) that renders a `Text` as a centred flex column, with an optional `Icon` block above its children.
+
+## Import
+
+```tsx
+import { Placeholder } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <Placeholder skin="surface" shape="rounded" minWidth="12rem" minHeight="10rem">
+    Default icon
+  </Placeholder>
+  <Placeholder icon="Icon24Folder" skin="surface" shape="rounded" minWidth="12rem" minHeight="10rem">
+    <Text fontWeight="600" color="primary">No files yet</Text>
+    <Button type="button" variant="primary" $size="small">Upload a file</Button>
+  </Placeholder>
+  <Placeholder icon="IconLock" iconProps={{ color: "warning", size: "3rem" }} skin="surface" shape="rounded" minWidth="12rem" minHeight="10rem">
+    Access restricted
+  </Placeholder>
+  <Placeholder icon={null} skin="surface" shape="rounded" minWidth="12rem" minHeight="10rem">
+    No results match your filters.
+  </Placeholder>
+</Preview>
+
+## Usage
+
+```tsx
+import { Placeholder } from "@reactberry/system/blocks";
+import { Button, Text } from "@reactberry/system/elements";
+
+export default function EmptyFiles() {
+  return (
+    <Placeholder icon="Icon24Folder" skin="surface" shape="rounded" minHeight="16rem">
+      <Text fontWeight="600" color="primary">
+        No files yet
+      </Text>
+      <Button variant="primary" $size="small">
+        Upload a file
+      </Button>
+    </Placeholder>
+  );
+}
+```
+
+## Props
+
+- `icon` (`string | React.ComponentType | null`, default `"IconDocFolder"`) — a registered icon name (rendered via `Icon`) or a React component (rendered directly via `Box as={icon}`). Pass `null` to render no icon.
+- `iconProps` (`any`) — spread onto the icon after its defaults (`color="palette.neutrals.7"`, `size="2.25rem"`, `flex="none"`).
+- `children` (`React.ReactNode`) — rendered below the icon.
+- All other props are spread onto the `Text` after these defaults: `as="div"`, `display="flex"`, `flexDirection="column"`, `justifyContent="center"`, `alignItems="center"`, `fontSize="small"`, `p="medium"`, `gap="s"`, `color="tertiary"`.
+
+## Examples
+
+Text only:
+
+```tsx
+<Placeholder icon={null}>No results match your filters.</Placeholder>
+```
+
+Custom icon styling:
+
+```tsx
+<Placeholder icon="IconLock" iconProps={{ color: "warning", size: "3rem" }}>
+  You do not have access to this project.
+</Placeholder>
+```
+
+Icon component:
+
+```tsx
+import { IconPencil } from "@reactberry/system/icons";
+
+<Placeholder icon={IconPencil}>Nothing drafted yet.</Placeholder>;
+```
+
+## Notes
+
+- With no `icon` prop, the registered `"IconDocFolder"` icon is rendered. String names must be registered (see the `Icon` page); unknown names log a warning from `Icon` and render no icon.
+- A component passed as `icon` receives the same defaults and `iconProps` as the string form, but is rendered directly rather than looked up by name.
+- `Skeleton` uses `Placeholder` internally for its loading blocks.

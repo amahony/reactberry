@@ -1,0 +1,109 @@
+---
+title: Pagination
+description: URL-driven page controls that sync the current page with the page query parameter in the Next.js App Router.
+navTitle: Pagination
+order: 1
+---
+
+`Pagination` is a client component that renders previous/next buttons and a compact list of page numbers. It reads and writes the `page` search parameter through `next/navigation`, so it requires the Next.js App Router.
+
+## Import
+
+```tsx
+import { Pagination, PaginationList } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+The controls mount on click because `Pagination` calls `useSearchParams`, which needs a `Suspense` boundary on statically rendered pages. Page changes update `?page=` in the address bar.
+
+<Preview flexDirection="column">
+  <State initial={0}>
+    {(page, setPage) =>
+      page === 0 ? (
+        <Button type="button" variant="primary" onClick={() => setPage(-1)}>Show pagination for 95 results</Button>
+      ) : (
+        <Box display="flex" flexDirection="column" alignItems="center" gap="s">
+          <Text color="secondary">95 results, 10 per page</Text>
+          <Pagination total={95} onPageChange={setPage} />
+          <Text fontSize="s" color="secondary">Last requested page: {page > 0 ? page : "none yet"}</Text>
+        </Box>
+      )
+    }
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { Suspense } from "react";
+import { Pagination } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function ResultsFooter({ total }: { total: number }) {
+  return (
+    <Box display="flex" flexDirection="column" gap="s">
+      <Text color="secondary">{total} results</Text>
+      <Suspense fallback={null}>
+        <Pagination
+          total={total}
+          pageSize={20}
+          onPageChange={(page) => console.log("Page", page)}
+        />
+      </Suspense>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `total` (`number`, required) — total number of items across all pages.
+- `pageSize` (`number`, default `10`) — items per page; used to compute the page count.
+- `onPageChange` (`(page: number) => void`, required) — called with the 1-based target page before the router navigates.
+
+No other props are accepted and nothing is spread.
+
+## Examples
+
+Default page size of 10:
+
+```tsx
+<Pagination total={95} onPageChange={(page) => setPage(page)} />
+```
+
+Wrapping a list with sticky controls:
+
+```tsx
+<PaginationList total={items.length} pageSize={25} onPageChange={setPage}>
+  {visibleItems.map((item) => (
+    <Text key={item.id}>{item.name}</Text>
+  ))}
+</PaginationList>
+```
+
+## Related exports
+
+### PaginationList
+
+A client component that renders `children` followed by a `Pagination` inside a sticky `Box` (`position="sticky"`, `bottom="0"`, `bg="base"`, `p="small"`).
+
+- `total` (`number`, required) — passed to `Pagination`.
+- `pageSize` (`number`, default `10`) — passed to `Pagination`.
+- `children` (`ReactNode`, required) — the list content rendered above the controls.
+- `onPageChange` (`(page: number) => void`, optional) — called with the 1-based page when it changes.
+
+No other props are accepted. `PaginationList` does not slice `children`; the caller renders only the items for the current page.
+
+## Notes
+
+- The current page is read from `searchParams.get("page")` and defaults to `1`. Page numbers are 1-based.
+- Changing page calls `onPageChange` and then `router.push` with the current pathname and the updated `page` parameter; other query parameters are preserved.
+- Returns `null` when `total` is less than or equal to `pageSize`.
+- Up to three page numbers are shown around the current page, with the first and last pages and `…` placeholders added as needed. Placeholder buttons are disabled.
+- The current page button uses `variant="primary"` and `aria-current="true"` and has no click handler. Other page buttons have `aria-label` values such as `"Page 3"`.
+- The previous and next buttons are disabled on the first and last page and switch their `aria-label` to `"No previous page available"` / `"No next page available"`.
+- Because it uses `useSearchParams`, Next.js may require a `Suspense` boundary around the component in statically rendered routes.
+- The `PaginationList` source comment mentions a default page size of 20, but the code default is `10`.

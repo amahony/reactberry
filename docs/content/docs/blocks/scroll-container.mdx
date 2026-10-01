@@ -1,0 +1,92 @@
+---
+title: ScrollContainer
+description: Wrap content in a flex column that scrolls to the end or to a target element when its inputs change.
+navTitle: ScrollContainer
+order: 1
+---
+
+`ScrollContainer` is a client component (`"use client"`) that renders a full-width flex-column `Box` and runs a scroll effect whenever `watch`, `scrollToId` or the scroll options change. It suits chat logs, activity feeds and in-page section navigation.
+
+## Import
+
+```tsx
+import { ScrollContainer } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial="">
+    {(target, setTarget) => (
+      <Box display="flex" flexDirection="column" gap="s">
+        <Box display="flex" gap="s" flexWrap="wrap">
+          {["overview", "install", "configure", "deploy"].map((id) => (
+            <Button key={id} type="button" $size="small" onClick={() => setTarget(`sc-demo-${id}`)}>
+              {id}
+            </Button>
+          ))}
+        </Box>
+        <ScrollContainer scrollToId={target} height="12rem" overflowY="auto" gap="s" skin="surface" shape="rounded" p="s">
+          {["overview", "install", "configure", "deploy"].map((id) => (
+            <Box key={id} id={`sc-demo-${id}`} minHeight="9rem" p="m" shape="rounded" bg="transparent.light.0">
+              <Text fontWeight="600" textTransform="capitalize">{id} section</Text>
+            </Box>
+          ))}
+        </ScrollContainer>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+import { ScrollContainer } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+type Message = { id: string; body: string };
+
+export default function ChatLog({ messages }: { messages: Message[] }) {
+  return (
+    <ScrollContainer watch={messages.length} scrollBlock="end" height="24rem" overflowY="auto" gap="xs">
+      {messages.map((message) => (
+        <Box key={message.id} skin="surface" shape="rounded" p="s">
+          <Text>{message.body}</Text>
+        </Box>
+      ))}
+    </ScrollContainer>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — scrollable content.
+- `watch` (`any`) — when defined, each change scrolls the end marker into view.
+- `scrollToId` (`string`) — id of an element to scroll to; takes priority over `watch`.
+- `onScrollStart` (`() => void`) — called each time the effect runs with a `scrollToId`.
+- `scrollOffset` (`number`, default `0`) — pixels subtracted from the target position when scrolling to `scrollToId`.
+- `scrollBehavior` (`ScrollBehavior`, default `"smooth"`) — behaviour for the `watch` scroll.
+- `scrollBlock` (`ScrollLogicalPosition`, default `"start"`) — vertical alignment for the `watch` scroll.
+- All other `BoxProps` are spread onto the root after `width="100%"`, `flex="auto"`, `display="flex"` and `flexDirection="column"`.
+
+## Examples
+
+Scroll to a section with a fixed header offset:
+
+```tsx
+<ScrollContainer scrollToId={activeSectionId} scrollOffset={64} height="100%" overflowY="auto">
+  <Box id="overview">...</Box>
+  <Box id="usage">...</Box>
+</ScrollContainer>
+```
+
+## Notes
+
+- The root does not set `overflow`. Give it a constrained height and `overflowY="auto"` (or place it in a parent that does) or there is nothing to scroll.
+- `scrollToId` scrolls the container itself using `scrollTo` with smooth behaviour; `scrollBehavior` and `scrollBlock` are not used in this path. The element is looked up with `document.getElementById`, so the id must be unique on the page.
+- The `watch` path calls `scrollIntoView` on the end marker, which can also scroll ancestor containers and the window. Use `scrollBlock="end"` to align the marker to the bottom edge.
+- Because the effect runs on mount, a defined `watch` scrolls to the end on first render.
+- `onScrollStart` is an effect dependency. An inline function changes identity every render and re-triggers the scroll; pass a stable callback (for example from `useCallback`).
+- The component appends an empty `div` and a `Box` with `pt="1rem"` after the children, adding 1rem of space at the end.
+- The code also contains a fallback that sets `scrollMarginTop` and calls `scrollIntoView` for `scrollToId`, and a fallback that scrolls to `scrollHeight` for `watch`. Neither runs in practice, because the container ref is always set and the earlier `watch` check covers every defined value.

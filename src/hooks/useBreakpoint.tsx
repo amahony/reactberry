@@ -31,12 +31,27 @@ const BREAKPOINT_VALUES: Record<Exclude<Breakpoint, "_">, string> = {
   xl: "96rem",
 };
 
+// Resolved on the first client render so consumers that swap components per
+// viewport (see blocks/Screen) do not mount the mobile tree and
+// immediately remount the desktop one. Returns "_" on the server.
+function resolveBreakpoint(): Breakpoint {
+  if (typeof window === "undefined" || !window.matchMedia) return "_";
+
+  for (const key of BREAKPOINT_KEYS) {
+    if (window.matchMedia(`(min-width: ${BREAKPOINT_VALUES[key]})`).matches) {
+      return key as Breakpoint;
+    }
+  }
+
+  return "_";
+}
+
 /**
  * Provider to wrap your app - add to root layout
  * Only ONE set of listeners for the entire app
  */
 export function BreakpointProvider({ children }: { children: ReactNode }) {
-  const [breakpoint, setBreakpoint] = useState<Breakpoint>("_");
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>(resolveBreakpoint);
 
   useEffect(() => {
     const queries: Record<string, MediaQueryList> = {};

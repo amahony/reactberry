@@ -1,0 +1,66 @@
+---
+title: TextReveal
+description: Reveal a paragraph word by word as it scrolls through the viewport.
+navTitle: TextReveal
+order: 1
+---
+
+`TextReveal` is a client component that splits a string into words and fades each word from a dimmed base to full opacity based on scroll progress. It depends on `motion/react` and `styled-components`.
+
+## Import
+
+```tsx
+import { TextReveal } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <TextReveal fontSize="xl" fontWeight="700" offset={["start 0.95", "end 0.4"]} revealEnd={1}>
+    {"Every word arrives on cue as this paragraph scrolls through the viewport."}
+  </TextReveal>
+</Preview>
+
+## Usage
+
+```tsx
+import { TextReveal } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+export default function Manifesto() {
+  return (
+    <Box maxWidth="800px" mx="auto" py="xl">
+      <TextReveal fontSize="xxxl" fontWeight="700">
+        We design tools that stay out of the way so teams can focus on the work
+        that matters.
+      </TextReveal>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `children` (`string`, required) — the text to reveal. Must be a plain string.
+- `baseOpacity` (`number`, default `0.18`) — opacity of the unrevealed words.
+- `offset` (`useScroll` offset, default `["start end", "end start"]`) — scroll offset passed to Motion's `useScroll`, targeting the text element.
+- `revealEnd` (`number`, default `0.88`) — scroll progress at which the last word is fully revealed. Clamped between 0.1 and 1.
+
+All remaining `TextProps` (except `children` and `as`) are spread onto the `Text` element, which always renders as a `div`.
+
+## Examples
+
+Reveal while the text moves through the centre of the viewport:
+
+```tsx
+<TextReveal offset={["start 0.8", "end 0.4"]} revealEnd={1}>
+  Every word arrives on cue.
+</TextReveal>
+```
+
+## Notes
+
+- Words are split on whitespace. Word `i` of `n` fades in between progress `i / n * revealEnd` and `(i + 1) / n * revealEnd`.
+- Each word is `aria-hidden` and the container receives `aria-label` set to the full string.
+- When the user prefers reduced motion, the string is rendered as plain text with no animation.
+- Each word is an `inline-grid` span with `0.25em` right margin and `0.1em` bottom margin; the foreground word uses `currentColor`.

@@ -1,0 +1,138 @@
+---
+title: MaskedField
+description: A Reactberry Field with numeric or pattern input masking from react-number-format, with built-in presets.
+navTitle: MaskedField
+order: 1
+---
+
+`MaskedField` is a client component that renders `react-number-format`'s `NumericFormat` or `PatternFormat` with Reactberry's `Field` (`as="input"`) as the custom input. Masks come from a named preset or from `react-number-format` props.
+
+## Import
+
+```tsx
+import { MaskedField, maskPresets } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={1250}>
+    {(amount, setAmount) => (
+      <Box display="grid" gridTemplateColumns={["1fr", "1fr 1fr"]} gap="m" maxWidth="36rem" width="100%" mx="auto">
+        <Box display="flex" flexDirection="column" gap="xs">
+          <Text as="label" htmlFor="preview-budget" fontWeight={600}>Budget (currency)</Text>
+          <MaskedField id="preview-budget" preset="currency" variant="default" value={amount} onValueChange={(values) => setAmount(values.floatValue)} placeholder="$0.00" />
+          <Text fontSize="xs" color="secondary">floatValue: {amount ?? "empty"}</Text>
+        </Box>
+        <Box display="flex" flexDirection="column" gap="xs">
+          <Text as="label" htmlFor="preview-phone" fontWeight={600}>Phone</Text>
+          <MaskedField id="preview-phone" preset="phone" variant="default" placeholder="(555) 123-4567" />
+        </Box>
+        <Box display="flex" flexDirection="column" gap="xs">
+          <Text as="label" htmlFor="preview-date" fontWeight={600}>Date</Text>
+          <MaskedField id="preview-date" preset="date" variant="default" />
+        </Box>
+        <Box display="flex" flexDirection="column" gap="xs">
+          <Text as="label" htmlFor="preview-card" fontWeight={600}>Credit card</Text>
+          <MaskedField id="preview-card" preset="creditCard" variant="default" placeholder="0000 0000 0000 0000" />
+        </Box>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import { MaskedField } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function BudgetInput() {
+  const [amount, setAmount] = useState<number | undefined>();
+
+  return (
+    <Box display="flex" flexDirection="column" gap="xs">
+      <Text as="label" htmlFor="budget" fontWeight={600}>
+        Budget
+      </Text>
+      <MaskedField
+        id="budget"
+        preset="currency"
+        variant="default"
+        value={amount}
+        onValueChange={(values) => setAmount(values.floatValue)}
+        placeholder="$0.00"
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `preset` (`MaskPresetType`) — a key of `maskPresets`. The preset's options are applied first and its `type` selects the formatter.
+- `maskType` (`"numeric" | "pattern"`) — selects the formatter explicitly; takes precedence over the preset's type. Defaults to `"numeric"` when neither is set.
+- `variant` (`string`, default `"ghost"`) — `Field` skin variant.
+- `$size` (`string`, default `"medium"`) — `Field` size.
+- `width` (`string`, default `"100%"`) — `Field` width.
+- `shape`, `bg`, `fontSize`, `textAlign` (`string`) and `fontWeight` (`number`) — design-system style props forwarded to `Field`.
+
+All other `NumericFormatProps` or `PatternFormatProps` from `react-number-format` (except `customInput` and `getInputRef`) are accepted, including `value`, `onValueChange`, `onChange`, `format`, `mask`, `prefix`, `suffix`, `decimalScale`, and `isAllowed`. They are merged after the preset, so they override preset options. Unconsumed props are passed through to `Field`.
+
+## Examples
+
+Phone number:
+
+```tsx
+<MaskedField preset="phone" placeholder="(555) 123-4567" />
+```
+
+Overriding a preset option:
+
+```tsx
+<MaskedField preset="currency" prefix="€" thousandSeparator="." decimalSeparator="," />
+```
+
+Custom pattern without a preset:
+
+```tsx
+<MaskedField maskType="pattern" format="##-##-##" mask="_" placeholder="00-00-00" />
+```
+
+## Related exports
+
+### maskPresets
+
+An object of preset configurations. `MaskPresetType` is `keyof typeof maskPresets`.
+
+Numeric presets (`NumericFormat`):
+
+- `currency` — prefix `$`, thousand separator `,`, decimal separator `.`, 2 fixed decimals, no negatives.
+- `percentage` — suffix `%`, up to 2 decimals, no negatives, values limited to 0–100.
+- `decimal` — up to 4 decimals, negatives allowed, thousand separator `,`.
+- `integer` — no decimals, no negatives, thousand separator `,`.
+- `year` — no decimals, no negatives, values limited to 1900–2100.
+
+Pattern presets (`PatternFormat`, mask character `_`, `allowEmptyFormatting: false`):
+
+- `phone` — `(###) ###-####`
+- `date` — `##/##/####`, placeholder `MM/DD/YYYY`
+- `zip` — `#####`
+- `zipPlus4` — `#####-####`
+- `ssn` — `###-##-####`
+- `ein` — `##-#######`
+- `creditCard` — `#### #### #### ####`
+- `time12` — `##:## ##`, placeholder `HH:MM AM`
+- `time24` — `##:##`, placeholder `HH:MM`
+
+## Notes
+
+- Any `type` prop is removed before rendering (it is stripped together with the preset's internal `type` key), so the input always uses `Field`'s default `type="text"`.
+- `MaskedField` does not forward refs, and `getInputRef` is omitted from its props.
+- Pattern presets only restrict input to digits; `date`, `time12`, and `time24` do not validate ranges, and `time12` accepts digits only in the AM/PM slot.
+- `maskType="pattern"` without a preset requires a `format` prop.
+- `formatWithPreset` exists in the module source but is not exported from `@reactberry/system/blocks`.
+- The preset `placeholder` values (`date`, `time12`, `time24`) are passed to the input and can be overridden.

@@ -1,0 +1,111 @@
+---
+title: Modal
+description: Render a full-screen dialog with a backdrop, Escape handling, and router-aware close behaviour.
+navTitle: Modal
+order: 1
+---
+
+`Modal` is a client component that renders a dialog panel over a backdrop, portalled to `document.body` by default. It uses `useRouter` and `usePathname` from `next/navigation`, so it must be rendered inside a Next.js App Router tree. The modal is open while mounted; the parent controls mounting.
+
+## Import
+
+```tsx
+import { Modal, useModalClose, pushThemeColor, popThemeColor } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <State initial={false}>
+    {(open, setOpen) => (
+      <>
+        <Button type="button" variant="primary" onClick={() => setOpen(true)}>Invite a teammate</Button>
+        {open && (
+          <Modal onClose={() => setOpen(false)} animated maxWidth="30rem" height="auto">
+            <Box p="medium" display="flex" flexDirection="column" gap="small">
+              <Text fontWeight="600">Invite a teammate</Text>
+              <Text color="secondary">Press Escape, click the backdrop, or use the button below to close.</Text>
+              <Button type="button" variant="ghost" onClick={() => setOpen(false)}>Close</Button>
+            </Box>
+          </Modal>
+        )}
+      </>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Modal, useModalClose } from "@reactberry/system/blocks";
+import { Box, Button, Text } from "@reactberry/system/elements";
+
+function CloseButton() {
+  const close = useModalClose();
+  return (
+    <Button variant="ghost" onClick={() => close?.()}>
+      <Text>Close</Text>
+    </Button>
+  );
+}
+
+export default function InviteDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button variant="primary" onClick={() => setOpen(true)}>
+        <Text>Invite</Text>
+      </Button>
+      {open && (
+        <Modal onClose={() => setOpen(false)} animated maxWidth="30rem" height="auto">
+          <Box p="medium" display="flex" flexDirection="column" gap="small">
+            <Text fontWeight="600">Invite a teammate</Text>
+            <CloseButton />
+          </Box>
+        </Modal>
+      )}
+    </>
+  );
+}
+```
+
+## Props
+
+- `children` (`ReactNode`, required) — dialog content, wrapped in a full-height flex column.
+- `onClose` (`() => void`) — close handler. When provided it always takes precedence over router navigation.
+- `portal` (`boolean`, default `true`) — render into `document.body` via `createPortal`.
+- `fallbackHref` (`string`) — route pushed on close when there is no `onClose` and no usable history.
+- `forceFallback` (`boolean`, default `false`) — skip `router.back()` and always push the fallback route.
+- `closeOnOverlayClick` (`boolean`, default `true`) — close when the backdrop is clicked.
+- `backdrop` (`boolean`, default `true`) — tint the backdrop (`transparent.light.9`); `false` makes it transparent.
+- `backdropProps` (`Record<string, any>`) — props spread onto the `Backdrop`, after the modal's defaults.
+- `animated` (`boolean`, default `false`) — scale and fade the dialog with a spring. `onClose` runs after the exit animation completes.
+
+Any other props are spread onto the dialog panel `Box` (defaults include `skin="surface"`, `shape="rounded"`, `width="100%"`, `height="100%"`, `overflow="hidden"`).
+
+## Examples
+
+Route-driven modal that falls back to a list page:
+
+```tsx
+<Modal fallbackHref="/tasks" closeOnOverlayClick={false}>
+  <Text>Task details</Text>
+</Modal>
+```
+
+## Related exports
+
+- `useModalClose()` — returns the enclosing modal's close function, or `null` outside a `Modal`. When `animated` is set, calling it plays the exit animation before `onClose` runs.
+- `pushThemeColor()` — increments a shared overlay counter. On the first push it sets `body` overflow to `hidden` and, on touch devices, sets the `theme-color` meta tag and `html` background to `#000000`.
+- `popThemeColor()` — decrements the counter and restores the original values when it reaches zero.
+
+`Modal` calls `pushThemeColor` on mount and `popThemeColor` on unmount. Call them in pairs if building a custom overlay.
+
+## Notes
+
+- Without `onClose`, closing calls `router.back()` when `window.history.length` is greater than 1, otherwise pushes `fallbackHref`. If no fallback is given, paths matching `/tasks/[id]` and `/activity/[id]` resolve to `/tasks` and `/activity`; anything else resolves to `/`.
+- Escape closes the modal. Clicks, pointer, and keyboard events inside the modal stop propagating to React ancestors.
+- The panel has `role="dialog"` and `aria-modal="true"`. Focus is not moved into or trapped within the dialog.
+- Nothing is rendered until after the first client mount. In PWA standalone mode, top padding includes the safe-area inset.

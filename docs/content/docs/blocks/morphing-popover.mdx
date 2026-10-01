@@ -1,0 +1,108 @@
+---
+title: MorphingPopover
+description: Morph a trigger element into a centred dialog panel using a shared layout animation.
+navTitle: MorphingPopover
+order: 1
+---
+
+`MorphingPopover` is a client component that uses a shared `motion/react` `layoutId` to animate a trigger into a panel. The panel is portalled to `document.body` and centred in a fixed full-screen overlay, rather than anchored to the trigger.
+
+## Import
+
+```tsx
+import { MorphingPopover } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <MorphingPopover
+    trigger={<Button variant="primary" shape="pill">Share</Button>}
+    panelProps={{ width: "20rem", p: "medium" }}
+  >
+    {({ close }) => (
+      <Box display="flex" flexDirection="column" gap="small">
+        <Text fontWeight="600">Share this page</Text>
+        <Text color="secondary">Copy the link or send it to a teammate.</Text>
+        <Button type="button" variant="ghost" onClick={close}>Done</Button>
+      </Box>
+    )}
+  </MorphingPopover>
+</Preview>
+
+## Usage
+
+```tsx
+import { MorphingPopover } from "@reactberry/system/blocks";
+import { Box, Button, Text } from "@reactberry/system/elements";
+
+export default function ShareAction() {
+  return (
+    <MorphingPopover
+      trigger={
+        <Button variant="primary" shape="pill">
+          <Text>Share</Text>
+        </Button>
+      }
+      panelProps={{ width: "20rem", p: "medium" }}
+    >
+      {({ close }) => (
+        <Box display="flex" flexDirection="column" gap="small">
+          <Text fontWeight="600">Share this page</Text>
+          <Button variant="ghost" onClick={close}>
+            <Text>Done</Text>
+          </Button>
+        </Box>
+      )}
+    </MorphingPopover>
+  );
+}
+```
+
+## Props
+
+- `trigger` (`React.ReactNode`) — element shown as the trigger. A valid element is recreated with `motion.create` and given the shared `layoutId`; clicking it calls its own `onClick` and then opens the panel unless `event.preventDefault()` was called.
+- `renderTrigger` (`(props: { ref; onClick? }) => React.ReactNode`) — custom trigger renderer. Wire the provided `onClick` to your element to open the panel; it is not called automatically.
+- `triggerProps` (`Record<string, any>`) — props spread onto the wrapper `Box`, used only when the trigger (or `renderTrigger` result) is not a valid React element.
+- `children` (`React.ReactNode | ((context: { close: () => void }) => React.ReactNode)`) — panel content.
+- `panelProps` (`Record<string, any>`) — props spread onto the panel, overriding defaults (`skin="surface"`, `shape="rounded"`, `p="xsmall"`, `$shadow="medium"`).
+- `containerProps` (`Record<string, any>`) — props spread onto the outer `Box` (default `display="inline-flex"`, `position="relative"`).
+- `transition` (`Transition`, default spring with `bounce: 0.1`, `duration: 0.4`) — applied through `MotionConfig`.
+- `variants` (`Variants`) — panel variants for `initial`, `animate`, and `exit`. The default fades opacity and animates `borderRadius` from `9999` to `16`.
+- `open` (`boolean`) — controlled open state.
+- `defaultOpen` (`boolean`, default `false`) — initial state when uncontrolled.
+- `onOpenChange` (`(open: boolean) => void`) — called when the component requests an open state change.
+- `placement` (`string`, default `"bottom end"`) — accepted for API compatibility with `Popover` but ignored.
+
+Remaining props are not spread.
+
+## Examples
+
+Controlled state:
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<MorphingPopover open={open} onOpenChange={setOpen} trigger={<Button><Text>Edit</Text></Button>}>
+  <Text>Editor</Text>
+</MorphingPopover>;
+```
+
+Custom trigger renderer:
+
+```tsx
+<MorphingPopover
+  renderTrigger={({ onClick }) => (
+    <Button onClick={onClick}><Text>Open</Text></Button>
+  )}
+>
+  <Text>Panel</Text>
+</MorphingPopover>
+```
+
+## Notes
+
+- The panel has `role="dialog"` and `aria-modal="true"`, but focus is not moved into or trapped within it.
+- Clicking outside the panel and pressing Escape both close it.
+- A transparent `Underlay` is rendered behind the panel inside the overlay (`zIndex="999999"`).
+- The trigger remains mounted while the panel is open; the shared `layoutId` drives the morph between them.

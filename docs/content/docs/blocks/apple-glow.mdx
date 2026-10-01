@@ -1,0 +1,89 @@
+---
+title: AppleGlow
+description: Overlay a rotating multi-colour gradient glow around the edges of a parent element.
+navTitle: AppleGlow
+order: 1
+---
+
+`AppleGlow` is a client component that renders an absolutely positioned layer with a rotating linear gradient behind a blurred inset mask, so only a soft coloured edge is visible. It depends on `motion/react`.
+
+## Import
+
+```tsx
+import { AppleGlow } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <State initial={true}>
+    {(active, setActive) => (
+      <Box position="relative" p="l" shape="rounded" minHeight="10rem" width="100%" maxWidth="24rem" display="flex" alignItems="center" justifyContent="center" bg="surface">
+        <AppleGlow preview={active} borderRadius="16px" backgroundColor="surface" />
+        <Box position="relative" display="flex" flexDirection="column" alignItems="center" gap="s">
+          <Text fontWeight="600">Assistant is {active ? "listening" : "idle"}</Text>
+          <Button type="button" onClick={() => setActive(!active)}>
+            {active ? "Stop glow" : "Start glow"}
+          </Button>
+        </Box>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import { AppleGlow } from "@reactberry/system/blocks";
+import { Box, Button } from "@reactberry/system/elements";
+
+export default function AssistantPanel() {
+  const [active, setActive] = useState(false);
+
+  return (
+    <Box position="relative" p="l" shape="rounded" minHeight="200px">
+      <AppleGlow preview={active} borderRadius="16px" />
+      <Box position="relative">
+        <Button variant="default" onClick={() => setActive((value) => !value)}>
+          {active ? "Stop" : "Start"}
+        </Button>
+      </Box>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `preview` (`boolean`, default `false`) — renders and animates the glow. Nothing is rendered when `false`.
+- `colors` (`string[]`, default `["#3B82F6", "#A855F7", "#7A84FF", "#35B3DF"]`) — gradient colour stops.
+- `borderRadius` (`string | number`) — applied as an inline style; the inset mask inherits it when set.
+- `intensity` (`"sm" | "md" | "lg" | "xl" | number`, default `"xl"`) — mask blur. Presets map to 8, 16, 24 and 32 pixels; a number is used as pixels.
+- `blurAmount` (`number`) — mask blur in pixels; overrides `intensity`.
+- `backgroundColor` (`string`, default `"base"`) — background of the inset mask. Match it to the parent's background.
+- `rotationSpeed` (`number`, default `50`) — milliseconds per degree of rotation; higher values rotate more slowly. `0` stops rotation.
+
+All remaining `BoxProps` (except `children`) are spread onto the glow layer.
+
+## Examples
+
+Subtle two-colour glow:
+
+```tsx
+<AppleGlow preview colors={["#22d3ee", "#a855f7"]} intensity="sm" rotationSpeed={100} />
+```
+
+## Related exports
+
+- `AppleGlowProps` — the props type, exported from `@reactberry/system/blocks`.
+
+## Notes
+
+- The layer is `position: absolute` with all edges at 0 and `pointer-events: none`. Its parent needs `position: relative`, and sibling content should be positioned to render above it.
+- The inset mask is offset 2px from each edge; the visible glow comes from the mask's blurred edges.
+- The glow fades in and out over 0.3 s via `AnimatePresence`.
+- The gradient angle is updated with `requestAnimationFrame`, writing `style.background` directly instead of re-rendering React.
+- When the user prefers reduced motion, a static gradient is shown and no animation loop runs.

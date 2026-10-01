@@ -1,0 +1,77 @@
+---
+title: TickerCard
+description: Render a square image tile that shows a dimmed overlay with a call-to-action label on hover.
+navTitle: TickerCard
+order: 1
+---
+
+`TickerCard` is a client component that renders a square `next/image` tile. On hover it fades in a 70% black overlay with either a white pill label or custom overlay content. It depends on `motion/react` and `next/image`.
+
+## Import
+
+```tsx
+import { TickerCard } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <TickerCard image="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%232e8b57'/%3E%3C/svg%3E" width="10rem" shape="rounded" />
+  <TickerCard image="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%234babd0'/%3E%3C/svg%3E" width="10rem" shape="rounded" overlayContent="View gallery" />
+  <TickerCard
+    image="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e0a458'/%3E%3C/svg%3E"
+    width="10rem"
+    shape="rounded"
+    overlayContent={<Button type="button" variant="default" $size="small">Open</Button>}
+  />
+</Preview>
+
+## Usage
+
+```tsx
+import { TickerCard } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+const tiles = ["/images/a.jpg", "/images/b.jpg", "/images/c.jpg"];
+
+export default function TileRow() {
+  return (
+    <Box display="flex" gap="m">
+      {tiles.map((src) => (
+        <TickerCard key={src} image={src} width="200px" shape="rounded" />
+      ))}
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `image` (`string`) — tile image source passed to `next/image`. Typed as optional, but the image is always rendered, so a value is effectively required.
+- `overlayContent` (`React.ReactNode | string`, default `"Explore Now"`) — a valid React element is rendered as-is; any other value is wrapped in a white pill with small semibold text.
+- `children` (`React.ReactNode`) — rendered inside the tile before the overlay and image layers.
+- `width` (`number | string`) — declared on the props type and passed through to the `Box`.
+- `height` (`number | string`) — declared on the props type and passed through to the `Box`.
+
+All remaining props are spread onto the outer Motion `Box` (typed as `[key: string]: any`), which defaults to `aspect="1/1"`, `position="relative"`, `overflow="hidden"` and centred flex content.
+
+## Examples
+
+Custom overlay element:
+
+```tsx
+<TickerCard
+  image="/images/a.jpg"
+  width="240px"
+  overlayContent={<Button variant="default">View</Button>}
+/>
+```
+
+## Notes
+
+- The overlay is shown via Motion's `onHoverStart` and `onHoverEnd`, which do not fire for touch input, so the overlay is not reachable on touch devices.
+- The image layer is absolutely positioned at `zIndex` 0. Give `children` a positioned wrapper with a higher `zIndex` to render above it. The overlay uses `zIndex` 10.
+- The image uses `fill`, `sizes="100vh"`, `objectFit: "cover"` and a fixed `alt="image"`.
+- The default pill slides up 10px as the overlay fades in.
+- There is no reduced-motion handling.
+- Remote image URLs must be allowed in your Next.js `images` configuration.

@@ -6,6 +6,8 @@ import {
   textTransform,
   textDecoration,
   textOverflow,
+  whiteSpace,
+  overflowWrap,
   truncate,
   lineClamp,
   disabled,
@@ -16,6 +18,7 @@ export interface TextProps extends BaseElementProps, TypographyProps {
   truncate?: boolean;
   textTransform?: string;
   textDecoration?: string;
+  overflowWrap?: string;
   lineClamp?: number;
 }
 
@@ -30,6 +33,8 @@ const Text = styled(Box)
         "textTransform",
         "textDecoration",
         "textOverflow",
+        "whiteSpace",
+        "overflowWrap",
         "truncate",
         "lineClamp",
       ].includes(prop),
@@ -40,7 +45,15 @@ const Text = styled(Box)
   }))<TextProps>`
   ${(p) => (p.truncate ? truncate : null)}
   ${(p) => (p.lineClamp ? lineClamp : null)}
-  ${() => compose(typography, textTransform, textDecoration, textOverflow)}
+  ${() =>
+    compose(
+      typography,
+      textTransform,
+      textDecoration,
+      textOverflow,
+      whiteSpace,
+      overflowWrap,
+    )}
   ${(p) => p.disabled && disabled}
 `;
 

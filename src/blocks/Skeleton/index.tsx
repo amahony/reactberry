@@ -24,12 +24,12 @@ interface SkeletonProps {
 
 export default function Skeleton({
   count = 9,
-  aspect = "1.5/1",
+  aspect = "3/2",
   colsize = "xlarge",
   showText = true,
   variant = "grid",
   width = "100%",
-  height = "40px",
+  height = "2.25rem",
   ...rest
 }: SkeletonProps) {
   if (variant === "component") {

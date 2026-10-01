@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "motion/react";
 
 import Box, { BoxProps } from "../../elements/box";

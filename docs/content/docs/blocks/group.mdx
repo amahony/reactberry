@@ -1,0 +1,104 @@
+---
+title: Group
+description: Join buttons, tabs or avatars into a connected horizontal or vertical group.
+navTitle: Group
+order: 1
+---
+
+`Group` is a client component (`"use client"`) that renders a styled-components `Box` as a centred flex row, with child styling rules selected by `type` and `vertical`.
+
+## Import
+
+```tsx
+import { Group } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column">
+  <State initial="Grid">
+    {(layout, setLayout) => (
+      <Group type="buttons">
+        {["Grid", "List", "Board"].map((option) => (
+          <Button
+            key={option}
+            type="button"
+            className="button"
+            variant={layout === option ? "primary" : undefined}
+            $size="small"
+            onClick={() => setLayout(option)}
+          >
+            {option}
+          </Button>
+        ))}
+      </Group>
+    )}
+  </State>
+  <Group type="avatars">
+    <Avatar name="Ada Lovelace" />
+    <Avatar name="Grace Hopper" />
+    <Avatar name="Katherine Johnson" />
+    <Avatar name="Margaret Hamilton" />
+  </Group>
+</Preview>
+
+## Usage
+
+```tsx
+import { Group } from "@reactberry/system/blocks";
+import { Button } from "@reactberry/system/elements";
+
+export default function ViewToggle() {
+  return (
+    <Group type="buttons">
+      <Button className="button" variant="primary" $size="small">
+        Grid
+      </Button>
+      <Button className="button" $size="small">
+        List
+      </Button>
+      <Button className="button" $size="small">
+        Board
+      </Button>
+    </Group>
+  );
+}
+```
+
+## Props
+
+- `type` (`"buttons" | "avatars" | "tabs"`) — selects the child styling rules. Without it, `Group` is a plain flex row.
+- `vertical` (`boolean`) — switches to a flex column aligned to the start, with vertical variants of the `type` rules.
+- `className` (`string`) — passed to the root element.
+- `children` (`React.ReactNode`) — grouped items.
+- All other `BoxProps` are spread onto the root after `display="flex"` and `alignItems="center"`.
+
+## Examples
+
+Overlapping avatar stack:
+
+```tsx
+<Group type="avatars">
+  <Avatar name="Ada Lovelace" />
+  <Avatar name="Grace Hopper" />
+  <Avatar name="Alan Turing" />
+</Group>
+```
+
+Vertical button stack:
+
+```tsx
+<Group type="buttons" vertical>
+  <Button $size="small">Profile</Button>
+  <Button $size="small">Security</Button>
+</Group>
+```
+
+## Notes
+
+- `buttons` (horizontal): the first and last children get 8px outer corner radii. Square inner corners, the `-1px` overlap and centred alignment apply only to direct children with the class `button` (and the first child of a `.dropdown` child). The `Button` element does not add this class itself, so pass `className="button"`. Hovered children are raised with `z-index: 2`.
+- `buttons` (vertical): children are centred, the first gets top corners and the last gets bottom corners rounded.
+- `avatars` (horizontal): uses `flex-direction: row-reverse`, so children render in reverse visual order, each `div` child overlapping the next by `0.75em`. Hovering a child scales it to 1.05. Vertical mode only centres the column.
+- `tabs` (horizontal): children are centred and the first gets a rounded top-left corner. Vertical mode makes children full-width with square corners.
+- `type` and `vertical` are not forwarded to the DOM.
+- `Group` adds no ARIA role. For a toolbar or tab list, set `role` (for example `role="group"` with an `aria-label`) yourself.

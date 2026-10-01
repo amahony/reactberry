@@ -1,0 +1,88 @@
+---
+title: Fader
+description: Render a full-size cover image that animates in with a blur and scale transition, with an optional gradient fade overlay.
+navTitle: Fader
+order: 1
+---
+
+`Fader` is a client component that renders a `next/image` cover image inside a Motion-powered `Box`, with an optional linear-gradient overlay on top. It depends on `motion/react` and `next/image`.
+
+## Import
+
+```tsx
+import { Fader } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview p="0" alignItems="stretch">
+  <Box position="relative" width="100%" height="18rem" color="black">
+    <Fader image="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f59e0b'/%3E%3Cstop offset='0.5' stop-color='%23dc2626'/%3E%3Cstop offset='1' stop-color='%237c2d12'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23g)'/%3E%3Ccircle cx='620' cy='120' r='70' fill='%23fde68a'/%3E%3C/svg%3E" fadeDirection="to bottom" />
+    <Box position="absolute" bottom="0" left="0" p="l" zIndex={4}>
+      <Text as="p" fontSize="xxl" fontWeight="700" color="white" m="0">Autumn preview</Text>
+      <Text as="p" color="white" m="0">Fades from transparent to black at 75%.</Text>
+    </Box>
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { Fader } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function Hero() {
+  return (
+    <Box position="relative" height="60vh" color="base">
+      <Fader image="/images/hero.jpg" fadeDirection="to bottom" />
+      <Box position="absolute" bottom="0" left="0" p="l" zIndex={4}>
+        <Text as="h1" fontSize="xxxl" fontWeight="700">
+          Autumn collection
+        </Text>
+      </Box>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `image` (`string | undefined | null`) — image source passed to `next/image`. Nothing is rendered for the image layer when falsy.
+- `fade` (`boolean`, default `true`) — renders the gradient overlay.
+- `fadeColor` (`string`, default `"currentColor"`) — set as the overlay's `color`. It only affects the gradient when an overlay stop uses `currentColor`.
+- `fadeDirection` (`string`, default `"to bottom"`) — direction argument of the overlay `linear-gradient`.
+- `overlay` (`{ start: { color, stop }, end: { color, stop } }`, default start `transparent 0%`, end `currentColor 75%`) — the two gradient stops.
+- `variants` (`object`) — Motion variants for the image wrapper. The defaults define `enter`, `center`, `exit` and `hover` states (opacity, scale, y offset and blur, 0.4 s each).
+- `imgStyle` (`object`) — declared but not used.
+
+All remaining `BoxProps` are spread onto the outer `Box`, which defaults to `position="relative"`, `overflow="hidden"`, `width="100%"` and `height="100%"`.
+
+## Examples
+
+Without the fade overlay:
+
+```tsx
+<Fader image="/images/hero.jpg" fade={false} />
+```
+
+Custom overlay stops fading to a fixed colour from the left:
+
+```tsx
+<Fader
+  image="/images/hero.jpg"
+  fadeDirection="to right"
+  overlay={{
+    start: { color: "rgba(0, 0, 0, 0.8)", stop: "0%" },
+    end: { color: "transparent", stop: "60%" },
+  }}
+/>
+```
+
+## Notes
+
+- The image wrapper uses `initial="enter"`, `animate="center"` and `exit="exit"`. The `hover` variant is defined but no hover gesture triggers it.
+- The image element inside `AnimatePresence` has no `key`, so changing `image` swaps the source without replaying the exit and enter animation.
+- The image is rendered with `priority`, `loading="eager"`, `fill`, `sizes="100%"`, `objectFit: "cover"` and a fixed `alt="image"`.
+- Remote image URLs must be allowed in your Next.js `images` configuration.
+- There is no reduced-motion handling; the blur and scale transition always runs.
+- Layering: the image sits at `zIndex` 1 and the overlay at `zIndex` 3. Place content above with `zIndex` 4 or higher.

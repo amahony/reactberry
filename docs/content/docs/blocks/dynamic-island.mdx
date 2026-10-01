@@ -1,0 +1,96 @@
+---
+title: DynamicIsland
+description: Render a pill-shaped container that animates its size and content when the view changes.
+navTitle: DynamicIsland
+order: 1
+---
+
+`DynamicIsland` is a client component that renders a centred, translucent dark pill using a `motion` layout animation. When `view` changes, the inner content remounts with a scale, opacity, and blur entrance. It reads theme tokens and should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { DynamicIsland } from "@reactberry/system/blocks";
+import type { DynamicIslandProps, DynamicIslandView } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column">
+  <State initial="idle">
+    {(view, setView) => (
+      <Box display="flex" flexDirection="column" alignItems="center" gap="m" width="100%">
+        <DynamicIsland
+          view={view}
+          content={
+            view === "idle" ? (
+              <Text px="m" py="xs" color="white">Island ready</Text>
+            ) : (
+              <Box px="l" py="s" display="flex" flexDirection="column" gap="xxs">
+                <Text color="white" fontWeight="600">Syncing 3 files</Text>
+                <Text color="white" fontSize="s">About 10 seconds left</Text>
+              </Box>
+            )
+          }
+        />
+        <Button type="button" onClick={() => setView(view === "idle" ? "uploading" : "idle")}>
+          {view === "idle" ? "Start sync" : "Finish sync"}
+        </Button>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import { DynamicIsland } from "@reactberry/system/blocks";
+import type { DynamicIslandView } from "@reactberry/system/blocks";
+import { Box, Button, Text } from "@reactberry/system/elements";
+
+export default function StatusIsland() {
+  const [view, setView] = useState<DynamicIslandView>("idle");
+
+  const content =
+    view === "idle" ? (
+      <Text px="m" py="xs" color="white">Ready</Text>
+    ) : (
+      <Box px="l" py="s" display="flex" gap="s" alignItems="center">
+        <Text color="white">Uploading 3 files</Text>
+      </Box>
+    );
+
+  return (
+    <Box display="flex" flexDirection="column" gap="m">
+      <DynamicIsland view={view} content={content} />
+      <Button onClick={() => setView(view === "idle" ? "uploading" : "idle")}>Toggle</Button>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `view` (`DynamicIslandView`, default `"default"` when omitted) — identifies the current content. It is used as the React key of the inner content, so a new value replays the entrance animation.
+- `content` (`ReactNode`) — content rendered inside the pill.
+- `containerProps` (`any`) — spread onto the outer `motion` `Box`, after the default layout props and before `transition`.
+- `onViewChange` (`(view: DynamicIslandView) => void`) — declared but not used.
+- `controlIcons` (`Record<string, ReactNode>`) — declared but not used.
+
+No other props are accepted.
+
+## Related exports
+
+- `DynamicIslandProps` — the props interface above.
+- `DynamicIslandView` — alias for `string`.
+
+## Notes
+
+- The component is controlled only through `view`. It has no internal way to change view, and `onViewChange` is never called.
+- `controlIcons` is accepted by the type but ignored; no controls are rendered.
+- Default container styling: `skin="translucent.dark"`, `shape="pill"`, `minWidth="6rem"`, `m="0 auto"`, width and height `fit-content`, flex centring, and hidden overflow. Any of these can be overridden through `containerProps`.
+- `transition` is set after `containerProps` is spread, so a `transition` passed in `containerProps` is overridden. Both the container and the content use a spring with `bounce: 0.5`.
+- No reduced-motion check is performed. No ARIA role or live region is applied; add one through `containerProps` (for example `role="status"`) when changes should be announced.

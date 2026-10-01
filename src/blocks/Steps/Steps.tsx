@@ -147,6 +147,7 @@ function Steps({
             {!isFirst && (
               <Box
                 as="button"
+                type="button"
                 skin="default"
                 px="medium"
                 py="small"
@@ -172,6 +173,7 @@ function Steps({
           <Box>
             <Box
               as="button"
+              type="button"
               px="medium"
               py="small"
               shape="pill"

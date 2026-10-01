@@ -5,6 +5,8 @@ import {
   PatternFormat,
   NumericFormatProps,
   PatternFormatProps,
+  numericFormatter,
+  patternFormatter,
 } from "react-number-format"
 import { Field } from "../../elements"
 
@@ -114,6 +116,31 @@ export const maskPresets = {
 }
 
 export type MaskPresetType = keyof typeof maskPresets
+
+/**
+ * Format an already-stored value with a preset's mask so read-only text reads
+ * the same as the masked input does while editing (e.g. `5551234567` becomes
+ * `(555) 123-4567`). Values that don't fill the pattern are returned untouched
+ * so partial or unexpected data is never mangled.
+ */
+export function formatWithPreset(
+  value: string,
+  preset: MaskPresetType,
+): string {
+  if (!value) return value
+  const config = maskPresets[preset] as any
+
+  if (config.type === "numeric") {
+    const numeric = value.replace(/[^0-9.-]/g, "")
+    if (!numeric || Number.isNaN(Number(numeric))) return value
+    return numericFormatter(numeric, config)
+  }
+
+  const digits = value.replace(/[^0-9]/g, "")
+  const slots = (String(config.format).match(/#/g) || []).length
+  if (digits.length !== slots) return value
+  return patternFormatter(digits, config)
+}
 
 interface BaseMaskedFieldProps {
   variant?: string

@@ -1,0 +1,107 @@
+---
+title: Checkbox
+description: An animated, button-based checkbox with loading and disabled states.
+navTitle: Checkbox
+order: 1
+---
+
+`Checkbox` is a client component that renders a `motion.button` (via `Group`) with `role="checkbox"` and an animated tick drawn with `motion/react`. It is controlled: the parent owns the `checked` state.
+
+## Import
+
+```tsx
+import { Checkbox } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="flex-start">
+  <State initial={false}>
+    {(done, setDone) => (
+      <Box display="flex" alignItems="center" gap="s">
+        <Checkbox checked={done} onChange={() => setDone(!done)} ariaLabel="Write release notes" />
+        <Text>Write release notes</Text>
+      </Box>
+    )}
+  </State>
+  <State initial={true}>
+    {(done, setDone) => (
+      <Box display="flex" alignItems="center" gap="s">
+        <Checkbox checked={done} onChange={() => setDone(!done)} size="2rem" ariaLabel="Ship version 2" />
+        <Text>Ship version 2 (large)</Text>
+      </Box>
+    )}
+  </State>
+  <Box display="flex" alignItems="center" gap="s">
+    <Checkbox checked={false} isLoading ariaLabel="Saving task" />
+    <Text>Saving task (loading)</Text>
+  </Box>
+  <Box display="flex" alignItems="center" gap="s">
+    <Checkbox checked disabled ariaLabel="Locked task" />
+    <Text>Locked task (disabled)</Text>
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import { Checkbox } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function TaskRow() {
+  const [done, setDone] = useState(false);
+
+  return (
+    <Box display="flex" alignItems="center" gap="s">
+      <Checkbox
+        checked={done}
+        onChange={() => setDone((value) => !value)}
+        ariaLabel="Write release notes"
+      />
+      <Text>Write release notes</Text>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `checked` (`boolean`, default `false`) — checked state; switches the skin from `"panel"` to `"success.static"` and animates the tick.
+- `onChange` (`() => void`) — called on click when not loading or disabled. It receives no arguments.
+- `isLoading` (`boolean`, default `false`) — shows an animated dots icon, hides the tick, and blocks interaction.
+- `disabled` (`boolean`, default `false`) — disables the button and blocks interaction.
+- `size` (`string`, default `"1.375rem"`) — width and height of the box.
+- `title` (`string`) — `title` attribute. Defaults to `"Mark as incomplete"` when checked and `"Mark as complete"` otherwise.
+- `ariaLabel` (`string`) — sets `aria-label`.
+- `containerProps` (`React.ComponentProps<typeof Group>`) — spread onto the `Group` button last, so it can override any default prop.
+
+No other props are accepted.
+
+## Examples
+
+Loading while a request is in flight:
+
+```tsx
+<Checkbox checked={task.done} isLoading={saving} onChange={toggleTask} ariaLabel={task.title} />
+```
+
+Larger size with a custom focus style:
+
+```tsx
+<Checkbox
+  checked={checked}
+  onChange={toggle}
+  size="2rem"
+  containerProps={{ interactive: { focusVisible: { borderColor: "brand" } } }}
+/>
+```
+
+## Notes
+
+- Sets `aria-checked`, `aria-disabled` (when loading or disabled), and `aria-busy` (when loading).
+- The click handler calls `preventDefault` and `stopPropagation`, so clicks do not bubble to parent rows or submit forms.
+- It is not a native `input type="checkbox"` and has no `name` or `value`; it does not participate in form submission.
+- The default `title` text is task-oriented; pass `title` for other contexts.

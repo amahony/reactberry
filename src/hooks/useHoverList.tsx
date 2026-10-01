@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, type MouseEventHandler } from "react";
 
 export type HoverProps = {

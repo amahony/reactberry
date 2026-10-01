@@ -1,0 +1,81 @@
+---
+title: Underlay
+description: Render a backdrop-blurred surface with a dotted grid or gradient fill and an optional fade-out mask.
+navTitle: Underlay
+order: 1
+---
+
+`Underlay` is a client component that renders a `Box` with `backdrop-filter: blur()`, a background pattern, and an optional linear-gradient mask. It is typically placed behind sticky headers or toolbars. It has no intrinsic size or position, and should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { Underlay } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview minHeight="12rem">
+  {["tomato", "gold", "mediumseagreen", "dodgerblue", "orchid"].map((colour) => (
+    <Box key={colour} size="4rem" bg={colour} shape="rounded" />
+  ))}
+  <Underlay position="absolute" top="0" left="0" right="0" height="7rem" color="base" />
+  <Text position="absolute" top="1rem" left="1.5rem" fontWeight="700">Sticky header</Text>
+</Preview>
+
+## Usage
+
+```tsx
+import { Underlay } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function StickyHeader() {
+  return (
+    <Box position="sticky" top="0" zIndex={10}>
+      <Underlay position="absolute" top="0" left="0" right="0" height="6rem" color="base" dotColor="transparent" />
+      <Box position="relative" p="m">
+        <Text as="h1" fontSize="l">Dashboard</Text>
+      </Box>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `blurAmount` (`number`, default `12`) — backdrop blur radius in pixels.
+- `hasMask` (`boolean`, default `true`) — applies a CSS `mask` with a linear gradient.
+- `maskGradient` (`string`) — contents of the mask's `linear-gradient()`. Falls back to `"rgb(0, 0, 0) 33%, rgba(0, 0, 0, 0) 100%"`, which fades from opaque to transparent top to bottom.
+- `dotColor` (`string`, default `"transparent"` in the pattern) — colour of the dots.
+- `backgroundColor` (`string`, default `"currentColor"` in the pattern) — colour between the dots. It is not applied as the CSS `background-color`.
+- `dotSize` (`number`, default `1`) — pixel position where the dot fades to `backgroundColor`.
+- `gridSize` (`number`, default `4`) — size in pixels of each repeating tile of the dot pattern.
+- `stop1` (`string`) — first colour of a gradient fill.
+- `stop2` (`string`) — second colour of a gradient fill. When both `stop1` and `stop2` are set, the dot pattern is replaced by `linear-gradient(to bottom right, stop1, stop2)` and `gridSize` is ignored.
+
+All remaining props are spread onto the root `Box` after its defaults (`bg="transparent"`, `backgroundImage`, `backgroundSize`), so they can override them.
+
+## Examples
+
+Gradient fill without a mask:
+
+```tsx
+<Underlay position="absolute" top="0" right="0" bottom="0" left="0" hasMask={false} stop1="rgba(255,255,255,0.8)" stop2="rgba(255,255,255,0.2)" />
+```
+
+Dense dot grid with a stronger blur:
+
+```tsx
+<Underlay height="4rem" dotColor="black" backgroundColor="white" dotSize={2} gridSize={6} blurAmount={20} />
+```
+
+## Related exports
+
+None.
+
+## Notes
+
+- With the defaults (`dotColor` unset), the pattern is a radial gradient from transparent to `currentColor`, so the inherited or `color` prop value sets the visible fill.
+- After mount, and whenever `blurAmount`, `width`, `height`, or `expanded` change, an effect clears and re-applies the inline `backdropFilter` to force the browser to repaint the blur. `expanded` is not declared in the props type but is read from the spread props and forwarded to the `Box`.
+- The element is purely decorative and sets no ARIA attributes. Add `aria-hidden` through the spread props if needed.
+- No animation is involved, so there is no reduced-motion handling.

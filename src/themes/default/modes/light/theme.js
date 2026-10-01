@@ -5,8 +5,8 @@ import { getTransparent } from "../../utils";
 const theme = {
   ...skinconfig,
   main: {
-    width: "100vw",
-    minHeight: "100dvh",
+    width: "100%",
+    minHeight: "100vh",
     bg: "palette.blues.0",
   },
   container: {

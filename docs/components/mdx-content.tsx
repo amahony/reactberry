@@ -1,13 +1,20 @@
 "use client";
 
-import { Children, isValidElement } from "react";
+import { Children, isValidElement, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMDXComponent } from "@content-collections/mdx/react";
-import { Box, Button, Text } from "@reactberry/system/elements";
+import * as Blocks from "@reactberry/system/blocks";
+import * as Charts from "@reactberry/system/charts";
+import * as Icons from "@reactberry/system/icons";
+import { Box, Button, Field, Text } from "@reactberry/system/elements";
 
 import CodeBlock from "@/components/code-block";
+import BottomSheetLiveExamples from "@/components/examples/bottom-sheet-live-examples";
+import BreadcrumbsLiveExamples from "@/components/examples/breadcrumbs-live-examples";
 import CarouselLiveExamples from "@/components/examples/carousel-live-examples";
+import ColorPickerLiveExamples from "@/components/examples/color-picker-live-examples";
+import ScreenLiveExamples from "@/components/examples/screen-live-examples";
 import { slugifyHeading } from "@/lib/toc";
 
 type MdxContentProps = {
@@ -152,12 +159,54 @@ function MdxPre({ children, ...props }: { children: React.ReactNode; [key: strin
   return <Box as="pre" p="m" skin="surface" shape="rounded" overflowX="auto" m="0" {...props}>{children}</Box>;
 }
 
+function Preview({ children, ...props }: { children: React.ReactNode; [key: string]: any }) {
+  return (
+    <Box
+      display="flex"
+      flexWrap="wrap"
+      alignItems="center"
+      justifyContent="center"
+      gap="m"
+      p="l"
+      minHeight="8rem"
+      position="relative"
+      overflow="hidden"
+      skin="surface"
+      shape="rounded"
+      {...props}
+    >
+      {children}
+    </Box>
+  );
+}
+
+function State<T>({
+  initial,
+  children,
+}: {
+  initial: T;
+  children: (value: T, setValue: React.Dispatch<React.SetStateAction<T>>) => React.ReactNode;
+}) {
+  const [value, setValue] = useState<T>(initial);
+  return <>{children(value, setValue)}</>;
+}
+
 export default function MdxContent({ code, contentKind, sourcePath, suppressFirstH1 = false }: MdxContentProps) {
   const Component = useMDXComponent(code);
   let headingIndex = 0;
   const components = {
+    ...(Icons as Record<string, any>),
+    ...(Charts as Record<string, any>),
+    ...(Blocks as Record<string, any>),
+    Field,
+    Preview,
+    State,
     CodeBlock,
+    BottomSheetLiveExamples,
+    BreadcrumbsLiveExamples,
     CarouselLiveExamples,
+    ColorPickerLiveExamples,
+    ScreenLiveExamples,
     Image: MdxImage,
     Box: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => <Box {...props}>{children}</Box>,
     Text: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => <Text {...props}>{children}</Text>,

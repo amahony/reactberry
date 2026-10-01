@@ -1,0 +1,69 @@
+---
+title: AnimatedCarousel
+description: Display one image at a time with spring-animated transitions and an expanding thumbnail strip.
+navTitle: AnimatedCarousel
+order: 1
+---
+
+`AnimatedCarousel` is a client component that renders a horizontal image track with previous and next controls and a row of thumbnails, animating position with `motion` springs. It reads theme tokens and should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { AnimatedCarousel } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Box maxWidth="32rem" width="100%" mx="auto" maxHeight="24rem">
+    <AnimatedCarousel
+      images={[
+        { id: 1, url: "https://picsum.photos/seed/kitchen/400/300" },
+        { id: 2, url: "https://picsum.photos/seed/lounge/400/300" },
+        { id: 3, url: "https://picsum.photos/seed/garden/400/300" },
+        { id: 4, url: "https://picsum.photos/seed/studio/400/300" },
+      ]}
+    />
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { AnimatedCarousel } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+const images = [
+  { id: 1, url: "/projects/kitchen.jpg" },
+  { id: 2, url: "/projects/lounge.jpg" },
+  { id: 3, url: "/projects/garden.jpg" },
+];
+
+export default function ProjectImages() {
+  return (
+    <Box maxWidth="48rem" mx="auto">
+      <AnimatedCarousel images={images} />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `images` (`ImageType[]`, required) — images to display. Each item is `{ id: number; url: string }`. `id` is used as the React key, so it must be unique.
+
+No other props are accepted and nothing is spread.
+
+## Related exports
+
+None. `ImageType` is exported from the package root (`import type { ImageType } from "@reactberry/system"`).
+
+## Notes
+
+- The active image is fully opaque; neighbouring images are dimmed to `0.4` opacity. Each main image is full width with height `100vh` capped at `70vh` and `objectFit: "cover"`.
+- The previous control appears only after the first image and the next control only before the last one. Navigation does not wrap around.
+- Clicking a thumbnail selects it. The active thumbnail expands from a `0.5` to a `3 / 2` aspect ratio and the strip re-centres on it.
+- A `keydown` listener on `document` handles the left and right arrow keys while the component is mounted. It responds regardless of focus, so multiple instances on one page move together and other arrow-key handlers on the page may conflict.
+- Main images are rendered without an `alt` attribute and thumbnails use `alt=""`. The arrow controls and thumbnails are `div` elements without a button role, label, or keyboard focus.
+- All transitions use a spring with `bounce: 0`. No reduced-motion check is performed.

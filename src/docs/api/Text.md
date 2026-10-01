@@ -53,6 +53,7 @@ import { Text } from '@reactberry/system/elements';
 | `truncate` | `boolean` | - | Single-line text truncation with ellipsis |
 | `textTransform` | `string` | - | CSS text-transform (uppercase, lowercase, capitalize) |
 | `textDecoration` | `string` | - | CSS text-decoration (underline, line-through, none) |
+| `overflowWrap` | `string` | - | CSS overflow-wrap (normal, break-word, anywhere) |
 | `lineClamp` | `number` | - | Multi-line text clamping (WebKit only) |
 
 ## Theme Integration

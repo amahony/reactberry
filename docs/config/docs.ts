@@ -24,6 +24,7 @@ export const docsConfig = {
     foundations: { title: "Foundations", order: 1 },
     elements: { title: "Elements", order: 2 },
     blocks: { title: "Blocks", order: 3 },
+    charts: { title: "Charts", order: 4 },
   } satisfies Record<string, DocsSectionMeta>,
 };
 

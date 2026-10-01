@@ -6,9 +6,15 @@ import Image from "next/image";
 interface ThumbnailProps extends Omit<BoxProps, "as"> {
   src: string;
   alt: string;
+  objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
 }
 
-const Thumbnail: React.FC<ThumbnailProps> = ({ src, alt, ...rest }) => {
+const Thumbnail: React.FC<ThumbnailProps> = ({
+  src,
+  alt,
+  objectFit,
+  ...rest
+}) => {
   return (
     <Box position="relative" overflow="hidden" {...rest}>
       <Box
@@ -17,7 +23,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ src, alt, ...rest }) => {
         alt={alt}
         fill
         sizes="100rem"
-        style={{ objectFit: "cover" }}
+        objectFit={objectFit || "cover"}
       />
     </Box>
   );

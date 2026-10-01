@@ -48,14 +48,6 @@ const staticPairs = {
     color: colors.dark,
     borderColor: colors.palette.brands[4],
   },
-  accent: {
-    color: colors.white,
-    backgroundColor: colors.palette.accents[6],
-    subtle: {
-      color: colors.palette.accents[10],
-      backgroundColor: colors.palette.accents[1],
-    },
-  },
   neutral: {
     color: colors.palette.neutrals[0],
     backgroundColor: colors.palette.neutrals[8],
@@ -104,6 +96,10 @@ const signalPairs = {
       color: colors.palette.greens[9],
       backgroundColor: colors.palette.greens[1],
     },
+    light: {
+      color: getShade(colors.success, 0.1),
+      backgroundColor: colors.palette.greens[0],
+    },
   },
   warning: {
     static: {
@@ -150,6 +146,32 @@ const signalPairs = {
       color: colors.palette.brands[9],
       backgroundColor: colors.palette.brands[0],
       borderColor: colors.transparent.light[5],
+    },
+    light: {
+      color: colors.palette.brands[10],
+      backgroundColor: colors.transparent.brand[3],
+    },
+  },
+  accent: {
+    color: colors.white,
+    backgroundColor: colors.palette.accents[6],
+    static: {
+      color: colors.palette.accents[10],
+      backgroundColor: colors.palette.accents[3],
+    },
+    interactive: {
+      color: colors.palette.accents[0],
+      backgroundColor: getShade(colors.accent, 0.3),
+    },
+    subtle: {
+      color: colors.palette.accents[10],
+      backgroundColor: colors.palette.accents[1],
+      borderColor: colors.transparent.light[5],
+    },
+    light: {
+      color: colors.palette.accents[9],
+      backgroundColor: colors.palette.accents[0],
+      borderColor: colors.transparent.accent[5],
     },
   },
   neutral: {
@@ -203,6 +225,10 @@ const stateSkins = {
   outlined: {
     borderColor: colors.palette.accents[5],
     boxShadow: "0 0 0 3px " + getTransparent(colors.palette.accents[3], 0.8),
+    success: {
+      borderColor: colors.palette.greens[8],
+      boxShadow: "0 0 0 3px " + getTransparent(colors.palette.greens[9], 0.3),
+    },
   },
 }
 
@@ -280,11 +306,11 @@ const specialSkins = {
     backgroundColor: "rgba(0,0,0,0.0)",
   },
   translucent: {
-    borderColor: colors.transparent.light[2],
     backdropFilter: "blur(8px)",
     "-webkit-backdrop-filter": "blur(8px)",
     backgroundColor: getTransparent(colors.white, 0.8),
     color: colors.primary,
+    borderColor: colors.transparent.light[2],
     light: {
       borderColor: colors.transparent.light[2],
       backdropFilter: "blur(8px)",
@@ -299,9 +325,21 @@ const specialSkins = {
       backgroundColor: getTransparent(colors.black, 0.7),
       color: colors.white,
     },
+    yellow: {
+      borderColor: getTransparent(colors.palette.yellows[4], 0.4),
+      backdropFilter: "blur(8px)",
+      "-webkit-backdrop-filter": "blur(8px)",
+      backgroundColor: getTransparent(colors.palette.yellows[1], 0.88),
+      color: colors.primary,
+    },
   },
   gradient: {
     backgroundImage: `linear-gradient(to bottom, ${colors.palette.blues[1]} 50%, ${colors.palette.yellows[1]} 100%)`,
+  },
+  contrast: {
+    borderColor: colors.transparent.light[2],
+    backgroundColor: getTransparent(colors.light, 0.7),
+    color: colors.dark,
   },
 }
 
@@ -330,9 +368,31 @@ const hoverSkins = {
     color: colors.palette.reds[0],
     backgroundColor: colors.palette.reds[8],
   },
+  info: {
+    color: colors.palette.blues[0],
+    backgroundColor: colors.palette.blues[8],
+  },
+
+  warning: {
+    color: colors.palette.yellows[11],
+    backgroundColor: colors.palette.yellows[6],
+  },
   success: {
     color: colors.palette.greens[0],
     backgroundColor: colors.palette.greens[8],
+  },
+  contrast: {
+    borderColor: colors.transparent.light[2],
+    backgroundColor: getTransparent(colors.light, 0.9),
+    color: colors.white,
+  },
+  lighten: {
+    backgroundColor: getTransparent(colors.white, 0.35),
+    color: colors.primary,
+  },
+  accent: {
+    color: colors.palette.purples[0],
+    backgroundColor: colors.palette.purples[7],
   },
 }
 
@@ -371,9 +431,9 @@ const skins = {
         },
       },
       danger: {
-        color: colors.palette.reds[8],
+        color: colors.palette.reds[9],
         border: "1px solid",
-        backgroundColor: getTransparent(colors.red, 0.075),
+        backgroundColor: colors.transparent.dark[8],
         borderColor: colors.transparent.light[2],
         boxShadow: "0 1px 2px 0 rgba(0,0,0,0.05)",
         "&:hover": {
@@ -389,6 +449,39 @@ const skins = {
         boxShadow: "0 1px 2px 0 rgba(0,0,0,0.05)",
         "&:hover": {
           ...hoverSkins.success,
+          boxShadow: "0 2px 0 0 rgba(0,0,0,0.04)",
+        },
+      },
+      info: {
+        color: colors.palette.blues[8],
+        border: "1px solid",
+        backgroundColor: colors.transparent.dark[8],
+        borderColor: colors.transparent.light[2],
+        boxShadow: "0 1px 2px 0 rgba(0,0,0,0.05)",
+        "&:hover": {
+          ...hoverSkins.info,
+          boxShadow: "0 2px 0 0 rgba(0,0,0,0.04)",
+        },
+      },
+      warning: {
+        color: colors.palette.yellows[10],
+        border: "1px solid",
+        backgroundColor: colors.transparent.dark[8],
+        borderColor: colors.transparent.light[2],
+        boxShadow: "0 1px 2px 0 rgba(0,0,0,0.05)",
+        "&:hover": {
+          ...hoverSkins.warning,
+          boxShadow: "0 2px 0 0 rgba(0,0,0,0.04)",
+        },
+      },
+      accent: {
+        color: colors.palette.purples[9],
+        border: "1px solid",
+        backgroundColor: colors.transparent.accent[1],
+        borderColor: colors.transparent.accent[4],
+        boxShadow: "0 1px 2px 0 rgba(0,0,0,0.05)",
+        "&:hover": {
+          ...hoverSkins.accent,
           boxShadow: "0 2px 0 0 rgba(0,0,0,0.04)",
         },
       },
@@ -412,6 +505,14 @@ const skins = {
         ...hoverSkins.brand,
       },
     },
+    accent: {
+      border: "1px solid",
+      ...colorPairs.accent,
+      borderColor: colors.transparent.light[1],
+      "&:hover": {
+        ...hoverSkins.accent,
+      },
+    },
     outline: {
       color: colors.light,
       border: "1px solid",
@@ -427,6 +528,33 @@ const skins = {
         borderColor: colors.transparent.dark[5],
         "&:hover": {
           ...hoverSkins.brand,
+        },
+        success: {
+          border: "1px solid",
+          color: colors.palette.greens[1],
+          backgroundColor: getTransparent(colors.green, 0.5),
+          borderColor: colors.transparent.dark[5],
+          "&:hover": {
+            ...hoverSkins.brand,
+          },
+        },
+        active: {
+          border: "1px solid",
+          color: colors.dark,
+          backgroundColor: getTransparent(colors.brand, 0.25),
+          borderColor: colors.transparent.dark[5],
+          "&:hover": {
+            ...hoverSkins.brand,
+          },
+        },
+      },
+      danger: {
+        border: "1px solid",
+        color: colors.palette.reds[9],
+        backgroundColor: "transparent",
+        borderColor: getTransparent(colors.red, 0.25),
+        "&:hover": {
+          ...hoverSkins.error,
         },
       },
     },
@@ -449,9 +577,9 @@ const skins = {
         ...hoverSkins.subtle,
       },
       danger: {
-        color: colors.primary,
-        backgroundColor: getTransparent(colors.red, 0.25),
-        borderColor: getTransparent(colors.red, 0.5),
+        color: colors.error,
+        backgroundColor: getTransparent(colors.red, 0.125),
+        borderColor: getTransparent(colors.red, 0.35),
         "&:hover": {
           ...hoverSkins.error,
         },
@@ -469,9 +597,18 @@ const skins = {
         backgroundColor: "transparent",
         border: "1px solid",
         borderColor: "transparent",
-        color: colors.tertiary,
+        color: colors.secondary,
         "&:hover": {
           ...hoverSkins.dim,
+        },
+      },
+      lighten: {
+        backgroundColor: "transparent",
+        border: "1px solid",
+        borderColor: "transparent",
+        color: colors.secondary,
+        "&:hover": {
+          ...hoverSkins.lighten,
         },
       },
     },
@@ -482,6 +619,15 @@ const skins = {
       color: colors.tertiary,
       "&:hover": {
         ...hoverSkins.default,
+      },
+      darker: {
+        backgroundColor: colors.palette.neutrals[3],
+        border: "1px solid",
+        borderColor: "transparent",
+        color: colors.secondary,
+        "&:hover": {
+          ...hoverSkins.default,
+        },
       },
     },
     clean: {
@@ -512,21 +658,64 @@ const skins = {
           ...hoverSkins.brand,
         },
       },
+      contrast: {
+        color: colors.dark,
+        backgroundColor: colors.light,
+        border: "1px solid",
+        borderColor: colors.black,
+        boxShadow:
+          "0 2px 2px 0 rgba(0,0,0,0.072), 0 0px 10px 2px rgba(0,0,0,0.082)",
+        "&:hover": {
+          ...hoverSkins.brand,
+          borderColor: colors.brand,
+        },
+      },
     },
     tab: {
       color: colors.primary,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.panel,
       boxShadow: "none",
-      borderBottom: "2px solid",
-      borderBottomColor: "transparent",
+      borderTop: "1px solid",
+      borderTopColor: colors.transparent.light[2],
+      position: "relative",
+      boxShadow: `${"0 -2px 0px 0px  rgba(0,0,0,0.05) inset"}`,
+      // Top indicator bar: hidden above the edge by default, slides down and
+      // fades in on hover and when the tab is active.
+      "&:before": {
+        content: "''",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "2px",
+        backgroundColor: colors.brand,
+        borderRadius: "4px 4px 0 0",
+        opacity: 0,
+        transform: "translateY(-100%)",
+        transition: "transform 0.2s ease, opacity 0.2s ease",
+      },
+      "@media (prefers-reduced-motion: reduce)": {
+        "&:before": {
+          transition: "none",
+        },
+      },
       "&:hover": {
         ...hoverSkins.subtle,
-        borderBottomColor: colors.palette.brands[3],
+        borderTopColor: colors.brand,
+        "&:before": {
+          opacity: 1,
+          transform: "translateY(0)",
+        },
       },
       "&[data-active='true']": {
-        backgroundColor: colors.palette.brands[0],
-        borderBottomColor: colors.palette.brands[7],
-        color: colors.palette.brands[10],
+        backgroundColor: colors.card,
+        borderTopColor: colors.brand,
+        color: colors.palette.brands[11],
+        boxShadow: "initial",
+        "&:before": {
+          opacity: 1,
+          transform: "translateY(0)",
+        },
       },
     },
     segment: {
@@ -536,9 +725,35 @@ const skins = {
       borderColor: colors.transparent.light[3],
       ...shadows.xsmall,
       "&:hover": {
-        backgroundColor: colors.surface,
+        backgroundColor: colors.palette.brands[0],
         color: colors.primary,
         borderColor: colors.transparent.light[4],
+      },
+      subtle: {
+        border: "1px solid",
+        color: colors.primary,
+        borderColor: colors.transparent.light[2],
+      },
+    },
+    translucent: {
+      ...specialSkins.translucent,
+      "&:hover": {
+        ...hoverSkins.default,
+      },
+      light: {
+        color: colors.dark,
+        background: colors.transparent.dark[4],
+        backdropFilter: "blur(3px)",
+        borderColor: colors.dark,
+        "&:hover": {
+          ...hoverSkins.default,
+        },
+      },
+      dark: {
+        ...specialSkins.translucent.dark,
+        "&:hover": {
+          ...hoverSkins.default,
+        },
       },
     },
     success: {
@@ -546,17 +761,44 @@ const skins = {
       "&:hover": {
         ...colorPairs.success.interactive,
       },
+      light: {
+        backgroundColor: colors.palette.greens[1],
+        color: colors.palette.greens[10],
+        borderColor: colors.palette.greens[4],
+        "&:hover": {
+          ...colorPairs.success.interactive,
+          borderColor: colors.palette.greens[8],
+        },
+      },
     },
     warning: {
       ...colorPairs.warning.static,
       "&:hover": {
         ...colorPairs.warning.interactive,
       },
+      light: {
+        backgroundColor: colors.palette.yellows[1],
+        color: colors.palette.yellows[10],
+        borderColor: colors.palette.yellows[3],
+        "&:hover": {
+          ...colorPairs.warning.interactive,
+          borderColor: colors.palette.yellows[8],
+        },
+      },
     },
     danger: {
       ...colorPairs.error.static,
       "&:hover": {
         ...colorPairs.error.interactive,
+      },
+      light: {
+        backgroundColor: colors.palette.reds[1],
+        color: colors.palette.reds[10],
+        borderColor: colors.palette.reds[3],
+        "&:hover": {
+          ...colorPairs.error.interactive,
+          borderColor: colors.palette.reds[8],
+        },
       },
     },
     sizes: {
@@ -914,10 +1156,10 @@ const skins = {
       color: colors.palette.brands[6],
     },
     underline: {
-      color: colors.palette.brands[7],
+      // color: colors.palette.brands[7],
       textDecoration: "underline",
-      textDecorationColor: colors.palette.brands[1],
-      textDecorationThickness: "1.5px",
+      textDecorationColor: "currentColor",
+      textDecorationThickness: "1px",
       //textUnderlinePosition: "under",
     },
     button: {
@@ -977,7 +1219,7 @@ const skins = {
       color: colors.primary,
       borderColor: colors.palette.neutrals[5],
       "&:hover, &:focus": {
-        backgroundColor: colors.palette.darks[0],
+        backgroundColor: colors.palette.blues[1],
         color: colors.primary,
         borderColor: colors.palette.neutrals[5],
       },

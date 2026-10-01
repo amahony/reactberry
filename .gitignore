@@ -11,3 +11,5 @@ coverage/
 
 .DS_Store
 tsconfig.tsbuildinfo
+
+src/**/*.d.ts

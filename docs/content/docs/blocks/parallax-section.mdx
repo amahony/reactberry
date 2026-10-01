@@ -1,0 +1,75 @@
+---
+title: ParallaxSection
+description: Render a full-viewport section with a background image that moves vertically as the section scrolls through the viewport.
+navTitle: ParallaxSection
+order: 1
+---
+
+`ParallaxSection` is a client component that renders a `100vh` `section` with a darkened `next/image` background that shifts from `-20%` to `20%` as the section scrolls past. It depends on `motion/react` and `next/image`.
+
+## Import
+
+```tsx
+import { ParallaxSection } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview display="block" p="0">
+  <Box height="20rem" overflow="hidden">
+    <ParallaxSection
+      image="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop stop-color='%23f26b38'/%3E%3Cstop offset='1' stop-color='%23fbd07c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3C/svg%3E"
+      content={
+        <Box position="relative" zIndex={1} height="20rem" display="flex" alignItems="center" justifyContent="center">
+          <Text as="h3" fontSize="xxl" fontWeight="700" color="white" m="0">Built for every season</Text>
+        </Box>
+      }
+    />
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { ParallaxSection } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function Overview() {
+  return (
+    <ParallaxSection
+      image="/images/overview.jpg"
+      content={
+        <Box
+          position="relative"
+          zIndex={1}
+          height="100%"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text as="h2" fontSize="xxxl" fontWeight="700" color="white">
+            Built for every season
+          </Text>
+        </Box>
+      }
+    />
+  );
+}
+```
+
+## Props
+
+- `image` (`string`, required) — background image source passed to `next/image`.
+- `content` (`React.ReactNode`) — rendered inside the section, before the background layer.
+
+No other props are accepted or spread. `children` is not supported; use `content`.
+
+## Notes
+
+- The background layer is absolutely positioned with `zIndex` 0. Give `content` a positioned wrapper (for example `position="relative"` with `zIndex` 1) so it renders above the image.
+- The background layer is 120% of the section height and its `top` is driven by `useScroll` with offset `["start end", "end start"]`.
+- A fixed `rgba(0, 0, 0, 0.3)` overlay is drawn above the image. There is no prop to change it.
+- The image uses `fill`, `sizes="100vh"`, `objectFit: "cover"` and a fixed `alt="Overview"`.
+- The section height is fixed at `100vh` with `overflow: hidden`.
+- There is no reduced-motion handling.
+- Remote image URLs must be allowed in your Next.js `images` configuration.

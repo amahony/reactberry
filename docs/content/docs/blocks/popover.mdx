@@ -1,0 +1,104 @@
+---
+title: Popover
+description: Open a floating panel from a trigger on click or hover.
+navTitle: Popover
+order: 1
+---
+
+`Popover` is a client component that combines the Headless UI `Popover` (click mode) with `@floating-ui/react` positioning and `motion/react` animations. In hover mode it uses a custom implementation instead of Headless UI.
+
+## Import
+
+```tsx
+import { Popover } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview minHeight="14rem" alignItems="flex-start">
+  <Popover trigger={<Text>Account</Text>} placement="bottom start" panelProps={{ width: "12rem" }}>
+    {({ close }) => (
+      <Box display="flex" flexDirection="column" gap="xxsmall">
+        <Button type="button" variant="ghost" onClick={close}>
+          <Text>Profile</Text>
+        </Button>
+        <Button type="button" variant="ghost" onClick={close}>
+          <Text>Sign out</Text>
+        </Button>
+      </Box>
+    )}
+  </Popover>
+  <Popover triggerMode="hover" hoverDelay={100} placement="bottom" trigger={<Text>Hover for help</Text>}>
+    <Text fontSize="small">Shortcuts are listed under Settings.</Text>
+  </Popover>
+</Preview>
+
+## Usage
+
+```tsx
+import { Popover } from "@reactberry/system/blocks";
+import { Box, Button, Text } from "@reactberry/system/elements";
+
+export default function AccountMenu() {
+  return (
+    <Popover
+      trigger={<Text>Account</Text>}
+      placement="bottom start"
+      panelProps={{ width: "12rem" }}
+    >
+      {({ close }) => (
+        <Box display="flex" flexDirection="column" gap="xxsmall">
+          <Button variant="ghost" onClick={close}>
+            <Text>Profile</Text>
+          </Button>
+          <Button variant="ghost" onClick={close}>
+            <Text>Sign out</Text>
+          </Button>
+        </Box>
+      )}
+    </Popover>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode | ((props: { close: () => void; open: boolean }) => React.ReactNode)`) — panel content. The render-function form is only supported in click mode.
+- `trigger` (`string | React.ReactNode`) — trigger content. In click mode it is wrapped in a ghost `Button`; in hover mode it is rendered directly.
+- `placement` (`string`, default `"bottom end"`) — Floating UI placement. Both `"bottom end"` and `"bottom-end"` forms are accepted.
+- `triggerMode` (`"click" | "hover"`, default `"click"`) — how the panel opens.
+- `hoverDelay` (`number`, default `200`) — delay in milliseconds before opening or closing in hover mode.
+- `usePortal` (`boolean`, default `false`) — render the panel in a Headless UI `Portal`. Switches positioning from `absolute` to `fixed`.
+- `scrollContainer` (`HTMLElement | null`, default `null`) — element whose scroll events close the popover. Defaults to `window` in click mode.
+- `renderTrigger` (`(props: { ref; onClick? }) => React.ReactNode`) — custom trigger renderer (click mode only). The result is wrapped in a `PopoverButton` rendered as a `div`.
+- `onOpenChange` (`(isOpen: boolean) => void`) — called when the open state changes (click mode only).
+- `triggerProps` (`any`) — props spread onto the default trigger `Button` (click mode only). A `ref` is merged with the internal refs.
+- `panelProps` (`any`) — props spread onto the panel, overriding defaults (`width="15rem"`, `p="xsmall"`, `skin="translucent"`, `zIndex="999999"`).
+- `containerProps` (`any`) — props spread onto the outer container `Box`. A `ref` is merged in hover mode.
+
+Remaining props are not spread.
+
+## Examples
+
+Hover mode with a portal:
+
+```tsx
+<Popover triggerMode="hover" hoverDelay={100} usePortal trigger={<Text>Help</Text>}>
+  <Text fontSize="small">Shortcuts are listed under Settings.</Text>
+</Popover>
+```
+
+Custom trigger:
+
+```tsx
+<Popover renderTrigger={() => <Button variant="primary"><Text>Filters</Text></Button>}>
+  <Text>Filter options</Text>
+</Popover>
+```
+
+## Notes
+
+- Click mode closes on outside click and Escape via Headless UI. It also closes on scroll of `scrollContainer` or `window`, except while focus is inside the panel (so focusing an input on mobile does not dismiss it).
+- Hover mode closes on scroll only when `scrollContainer` is set. When portalled, hovering the panel keeps it open.
+- In hover mode, `renderTrigger`, `triggerProps`, and `onOpenChange` are ignored, and function children are not called.
+- The `ref` passed to `renderTrigger` is a no-op; the wrapping `PopoverButton` receives the positioning ref instead.

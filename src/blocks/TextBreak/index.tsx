@@ -35,6 +35,7 @@ export default function TextBreak({
     attention: ["currentColor", "red"],
     accent: ["currentColor", "accent"],
   }
+  const palette = noticePalette[colorSchema] ?? noticePalette.default
 
   const content = message || children
   const leftBreakFlex =
@@ -45,7 +46,7 @@ export default function TextBreak({
   return (
     <Text
       as="div"
-      color={noticePalette[colorSchema][1]}
+      color={palette[1]}
       display="flex"
       alignItems={"center"}
       width="100%"
@@ -58,7 +59,7 @@ export default function TextBreak({
           flex={leftBreakFlex}
           width={"auto"}
           height={"1px"}
-          bg={noticePalette[colorSchema][0]}
+          bg={palette[0]}
           opacity="0.25"
           {...breakProps}
         />
@@ -86,7 +87,7 @@ export default function TextBreak({
           flex={rightBreakFlex}
           width={"auto"}
           height={"1px"}
-          bg={noticePalette[colorSchema][0]}
+          bg={palette[0]}
           opacity="0.25"
           {...breakProps}
         />

@@ -1,0 +1,128 @@
+---
+title: Button
+description: The action primitive. Extends Text with theme-driven variants and sizes.
+navTitle: Button
+order: 3
+---
+
+`Button` extends `Text`, so it accepts every Text and Box prop. It adds a `variant` prop mapped to `theme.skins.button` and a `$size` prop mapped to `theme.skins.button.sizes`.
+
+## Import
+
+```tsx
+import { Button } from "@reactberry/system/elements";
+```
+
+## Basic usage
+
+```tsx
+<Button as="button" type="button" variant="primary" onClick={handleSave}>
+  Save
+</Button>
+```
+
+`Button` inherits the `span` default from `Text`. Pass `as="button"` for a native button with form, keyboard, and `disabled` behaviour, or `as="a"` / a router link for navigation.
+
+## Props
+
+- `variant` — key in `theme.skins.button` (default `"default"`)
+- `$size` — key in `theme.skins.button.sizes` (default `"medium"`)
+- `disabled` — sets `opacity: 0.5` and `pointer-events: none`
+- All Text and Box props, including `shape`, `gap`, and spacing
+
+## Default attributes
+
+These are applied before your props, so any of them can be overridden:
+
+- `role="button"`
+- `tabIndex={0}`
+- `variant="default"`
+- `$size="medium"`
+- `shape="rounded"`
+- `border="none"`
+- `display="inline-flex"`
+- `alignItems="center"`
+- `justifyContent="center"`
+- `cursor="pointer"`
+
+A `0.2s ease` transition is always applied.
+
+## Variants
+
+Variants resolve by dot path, so nested entries are used as `ghost.dim` or `outline.dark`. The default light theme defines:
+
+- `default` — with `default.surface`, `default.danger`, `default.success`, `default.info`, `default.warning`, `default.accent`
+- `primary`
+- `accent`
+- `active`
+- `outline` — with `outline.danger`, `outline.dark`, `outline.dark.success`, `outline.dark.active`
+- `solid`
+- `ghost` — with `ghost.danger`, `ghost.subtle`, `ghost.dim`, `ghost.lighten`
+- `subtle` — with `subtle.darker`
+- `clean` — no border, background, or radius
+- `cta` — with `cta.subtle`, `cta.contrast`
+- `tab` — top indicator bar, active when `data-active="true"`
+- `segment` — with `segment.subtle`
+- `translucent` — with `translucent.light`, `translucent.dark`
+- `success`, `warning`, `danger` — each with `.light`
+
+The dark theme defines `default`, `primary`, `outline`, `subtle`, `solid`, `ghost`, `clean`, `cta`, `danger`, and `bubble`.
+
+## Sizes
+
+Light theme (`font-weight: 600` throughout):
+
+- `xxxsmall` — height 1.5rem, font 0.875rem
+- `xxsmall` — height 1.75rem, font 0.875rem
+- `xsmall` — height 2rem, font 0.875rem
+- `small` — height 2.25rem, font 0.875rem
+- `medium` — height 2.5rem, font 1rem; `medium.condensed` uses 0.5rem horizontal padding
+- `large` — height 3rem, font 1.125rem
+
+Square icon sizes: `icon` (2.5rem), `icon.large` (3rem), `icon.small` (2.25rem), `icon.xsmall` (2rem), `icon.xxsmall` (1.5rem).
+
+The dark theme provides `xxsmall` to `large` with different font sizes and weights, adds `xlarge` (height 4rem), and has no `xxxsmall`. Padding for each size comes from `theme.controlSizes` (see Box).
+
+Pass `$size=""` to opt out of size styles and control dimensions directly.
+
+## Examples
+
+Variants:
+
+```tsx
+<Box display="flex" gap="xs">
+  <Button as="button" variant="primary">Save</Button>
+  <Button as="button" variant="outline">Cancel</Button>
+  <Button as="button" variant="ghost.danger">Delete</Button>
+</Box>
+```
+
+Icon button:
+
+```tsx
+<Button as="button" variant="ghost.dim" $size="icon.xsmall" shape="circle" aria-label="Close">
+  <Text as={IconERemove} size="0.875rem" color="inherit" />
+</Button>
+```
+
+Button with icon and label:
+
+```tsx
+<Button as="button" variant="default" $size="small" gap="xs">
+  <Text as={IconPlus} size="1rem" />
+  Add item
+</Button>
+```
+
+Disabled:
+
+```tsx
+<Button as="button" variant="primary" disabled>
+  Saving
+</Button>
+```
+
+## Notes
+
+- There are no built-in `loading`, `icon`, `iconPosition`, or `fullWidth` props. Compose children and use `width="100%"` instead.
+- Set `type` explicitly on native buttons inside forms.

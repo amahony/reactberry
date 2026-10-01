@@ -1,0 +1,79 @@
+---
+title: Icon
+description: Render a registered design-system SVG icon by name.
+navTitle: Icon
+order: 1
+---
+
+`Icon` is a client component (`"use client"`) that looks up an SVG component by name in `designSystemIcons` (from `@reactberry/system/icons`) and renders it through `Box`, so styled-system props apply.
+
+## Import
+
+```tsx
+import { Icon } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  {["IconUpload", "IconPencil", "IconGear", "IconHouse", "IconLock", "IconLaunch", "IconFile", "IconCCheck"].map((name) => (
+    <Box key={name} display="flex" flexDirection="column" alignItems="center" gap="xs" width="6rem">
+      <Icon icon={name} size="1.5rem" />
+      <Text fontSize="xs" color="secondary">{name}</Text>
+    </Box>
+  ))}
+  <Box display="flex" flexDirection="column" alignItems="center" gap="xs" width="6rem">
+    <Icon icon="IconOWarning" color="warning" size="1.5rem" />
+    <Text fontSize="xs" color="secondary">color="warning"</Text>
+  </Box>
+  <Button type="button" variant="primary" display="flex" gap="xxsmall">
+    <Icon icon="IconUpload" size="1rem" />
+    <Text>Upload</Text>
+  </Button>
+</Preview>
+
+## Usage
+
+```tsx
+import { Icon } from "@reactberry/system/blocks";
+import { Button, Text } from "@reactberry/system/elements";
+
+export default function UploadButton() {
+  return (
+    <Button variant="primary" $size="small" display="flex" gap="xxsmall">
+      <Icon icon="IconUpload" size="1rem" />
+      <Text>Upload</Text>
+    </Button>
+  );
+}
+```
+
+## Props
+
+- `icon` (`string`, required) — name of a registered icon.
+- `size` (`string | number | object`, default `"24px"`) — applied as both width and height.
+- `width` (`string | number`, default `"24px"`) — used only when `size` is falsy.
+- `height` (`string | number`, default `"24px"`) — used only when `size` is falsy.
+- `color` (`string`, default `"currentColor"`) — icon colour.
+- All other props are spread onto the `Box` rendered as the icon component.
+
+## Examples
+
+Theme colour and responsive size:
+
+```tsx
+<Icon icon="IconOWarning" color="warning" size={{ _: "1rem", md: "1.25rem" }} />
+```
+
+Non-square sizing (disable `size` so `width` and `height` apply):
+
+```tsx
+<Icon icon="IconArrowRight" size="" width="2rem" height="1rem" />
+```
+
+## Notes
+
+- Registered names: `Icon24Folder`, `IconArrowLeft`, `IconArrowRight`, `IconArrowSmDown`, `IconArrowSmRight`, `IconBan`, `IconCCheck`, `IconDCheck`, `IconDocFolder`, `IconDotsAnim`, `IconDownloadData`, `IconEAdd`, `IconERemove`, `IconFile`, `IconGear`, `IconHouse`, `IconLaunch`, `IconLock`, `IconMove3`, `IconOWarning`, `IconPencil`, `IconText`, `IconUpload`, `IconUserFocus`.
+- An unknown name logs a console warning and renders nothing.
+- Because `size` defaults to `"24px"`, passing `width` or `height` alone has no effect.
+- The rendered SVG has no accessible name. Decorative icons next to text need nothing extra; icon-only controls need an `aria-label` on the control.

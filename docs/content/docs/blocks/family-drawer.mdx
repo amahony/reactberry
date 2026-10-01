@@ -1,0 +1,93 @@
+---
+title: FamilyDrawer
+description: A Drawer with four built-in wallet settings views and animated transitions between them.
+navTitle: FamilyDrawer
+order: 1
+---
+
+`FamilyDrawer` is a client component that renders a trigger button and a `Drawer` titled "Options" containing four built-in views for wallet settings. View changes animate the container height (measured with `react-use-measure`) and cross-fade the content with scale and blur. It inherits the `SidebarProvider` requirement from `Drawer`, which `DesignSystemProvider` satisfies (see Notes).
+
+## Import
+
+```tsx
+import { FamilyDrawer } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column">
+  <State initial="No action yet">
+    {(lastAction, setLastAction) => (
+      <Box display="flex" flexDirection="column" alignItems="center" gap="m">
+        <Box display="flex" flexWrap="wrap" justifyContent="center" gap="m">
+          <FamilyDrawer
+            id="docs-preview-family-drawer"
+            privateKey="0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d"
+            recoveryPhrase="orbit lunar velvet canyon maple drift honey quartz ember signal harbor tide"
+            onViewChange={(view) => setLastAction(`Viewed: ${view}`)}
+            onReveal={(view) => setLastAction(`Revealed: ${view}`)}
+            onRemove={() => setLastAction("Wallet removed")}
+          />
+          <FamilyDrawer
+            id="docs-preview-family-drawer-key"
+            initialView="key"
+            privateKey="0x9b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c"
+            trigger={<Button type="button" variant="primary">Open key view</Button>}
+            onReveal={(view) => setLastAction(`Revealed: ${view}`)}
+          />
+        </Box>
+        <Text color="secondary">Last action: {lastAction}</Text>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+The keys and phrase above are sample values.
+
+## Usage
+
+```tsx
+import { FamilyDrawer } from "@reactberry/system/blocks";
+
+export default function WalletSettings() {
+  return (
+    <FamilyDrawer
+      id="wallet-settings"
+      width={{ _: "100%", md: "400px" }}
+      onViewChange={(view) => console.log("Current view:", view)}
+    />
+  );
+}
+```
+
+## Props
+
+- `id` (`string`, required) — drawer id shared by the trigger and the internal `Drawer`.
+- `initialView` (`"default" | "key" | "phrase" | "remove"`, default `"default"`) — view shown on first render.
+- `onViewChange` (`(view: FamilyDrawerView) => void`) — called when the user navigates between views.
+- `width` (`string | number | object`, default `"360px"`) — drawer width; responsive objects are supported.
+- `trigger` (`React.ReactNode`) — custom trigger. A valid element is rendered as-is with an `onClick` that calls its own `onClick` and then toggles the drawer; other nodes are rendered inside the default trigger button. Defaults to a "Settings" button with a gear icon.
+- `privateKey` (`string`) — shown in the `"key"` view after Reveal is pressed.
+- `recoveryPhrase` (`string`) — shown in the `"phrase"` view after Reveal is pressed.
+- `onReveal` (`(view: "key" | "phrase") => void`) — called when Reveal is pressed in the key or phrase view.
+- `onRemove` (`() => void`) — called when removal is confirmed with Continue in the `"remove"` view.
+
+No other props are accepted.
+
+## Examples
+
+Open directly on the removal confirmation:
+
+```tsx
+<FamilyDrawer id="wallet-remove" initialView="remove" />
+```
+
+## Notes
+
+- The drawer and trigger read open state via `useSidebar`, which requires `SidebarProvider`. `DesignSystemProvider` mounts `SidebarProvider`, and both `SidebarProvider` and `useSidebar` are exported from `@reactberry/system/providers`. Outside a provider, the drawer stays closed and a `useSidebar must be used within a SidebarProvider` warning is logged.
+- The built-in views:
+  - `"default"` — an "Options" heading with buttons for View Private Key, View Recovery Phrase, and Remove Wallet.
+  - `"key"` and `"phrase"` — explanatory text with security reminders, plus Cancel and Reveal buttons. Reveal calls `onReveal`, shows `privateKey` or `recoveryPhrase` (when provided) in a code block, and replaces the buttons with Done, which returns to the default view.
+  - `"remove"` — a confirmation warning with Cancel and Continue buttons. Continue calls `onRemove`, returns to the default view, and closes the drawer.
+- The revealed state is local to the key or phrase view and resets when the view is left.
+- The current view is held in component state and is not reset when the drawer is closed with the close button or backdrop.

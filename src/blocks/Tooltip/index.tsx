@@ -20,6 +20,8 @@ interface TooltipProps {
   offset?: number;
   portal?: boolean;
   possiblePlacements?: string[];
+  arrow?: boolean;
+  panelProps?: React.ComponentProps<typeof Box>;
   [key: string]: any;
 }
 
@@ -27,9 +29,11 @@ export const Tooltip = ({
   children,
   content,
   placement = "bottom",
-  offset = 8,
+  offset = 4,
   portal = true,
   possiblePlacements,
+  arrow = false,
+  panelProps,
   ...props
 }: TooltipProps) => {
   const [mounted, setMounted] = useState(false);
@@ -105,7 +109,7 @@ export const Tooltip = ({
           as={motion.div}
           ref={refs.setFloating}
           fontSize="small"
-          zIndex={99999}
+          zIndex={1000000}
           initial={{ opacity: 0, y: actualSide === "top" ? 10 : -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: actualSide === "top" ? 10 : -10 }}
@@ -117,26 +121,30 @@ export const Tooltip = ({
           }}
           {...props}
         >
-          <Box
+          <Text
+            as={"div"}
             skin="translucent.dark"
+            color="dark"
             shape="roundedLarge"
             $shadow="medium"
             p="small"
             width="fit-content"
             maxWidth="20rem"
             position="relative"
+            {...panelProps}
           >
-            {/* Arrow */}
-            <Box
-              position="absolute"
-              width="8px"
-              height="8px"
-              bg="inherit"
-              style={{
-                transform: "rotate(45deg)",
-                ...getArrowStyles(),
-              }}
-            />
+            {arrow && (
+              <Box
+                position="absolute"
+                width="8px"
+                height="8px"
+                bg="inherit"
+                style={{
+                  transform: "rotate(45deg)",
+                  ...getArrowStyles(),
+                }}
+              />
+            )}
 
             {/* Content */}
 
@@ -147,7 +155,7 @@ export const Tooltip = ({
             >
               {content}
             </Text>
-          </Box>
+          </Text>
         </Text>
       )}
     </AnimatePresence>
@@ -160,6 +168,7 @@ export const Tooltip = ({
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
         display="flex"
+        cursor="help"
         {...props}
       >
         {children}

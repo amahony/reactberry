@@ -1,0 +1,88 @@
+---
+title: Avatar
+description: Show a user as initials, an icon or an image, with an optional presence dot.
+navTitle: Avatar
+order: 1
+---
+
+`Avatar` is a client component (`"use client"`) that renders a circular `Box` containing initials, an icon or a `next/image` image. It depends on Next.js (`next/image`) and the `Icon` block for string icon names.
+
+## Import
+
+```tsx
+import { Avatar } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <Avatar name="Ada Lovelace" withPresence />
+  <Avatar name="Grace Hopper" autocolor={false} color="brand" size="3rem" />
+  <Avatar type="icon" name="Settings" icon="IconGear" iconProps={{ size: "1.25rem" }} />
+  <Avatar type="icon" name="Guest" />
+  <Avatar type="image" name="Alan Turing" fallbackType="text" size="3rem" withPresence status={{ label: "away", color: "orange", border: "surface" }} />
+</Preview>
+
+## Usage
+
+```tsx
+import { Avatar } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function MemberRow() {
+  return (
+    <Box display="flex" alignItems="center" gap="s">
+      <Avatar
+        type="image"
+        name="Ada Lovelace"
+        src="https://example.com/avatars/ada.jpg"
+        size="2rem"
+        withPresence
+      />
+      <Text fontWeight="600">Ada Lovelace</Text>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `type` (`"text" | "icon" | "image"`, default `"text"`) — what to render inside the circle.
+- `name` (`string`, default `"Aa"`) — source for the initials and the auto colour; also used as the image `alt` fallback.
+- `autocolor` (`boolean`, default `true`) — derive the colour from `name` via a string hash.
+- `color` (`string`) — colour used when `autocolor` is `false` (falls back to `"neutral"`).
+- `size` (default `"2.5rem"`) — width and height of the circle.
+- `fontSize` (`string`, default `"75%"`) — initials font size.
+- `src` (`string`) — image URL for `type="image"`.
+- `alt` (`string`) — image alt text; falls back to `name`, then `"avatar"`.
+- `fallbackType` (`"text" | "icon"`, default `"icon"`) — rendered when `type="image"` has no `src` or the image fails to load.
+- `icon` (`string | ComponentType | ReactElement`) — icon for `type="icon"`: a registered icon name, a component, or a rendered element. Without it, a user silhouette is drawn.
+- `iconProps` (`object`, default `{}`) — forwarded to the icon when `icon` is a name or component.
+- `withPresence` (`boolean`, default `false`) — show the status dot.
+- `status` (`object | null`, default `{ label: "online", color: "green", border: "surface" }`) — dot colour (`color`), border colour (`border`) and optional `size`.
+- `statusProps` (`object`, default `{}`) — spread onto the status dot `Box`.
+- All other props are spread onto the inner circle `Box`, after the defaults (`display="inline-flex"`, `shape="circle"`, `overflow="hidden"`, `flex="none"`).
+
+## Examples
+
+Initials with a fixed colour:
+
+```tsx
+<Avatar name="Grace Hopper" autocolor={false} color="brand" />
+```
+
+Icon avatar using a registered icon:
+
+```tsx
+<Avatar type="icon" name="Settings" icon="IconGear" iconProps={{ size: "1.25rem" }} />
+```
+
+## Notes
+
+- Initials are the first letters of the first two space-separated words, or the first two characters of a single word, upper-cased.
+- The circle background uses `currentColor`, so `color` (or the auto colour) sets the fill; initials and icons are white.
+- Failed image URLs are remembered for the session by URL without its query string, so presigned URLs that only change their signature are not retried.
+- Remote `src` hosts must be allowed in your Next.js `images` configuration.
+- The status dot size is `calc(status.size or size / 2.5)` when `size` is passed, otherwise `"0.625rem"` regardless of `status.size`.
+- `status.label` is declared but not rendered or used for accessibility. Add an accessible label yourself if presence matters.
+- `name` is also forwarded to the inner `div` as a `name` attribute.

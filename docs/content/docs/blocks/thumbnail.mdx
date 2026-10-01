@@ -1,0 +1,68 @@
+---
+title: Thumbnail
+description: Render a next/image that fills a sized, clipped Box.
+navTitle: Thumbnail
+order: 1
+---
+
+`Thumbnail` is a client component (`"use client"`) that renders a relatively positioned, `overflow="hidden"` `Box` containing a `next/image` in `fill` mode. It requires Next.js.
+
+## Import
+
+```tsx
+import { Thumbnail } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <Thumbnail src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 90'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234babd0'/%3E%3Cstop offset='1' stop-color='%23845af6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='160' height='90' fill='url(%23g)'/%3E%3C/svg%3E" alt="Launch event stage" width="16rem" aspect="16/9" shape="rounded" />
+  <Thumbnail src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f5a524'/%3E%3C/svg%3E" alt="Team portrait" size="4rem" shape="rounded" />
+  <Thumbnail src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23fe3537'/%3E%3C/svg%3E" alt="User avatar" size="3rem" shape="circle" />
+</Preview>
+
+## Usage
+
+```tsx
+import { Thumbnail } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function ArticleCard() {
+  return (
+    <Box skin="surface" shape="rounded" overflow="hidden">
+      <Thumbnail
+        src="https://example.com/covers/launch.jpg"
+        alt="Launch event stage"
+        width="100%"
+        aspect="16/9"
+      />
+      <Box p="m">
+        <Text fontWeight="600">Launch recap</Text>
+      </Box>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `src` (`string`, required) — image URL passed to `next/image`.
+- `alt` (`string`, required) — image alt text.
+- `objectFit` (`"cover" | "contain" | "fill" | "none" | "scale-down"`, default `"cover"`) — passed to the image element.
+- All other `BoxProps` except `as` are spread onto the wrapper `Box`.
+
+## Examples
+
+Fixed square thumbnail:
+
+```tsx
+<Thumbnail src={user.photoUrl} alt={user.name} size="4rem" shape="rounded" />
+```
+
+## Notes
+
+- The image uses `fill`, so the wrapper must have a size: set `width` and `height`, `size`, or `width` plus `aspect`. Without one, the wrapper collapses to zero height.
+- `sizes` is fixed at `"100rem"`, so Next.js may request a larger image than the rendered size. It cannot be overridden through props.
+- `objectFit` is forwarded as a prop to `next/image` rather than applied as a CSS style. Current versions of `next/image` treat `objectFit` as a legacy prop, so the value may not take effect; verify the rendered result or apply `object-fit` via CSS.
+- No other `next/image` props (such as `priority`, `quality` or `placeholder`) can be passed through; extra props go to the wrapper.
+- Remote `src` hosts must be allowed in your Next.js `images` configuration.

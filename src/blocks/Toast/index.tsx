@@ -12,6 +12,10 @@ interface ToastProps extends BoxProps {
   variant?: "default" | "success" | "error" | "info" | "warning";
   icon?: React.ReactNode;
   onClose?: () => void;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
 export default function Toast({
@@ -20,6 +24,7 @@ export default function Toast({
   variant = "default",
   icon,
   onClose,
+  action,
   ...props
 }: ToastProps) {
   const variantStyles = {
@@ -70,6 +75,17 @@ export default function Toast({
           flex="none"
         >
           <Text as={IconERemove} size="0.875rem" color="inherit"></Text>
+        </Button>
+      )}
+      {action && (
+        <Button
+          as="button"
+          onClick={action.onClick}
+          variant="ghost"
+          $size="small"
+          flex="none"
+        >
+          {action.label}
         </Button>
       )}
     </Box>

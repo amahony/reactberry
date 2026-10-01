@@ -1,0 +1,123 @@
+---
+title: Field
+description: The form input primitive. Extends Text with theme-driven variants and sizes for inputs, textareas, and selects.
+navTitle: Field
+order: 4
+---
+
+`Field` extends `Text`, so it accepts every Text and Box prop. It renders an `input` by default and adds a `variant` prop mapped to `theme.skins.field` and a `$size` prop mapped to `theme.skins.field.sizes`.
+
+## Import
+
+```tsx
+import { Field } from "@reactberry/system/elements";
+```
+
+## Basic usage
+
+```tsx
+<Field type="email" placeholder="you@example.com" value={email} onChange={handleEmail} width="100%" />
+```
+
+## Props
+
+- `variant` — key in `theme.skins.field` (default `"default"`)
+- `$size` — key in `theme.skins.field.sizes` (default `"medium"`)
+- `as` — `"input"` (default), `"textarea"`, `"select"`, or a component
+- `type` — input type (default `"text"`)
+- `placeholder` — placeholder text (default empty string)
+- `autoComplete` — native autocomplete hint
+- `disabled` — sets `opacity: 0.5` and `pointer-events: none`, and is forwarded to the native element
+- All Text and Box props, plus native input attributes such as `value`, `onChange`, `name`, and `required`
+
+`variant`, `shape`, and `$size` are not forwarded to the DOM.
+
+## Default attributes
+
+Applied before your props, so any of them can be overridden:
+
+- `as="input"`
+- `type="text"`
+- `variant="default"`
+- `$size="medium"`
+- `shape="rounded"`
+- `display="inline-flex"`
+- `placeholder=""`
+
+A `0.2s ease` transition is applied, except on checkboxes and radios.
+
+## Element-specific styling
+
+- `as="select"` — removes native appearance and adds a chevron background with right padding
+- `type="range"` — custom track and thumb using `theme.colors.primary`
+- `type="checkbox"` or `type="radio"` — disables the transition and hover shadow to avoid flicker
+
+## Variants
+
+Variants resolve by dot path. The default light theme defines:
+
+- `default` — bordered, base background, brand border on focus
+- `primary` — tinted brand background with a thicker border
+- `ghost` — no border, background, or radius; with `ghost.dark`
+- `outline` — surface background with border; with `outline.required`, `outline.prefilled`
+- `underline` — dashed bottom border only; with `underline.required`, `underline.prefilled`
+- `select` — surface background tuned for selects
+- `checked` — for checkbox and radio inputs
+
+The dark theme defines `default`, `primary`, `subtle`, `ghost`, `outline`, `underline`, and `checked`.
+
+`ghost`, `outline`, and `underline` style invalid values through the `:user-invalid` and `:invalid:not(:placeholder-shown)` pseudo-classes, so native validation attributes (`required`, `pattern`, `type="email"`) drive the error state.
+
+## Sizes
+
+All sizes use `font-weight: 400`.
+
+- `xsmall` — height 2rem, font 0.875rem; `xsmall.select` uses height 1.75rem
+- `small` — height 2.25rem, font 1rem
+- `medium` — no fixed height, padding 0.5rem 0.75rem, font 1rem
+- `large` — no fixed height, padding 0.5rem 0.75rem, font 1.125rem
+
+In the light theme, `small`, `medium`, and `large` also have a `.prefix` entry (for example `medium.prefix`) with extra left padding for a leading icon.
+
+Pass `$size=""` to opt out of size styles.
+
+## Examples
+
+Labelled input:
+
+```tsx
+<Box display="flex" flexDirection="column" gap="xs">
+  <Text as="label" htmlFor="email" fontSize="s" fontWeight="500">
+    Email
+  </Text>
+  <Field id="email" type="email" variant="outline" required width="100%" />
+</Box>
+```
+
+Textarea:
+
+```tsx
+<Field as="textarea" rows={4} variant="outline" placeholder="Message" width="100%" />
+```
+
+Select:
+
+```tsx
+<Field as="select" variant="select" value={role} onChange={handleRole}>
+  <option value="viewer">Viewer</option>
+  <option value="editor">Editor</option>
+</Field>
+```
+
+Range and checkbox:
+
+```tsx
+<Field type="range" min={0} max={100} value={volume} onChange={handleVolume} />
+<Field type="checkbox" variant="checked" checked={agreed} onChange={handleAgree} />
+```
+
+## Notes
+
+- There is no `invalid` or `error` prop. Use native validation, or pass `aria-invalid` and adjust `variant` or `borderColor` yourself.
+- `Field` is not full width by default. Pass `width="100%"` where needed.
+- For labelled fields with descriptions and errors, see the `FieldSet` block.

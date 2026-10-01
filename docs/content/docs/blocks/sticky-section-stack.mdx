@@ -1,0 +1,102 @@
+---
+title: StickySectionStack
+description: Stack child sections as sticky layers that scale down progressively as the container scrolls.
+navTitle: StickySectionStack
+order: 1
+---
+
+`StickySectionStack` is a client component that makes each child a sticky layer. Earlier layers shrink as later ones scroll over them, driven by the container's scroll progress. It depends on `motion/react`.
+
+## Import
+
+```tsx
+import { StickySectionStack } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Box height="20rem" overflow="auto" shape="rounded">
+    <StickySectionStack
+      topPadding="1rem"
+      bottomPadding="6rem"
+      stickyTop="1rem"
+      stickyStep={16}
+      px="m"
+      sectionProps={{ skin: "card", shape: "rounded", p: "l", $shadow: "medium" }}
+    >
+      {["Plan", "Build", "Ship"].map((stage) => (
+        <Box key={stage} minHeight="12rem">
+          <Text as="h3" fontSize="xl" fontWeight="700">
+            {stage}
+          </Text>
+          <Text color="secondary">Scroll inside this frame to stack the next stage.</Text>
+        </Box>
+      ))}
+    </StickySectionStack>
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { StickySectionStack } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+const steps = ["Plan", "Build", "Ship"];
+
+export default function Process() {
+  return (
+    <StickySectionStack
+      maxWidth="960px"
+      mx="auto"
+      sectionMinHeight="70vh"
+      sectionProps={{ skin: "card", shape: "rounded", p: "l" }}
+    >
+      {steps.map((step) => (
+        <Box key={step} minHeight="50vh">
+          <Text as="h2" fontSize="xxxl" fontWeight="700">
+            {step}
+          </Text>
+        </Box>
+      ))}
+    </StickySectionStack>
+  );
+}
+```
+
+## Props
+
+- `children` (`ReactNode`, required) — each non-empty child becomes one section.
+- `topPadding` (`string`, default `"10vh"`) — top padding of the container.
+- `bottomPadding` (`string`, default `"30vh"`) — bottom padding of the container.
+- `stickyTop` (`string`, default `"4vh"`) — sticky `top` offset of every section.
+- `stackOffsetBase` (`number`, default `0`) — base vertical offset in pixels applied to each section.
+- `stickyStep` (`number`, default `24`) — extra offset in pixels added per section index, so stacked layers peek out below each other.
+- `scaleStep` (`number`, default `0.06`) — scale reduction per section that follows.
+- `minScale` (`number`, default `0.82`) — lower bound for the final scale.
+- `sectionMinHeight` (`string`, default `"auto"`) — `minHeight` of each sticky wrapper.
+- `sectionProps` (`BoxProps`) — spread onto the inner `Box` that wraps each child.
+
+All remaining `BoxProps` are spread onto the container `Box`.
+
+## Examples
+
+Tighter stack with less scaling:
+
+```tsx
+<StickySectionStack stickyStep={12} scaleStep={0.03} minScale={0.9}>
+  {sections}
+</StickySectionStack>
+```
+
+## Related exports
+
+- `StickySectionStackProps` is exported from the component module but not from `@reactberry/system/blocks`.
+
+## Notes
+
+- Section `index` scales from 1 to `max(minScale, 1 - (total - index - 1) * scaleStep)` over scroll progress from `index / total` to 1. The last section never scales.
+- Scroll progress uses `useScroll` on the container with offset `["start start", "end end"]`.
+- When the user prefers reduced motion, sections render in normal flow without sticky positioning, scaling, or container padding; `sectionProps` and the remaining props still apply.
+- Children are keyed by index after `Children.toArray`, so reordering children remounts sections.

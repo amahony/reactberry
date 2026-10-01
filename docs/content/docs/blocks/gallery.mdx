@@ -1,0 +1,78 @@
+---
+title: Gallery
+description: Render a responsive grid of images that opens a full-screen, swipeable lightbox.
+navTitle: Gallery
+order: 1
+---
+
+`Gallery` is a client component that lays images out in a `Collection` grid and opens a Headless UI dialog with a carousel when an image is clicked. It depends on `next/image`, `next/navigation`, `@headlessui/react`, `react-swipeable`, and `motion`, so it must run inside a Next.js App Router app wrapped in `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { Gallery } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+Click a tile to open the lightbox. Use the arrows, thumbnails or arrow keys to navigate, and Escape to close.
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Gallery
+    images={[
+      { id: 1, url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%230099c2'/%3E%3Ccircle cx='300' cy='200' r='110' fill='%23bae6fd'/%3E%3C/svg%3E" },
+      { id: 2, url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%237c4dff'/%3E%3Crect x='170' y='90' width='260' height='220' rx='24' fill='%23ddd6fe'/%3E%3C/svg%3E" },
+      { id: 3, url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%2316a34a'/%3E%3Cpolygon points='300,70 450,330 150,330' fill='%23bbf7d0'/%3E%3C/svg%3E" },
+      { id: 4, url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23ea580c'/%3E%3Cellipse cx='300' cy='200' rx='200' ry='90' fill='%23fed7aa'/%3E%3C/svg%3E" },
+    ]}
+  />
+</Preview>
+
+## Usage
+
+```tsx
+import { Gallery } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+const images = [
+  { id: 1, url: "/photos/harbour.jpg" },
+  { id: 2, url: "/photos/forest.jpg" },
+  { id: 3, url: "/photos/city.jpg" },
+];
+
+export default function PhotosPage() {
+  return (
+    <Box p="l">
+      <Gallery images={images} />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `images` (`ImageType[]`, required) — images to display. Each item is `{ id: number; url: string }`.
+
+No other props are accepted and nothing is spread.
+
+## Related exports
+
+`ImageType` is exported from the package root:
+
+```tsx
+import type { ImageType } from "@reactberry/system";
+```
+
+## Notes
+
+- The grid uses `Collection` with `colsize="medium"`. Each tile is a `3 / 2` rounded box that scales to `1.04` on hover and renders a `next/image` with `fill` and `objectFit: "cover"`.
+- Clicking a tile opens the lightbox at that image.
+- The lightbox shows the selected image with `objectFit: "contain"`, previous and next arrow controls, a strip of thumbnails along the bottom of the viewport, an "Open fullsize version" link (opens `url` in a new tab), and a "Download fullsize version" control.
+- Navigation in the lightbox works by clicking the arrows or thumbnails, swiping or mouse-dragging horizontally, or pressing the left and right arrow keys. It stops at the first and last image (no wraparound).
+- The download control fetches `url` with `mode: "cors"` and saves it as `<index>.jpg`, so cross-origin images need permissive CORS headers.
+- Clicking the blurred backdrop or pressing Escape closes the dialog.
+- Because tiles use `next/image`, remote URLs must be allowed in `images.remotePatterns` in `next.config`.
+- All grid images use the fixed `alt="image"`, and the lightbox image uses `alt="Image"`; there is no way to provide per-image alternative text.
+- Grid tiles and lightbox controls are clickable `div` elements without a button role or keyboard focus. Keyboard users can navigate inside the open lightbox with the arrow keys.
+- The lightbox header renders the literal text "Title"; it is not derived from the image data.
+- Hover and slide animations use `motion` and do not check for reduced-motion preferences.

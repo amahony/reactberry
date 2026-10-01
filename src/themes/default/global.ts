@@ -140,6 +140,17 @@ const GlobalStyles = styled.createGlobalStyle`
     ::-webkit-scrollbar-corner {
         background: var(--tertiary);
     }
+
+    /* Firefox 153+ disables overlay scrollbars when a -webkit-scrollbar rule
+       specifies a nonzero size. Zero the dimensions for Firefox only so it
+       falls back to overlay scrollbars via scrollbar-width, while Chromium
+       keeps the styled bars above. */
+    @supports (-moz-appearance: none) {
+        *::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    }
 `;
 
 export default GlobalStyles;

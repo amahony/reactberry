@@ -1,0 +1,68 @@
+---
+title: Parallax
+description: Stack full-height sticky image cards that shrink and blur as the page scrolls past them.
+navTitle: Parallax
+order: 1
+---
+
+`Parallax` is a client component that renders a vertical list of sticky image cards. Each card scales down and blurs once it reaches its sticky position. It depends on `motion/react` and `next/image`.
+
+## Import
+
+```tsx
+import { Parallax } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+Scroll inside the frame to see the sticky cards stack.
+
+<Preview display="block" p="0">
+  <Box height="28rem" overflowY="auto" px="l">
+    <Parallax
+      images={[
+        { id: "coast", url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop stop-color='%230b5c7a'/%3E%3Cstop offset='1' stop-color='%2399d5c9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3C/svg%3E" },
+        { id: "forest", url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop stop-color='%231f4d2b'/%3E%3Cstop offset='1' stop-color='%23a3c97a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3C/svg%3E" },
+        { id: "city", url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop stop-color='%232b2d42'/%3E%3Cstop offset='1' stop-color='%238d99ae'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3C/svg%3E" },
+      ]}
+    />
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { Parallax } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+const images = [
+  { id: "1", url: "/images/coast.jpg" },
+  { id: "2", url: "/images/forest.jpg" },
+  { id: "3", url: "/images/city.jpg" },
+];
+
+export default function Gallery() {
+  return (
+    <Box px="l">
+      <Parallax images={images} />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `images` (`{ id: string; url: string }[]`, required) — one card is rendered per entry. `id` is used as the React key and `url` as the image source.
+
+No other props are accepted or spread.
+
+## Notes
+
+- Each card is `position: sticky` with a height of `80vh`, a `top` of `10vh`, a 10vh gap between cards and 10vh vertical padding around the list. The outer wrapper has a `minHeight` of `100vh`.
+- Once a card enters its sticky zone, its scale decreases by 1 for every 10000px of page scroll and its blur increases up to 100px.
+- Every card renders a hard-coded `h1` with the text "Card" above the image. There is no prop to change or remove it.
+- Cards use `bg="neutral"`, `shape="roundedLarge"` and `$shadow="medium"`. The image uses `fill`, `sizes="100vw"`, `objectFit: "cover"` and the URL as its `alt` text.
+- The scroll listener is registered during render without cleanup and updates React state on every scroll change, which can be costly with many cards.
+- There is no reduced-motion or touch handling.
+- Remote image URLs must be allowed in your Next.js `images` configuration.
+- The image data type is not exported; define the array inline or with a local type.

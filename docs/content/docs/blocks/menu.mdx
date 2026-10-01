@@ -1,0 +1,108 @@
+---
+title: Menu
+description: Build a horizontal hover navigation bar with animated dropdown panels.
+navTitle: Menu
+order: 1
+---
+
+`Menu` is a client component that renders a horizontal navigation bar. Hovering or clicking a `MenuItem` with children selects it, and that item's children render as the dropdown panel, typically a `MenuContent`. `MenuItem` uses `next/link` for items with a `path`.
+
+## Import
+
+```tsx
+import { Menu, MenuItem, MenuContent } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview minHeight="20rem" alignItems="flex-start">
+  <Menu>
+    <MenuItem id={1} title="Products">
+      <MenuContent
+        items={[
+          { documentId: "analytics", title: "Analytics", path: "/docs/blocks/list", additionalFields: { description: "Track usage" } },
+          { documentId: "billing", title: "Billing", path: "/docs/blocks/pagination", additionalFields: { description: "Invoices and plans" } },
+        ]}
+      />
+    </MenuItem>
+    <MenuItem id={2} title="Company">
+      <MenuContent>
+        <Text p="small">About, careers, and press.</Text>
+      </MenuContent>
+    </MenuItem>
+    <MenuItem id={3} title="Docs" path="/docs" />
+  </Menu>
+</Preview>
+
+## Usage
+
+```tsx
+import { Menu, MenuItem, MenuContent } from "@reactberry/system/blocks";
+
+const productLinks = [
+  { documentId: "analytics", title: "Analytics", path: "/analytics", additionalFields: { description: "Track usage" } },
+  { documentId: "billing", title: "Billing", path: "/billing" },
+];
+
+export default function SiteNav() {
+  return (
+    <Menu>
+      <MenuItem id={1} title="Products">
+        <MenuContent items={productLinks} />
+      </MenuItem>
+      <MenuItem id={2} title="Pricing" path="/pricing" />
+      <MenuItem id={3} title="Docs" path="/docs" />
+    </Menu>
+  );
+}
+```
+
+## Props
+
+`Menu`:
+
+- `children` (`React.ReactNode`, required) — `MenuItem` elements. Each direct child's `id` is matched against the selected id to find the panel to render.
+
+The selection is cleared when the pointer leaves the menu. No other props are accepted.
+
+## Related exports
+
+`MenuItem`:
+
+- `id` (`string | number`, required) — unique id. Also used to build the title element id `shift-tab-` followed by the id.
+- `title` (`string`, required) — label text.
+- `path` (`string`) — when set, the title renders as a Next.js `Link` to this path.
+- `children` (`React.ReactNode`) — dropdown panel shown when this item is selected. Items without children clear the selection on hover.
+- `disabled` (`boolean`) — passed to the wrapper `Box` only; it does not prevent selection or navigation.
+
+A pill highlight with a shared `layoutId` follows the hovered or selected item. It can be styled through `theme.header.public.menu.item.highlight`.
+
+`MenuContent`:
+
+- `items` (`MenuItem[]`) — link data. Each item has `documentId` (`string`), `title` (`string`), and optional `path`, `items` (nested items), `additionalFields` (`description`, `divider`), `menuAttached`, and `order`. When provided, `items` takes precedence over `children`.
+- `children` (`React.ReactNode`) — custom panel content, rendered when `items` is not set.
+- `level` (`number`, default `0`) — nesting level. At level `0` items are laid out in one grid column each; nested levels use a single column.
+
+Items with nested `items` render as a category heading with their children below; other items render as anchor links with an optional description.
+
+## Examples
+
+Custom panel content:
+
+```tsx
+<MenuItem id="company" title="Company">
+  <MenuContent>
+    <Text p="small">About, careers, and press.</Text>
+  </MenuContent>
+</MenuItem>
+```
+
+## Notes
+
+- `MenuContent` must be rendered inside `Menu`; it reads the shared menu context and throws otherwise.
+- The panel is absolutely positioned below the bar (`width="40rem"`), with a nub that tracks the centre of the selected title. The nub position is not updated when the selected id is `0` or another falsy value.
+- Slide direction between panels compares ids with `>`, so numeric ids in display order give the expected direction.
+- Hovering a title that has a `path` clears the selection, so combining `path` and `children` on one item does not keep its panel open.
+- `MenuContent` sets `id="overlay-content"` on its panel; only one panel is rendered at a time.
+- `additionalFields.divider`, `menuAttached`, and `order` are declared in the item type but not used in rendering.
+- Navigation is pointer-driven; there is no keyboard handling or ARIA menu semantics.

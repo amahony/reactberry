@@ -5,14 +5,14 @@ import Icon from "../Icon";
 
 interface PlaceholderProps {
   children?: React.ReactNode;
-  icon?: string;
+  icon?: string | React.ComponentType<any> | null;
   [key: string]: any;
   iconProps?: any;
 }
 
 const Placeholder: React.FC<PlaceholderProps> = ({
   children,
-  icon = "IconEmpty",
+  icon = "IconDocFolder",
   iconProps,
   ...props
 }) => {
@@ -26,10 +26,10 @@ const Placeholder: React.FC<PlaceholderProps> = ({
       fontSize="small"
       p="medium"
       gap="s"
-      {...props}
       color="tertiary"
+      {...props}
     >
-      {icon && (
+      {typeof icon === "string" ? (
         <Box
           as={Icon}
           color={"palette.neutrals.7"}
@@ -38,7 +38,15 @@ const Placeholder: React.FC<PlaceholderProps> = ({
           icon={icon}
           {...iconProps}
         />
-      )}
+      ) : icon ? (
+        <Box
+          as={icon}
+          color={"palette.neutrals.7"}
+          size="2.25rem"
+          flex="none"
+          {...iconProps}
+        />
+      ) : null}
 
       {children ? <>{children}</> : null}
     </Text>

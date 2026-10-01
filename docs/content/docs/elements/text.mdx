@@ -1,0 +1,102 @@
+---
+title: Text
+description: The typography primitive. Extends Box with font, text, truncation, and line clamp props.
+navTitle: Text
+order: 2
+---
+
+`Text` extends `Box`, so it accepts every Box prop, and adds styled-system typography plus a few text utilities. Use it for headings, paragraphs, labels, links, and any element that needs font styling.
+
+## Import
+
+```tsx
+import { Text } from "@reactberry/system/elements";
+```
+
+## Basic usage
+
+```tsx
+<Text as="h2" fontSize="xl" fontWeight="600" color="primary">
+  Section title
+</Text>
+```
+
+`Text` renders a `span` by default. Pass `as` to choose the semantic element.
+
+## Typography props
+
+- `fontSize` — maps to `theme.fontSizes`
+- `fontWeight` — raw CSS value (for example `400`, `600`, `"bold"`)
+- `lineHeight` — raw CSS value (for example `1.5`)
+- `letterSpacing` — raw CSS value
+- `fontFamily` — raw CSS value
+- `fontStyle` — raw CSS value
+- `textAlign` — raw CSS value
+
+The default themes do not define `fonts`, `fontWeights`, `lineHeights`, or `letterSpacings` scales, so those props pass through unchanged. Named values such as `"medium"` or `"relaxed"` are not valid CSS for `fontWeight` or `lineHeight`.
+
+## Text utility props
+
+- `textTransform` — CSS `text-transform`
+- `textDecoration` — CSS `text-decoration`
+- `textOverflow` — CSS `text-overflow`
+- `whiteSpace` — CSS `white-space`
+- `overflowWrap` — CSS `overflow-wrap`
+- `truncate` — single-line ellipsis; sets `width: 100%`, `white-space: nowrap`, `overflow: hidden`, and `display: inline-block`
+- `lineClamp` — clamps to the given number of lines with an ellipsis using `-webkit-line-clamp`
+- `disabled` — sets `opacity: 0.5` and `pointer-events: none`
+
+## Font sizes
+
+Aliases from `theme.fontSizes`:
+
+- `xxs` 0.625rem
+- `xs` 0.75rem
+- `s` 0.875rem
+- `m` 1rem
+- `l` 1.25rem
+- `xl` 1.5rem
+- `xxl` 2rem
+- `xxxl` 3rem
+- `huge` 5rem
+
+Long names (`xxsmall`, `xsmall`, `small`, `medium`, `large`, `xlarge`, `xxlarge`, `xxxlarge`) match the short aliases. Numeric indices `0` to `13` are also available.
+
+## Examples
+
+Semantic elements:
+
+```tsx
+<Text as="h1" fontSize="xxl" fontWeight="700">Page title</Text>
+<Text as="p" fontSize="m" lineHeight="1.6" color="secondary">Body copy</Text>
+<Text as="label" htmlFor="email" fontSize="s" fontWeight="500">Email</Text>
+```
+
+Truncation and clamping:
+
+```tsx
+<Text truncate maxWidth="12rem">A long single line that will be cut off</Text>
+
+<Text as="p" lineClamp={3}>
+  A longer paragraph that is clamped to three lines.
+</Text>
+```
+
+Uppercase eyebrow label:
+
+```tsx
+<Text fontSize="xs" fontWeight="700" textTransform="uppercase" color="tertiary">
+  Overview
+</Text>
+```
+
+Responsive size:
+
+```tsx
+<Text fontSize={["s", "m", "l"]}>Responsive text</Text>
+```
+
+## Notes
+
+- Use `fontSize` for text size. `size` sets width and height (inherited from Box), which is useful for icons rendered with `as`.
+- Use `Text` rather than `Box` whenever typography props are needed.

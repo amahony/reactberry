@@ -1,0 +1,103 @@
+---
+title: List
+description: Render rows of data in a bordered CSS grid with configurable columns and optional column groups.
+navTitle: List
+order: 1
+---
+
+`List` is a client component (`"use client"`) that renders a data grid built from `Box` and `Text`: an optional group header row, a column header row, and one row per data item. Each cell renders a component you supply per column.
+
+## Import
+
+```tsx
+import { List } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={[]}>
+    {(selected, setSelected) => (
+      <Box display="flex" flexDirection="column" gap="s">
+        <List
+          data={[
+            { id: "u1", name: "Ada Lovelace", city: "London", role: "Admin" },
+            { id: "u2", name: "Grace Hopper", city: "New York", role: "Editor" },
+            { id: "u3", name: "Alan Turing", city: "Manchester", role: "Viewer" },
+          ]}
+          grid={[
+            { label: "ID", width: "4rem", key: "id", align: "center", component: (p) => <Text>{p.id}</Text> },
+            { label: "Name", width: "1fr", key: "name", component: (p) => <Text fontWeight="600">{p.name}</Text> },
+            { label: "City", width: "8rem", key: "city", group: "Details", component: (p) => <Text>{p.value}</Text> },
+            { label: "Role", width: "6rem", key: "role", group: "Details", component: (p) => <Text>{p.value}</Text> },
+          ]}
+          rowHeight="2.5rem"
+          selected={selected}
+          onSelect={(id) => setSelected(selected.includes(id) ? selected.filter((item) => item !== id) : [...selected, id])}
+        />
+        <Text fontSize="s" color="secondary">Selected ids: {selected.length ? selected.join(", ") : "none"}</Text>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+import { List } from "@reactberry/system/blocks";
+import { Text } from "@reactberry/system/elements";
+
+const users = [
+  { id: "u1", name: "Ada Lovelace", city: "London", role: "Admin" },
+  { id: "u2", name: "Grace Hopper", city: "New York", role: "Editor" },
+];
+
+const grid = [
+  { label: "ID", width: "4rem", key: "id", align: "center", component: (p: any) => <Text>{p.id}</Text> },
+  { label: "Name", width: "1fr", key: "name", component: (p: any) => <Text fontWeight="600">{p.name}</Text> },
+  { label: "City", width: "10rem", key: "city", group: "Details", component: (p: any) => <Text>{p.value}</Text> },
+  { label: "Role", width: "8rem", key: "role", group: "Details", component: (p: any) => <Text>{p.value}</Text> },
+];
+
+export default function UserList() {
+  return <List data={users} grid={grid} rowHeight="2.5rem" onRowClick={(item) => console.log(item.name)} />;
+}
+```
+
+## Props
+
+- `data` (`DataItem[]`, required in the type, default `[]`) — row objects.
+- `grid` (`(GridColumn | GroupedColumn)[]`, default a three-column `id` / `name` / empty setup) — column definitions.
+- `rowHeight` (`string`, default `"2rem"`) — fixed height and max height of each row.
+- `selected` (`string[]`, default `[]`) — ids of selected rows.
+- `onSelect` (`(id: string) => void`) — called with the row's `id` on click.
+- `onRowClick` (`(item: DataItem) => void`) — called with the row item on click.
+- `gap` (`string`, default `"xxxsmall"`) — gap and bottom padding of the group header row.
+- All other props are spread onto the group header row only.
+
+Each `GridColumn` accepts:
+
+- `label` (`string | React.ReactNode`, required) — header content.
+- `width` (`string`, required) — grid track size, such as `"8rem"` or `"1fr"`.
+- `key` (`string | string[]`, required) — data key(s) to keep and pass as `value`.
+- `component` (`React.ComponentType`, required) — cell renderer; receives the row's kept fields as props plus `value`.
+- `align` — cell and header alignment (default `"start"`).
+- `minWidth` / `maxWidth` (`string`) — applied to each cell.
+- `autoWidth` (`boolean`) — measure content to size the column.
+- `group` (`string`) — columns sharing a value are grouped under one header.
+- `columnProps` / `cellProps` — spread onto the header and each cell.
+- `groupProps` — spread onto the group header when this is the first column of its group.
+
+## Notes
+
+- Row data is filtered to the keys listed in `grid` before rendering. Selection, `onSelect`, `onRowClick` and cell components only see those fields, so include an `id` column if you use `selected` or `onSelect`; otherwise `id` is `undefined`.
+- When a `key` is an array, `value` is an object containing each of those keys.
+- Selected rows show a check mark emoji at the start of every cell; there is no other selected styling.
+- Rows are clickable `div` elements with `cursor="pointer"` when a handler is set. They are not focusable and have no keyboard handling or ARIA grid roles.
+- `autoWidth` columns are measured after mount and on horizontal window resize (debounced 250ms), using up to 20 rows plus the header and adding 24px. Measurement queries cells by a global class name, so multiple `List` instances with `autoWidth` on one page can affect each other.
+- Group headers read `groupProps` from the first column in the group. The `groupProps` field on a `GroupedColumn` object is not used.
+- Because extra props and `gap` apply only to the group header row, they have no effect when no columns are grouped.
+
+## Related exports
+
+The module also exports `createColumnGroup(groupHeader, columns, groupProps?)`, which returns a `GroupedColumn`, and the types `DataItem`, `ListProps`, `GridColumn` and `GroupedColumn`. These are not re-exported from `@reactberry/system/blocks`, and the package does not expose deep import paths, so they are not currently importable by consumers. Use the `group` field on columns instead.

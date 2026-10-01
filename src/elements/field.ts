@@ -37,6 +37,19 @@ const selectStyling = css`
   padding-right: 2em;
 `;
 
+// Native checkbox/radio controls flicker on hover in Chrome/Safari when the
+// blanket `transition: 0.2s ease` (i.e. `transition: all`) animates their
+// internal paint. Keep their visual state static on hover so they don't
+// flicker or shift.
+const checkboxStyling = css`
+  transition: none;
+  &:hover,
+  &:focus,
+  &:focus-within {
+    box-shadow: none;
+  }
+`;
+
 const rangeStyling = css`
   --color: ${(p: any) => p.theme.colors.primary};
   --track: ${(p: any) => p.theme.colors.transparent.light[2]};
@@ -124,6 +137,7 @@ const Field = styled(Text)
   ${(p) => p.as === "select" && selectStyling}
   ${(p) => p.type === "range" && rangeStyling}
     transition: 0.2s ease;
+  ${(p) => (p.type === "checkbox" || p.type === "radio") && checkboxStyling}
 `;
 
 export default Field;

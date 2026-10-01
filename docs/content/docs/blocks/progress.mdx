@@ -1,0 +1,105 @@
+---
+title: Progress
+description: Show progress as an animated bar, a pie, or a labelled circle.
+navTitle: Progress
+order: 1
+---
+
+`Progress` is a client component that renders one of three indicators: a horizontal bar (animated with `motion`), an SVG pie, or an SVG circle with a centred label. It is built on `Box` and reads colours from the active theme, so it should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { Progress } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={40}>
+    {(value, setValue) => (
+      <Box display="flex" flexDirection="column" gap="m">
+        <Progress progress={value} />
+        <Box display="flex" alignItems="center" justifyContent="center" gap="l">
+          <Progress variant="pie" progress={value} size="2.5rem" />
+          <Progress variant="circle" progress={value} sqSize={80} strokeWidth={6} />
+        </Box>
+        <Box display="flex" justifyContent="center" gap="s">
+          <Button type="button" onClick={() => setValue(Math.max(0, value - 10))}>-10</Button>
+          <Button type="button" onClick={() => setValue(Math.min(100, value + 10))}>+10</Button>
+        </Box>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+import { Progress } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function UploadStatus({ percent }: { percent: number }) {
+  return (
+    <Box display="flex" flexDirection="column" gap="xs">
+      <Text>Uploading… {percent}%</Text>
+      <Progress progress={percent} />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `variant` (`"bar" | "pie" | "circle"`, default `"bar"`) — selects the indicator. Any value other than `"pie"` or `"circle"` renders the bar.
+- `progress` (`number`, default `0`) — current value as a percentage (0–100) for all variants.
+- `progressColor` (`string`, default `"brand"`) — colour token or CSS colour for the filled portion.
+- `trackColor` (`string`, default `"transparent.light.1"`) — colour token or CSS colour for the unfilled track.
+
+Bar-only props:
+
+- `reverse` (`boolean`, default `false`) — fills from the right edge instead of the left.
+
+Pie-only props:
+
+- `size` (`string`, default `"2rem"`) — width and height of the SVG.
+
+Circle-only props:
+
+- `sqSize` (`number`, default `100`) — width and height of the SVG and its viewBox.
+- `strokeWidth` (`number`, default `1`) — stroke width in pixels for the track and the progress arc.
+- `label` (`string`) — text shown in the centre; falls back to `` `${progress}%` ``.
+
+`ProgressProps` has an index signature, so all remaining props are spread onto the root `Box`: the track `div` for the bar, and the `svg` element for the pie and circle.
+
+## Examples
+
+Bar filling from the right with custom colours and height:
+
+```tsx
+<Progress progress={40} reverse progressColor="green" trackColor="base" height="0.5rem" />
+```
+
+Circle with a custom label:
+
+```tsx
+<Progress variant="circle" progress={72} sqSize={80} strokeWidth={6} label="72 / 100" />
+```
+
+Pie:
+
+```tsx
+<Progress variant="pie" progress={50} size="1.5rem" />
+```
+
+## Related exports
+
+None. A `getProgressColor` helper exists in `src/blocks/Progress/getProgressColor.ts` but is not exported from `@reactberry/system/blocks`.
+
+## Notes
+
+- The pie normalises its arc with `pathLength={100}`, so `progress` maps directly to the filled percentage. Values are clamped to 0–100.
+- The bar is `0.25rem` high by default; pass `height` to override it.
+- The bar animates its width through `motion`. No reduced-motion check is performed by the component.
+- No ARIA role or value attributes (such as `role="progressbar"` or `aria-valuenow`) are set. Add them through the spread props, or provide adjacent text, when the value must be announced.
+- The circle variant's label is rendered as SVG `text` using the `secondary` colour and `fontWeight` 600.

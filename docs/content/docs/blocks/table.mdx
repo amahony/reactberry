@@ -1,0 +1,295 @@
+---
+title: Table
+description: Semantic table primitives with a pagination bar and hooks for sorting, filtering, and paging data.
+navTitle: Table
+order: 1
+---
+
+`Table` and its subcomponents render native `table`, `thead`, `tbody`, `tfoot`, `tr`, `td`, and `th` elements through Reactberry's `Text` element. `TablePagination` and the three hooks are client-side (`"use client"`); the hooks hold state with React `useState`.
+
+## Import
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableCell,
+  TableHeaderCell,
+  TablePagination,
+  useTableControls,
+  useTableFilters,
+  useFilteredTableControls,
+} from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={0}>
+    {(page, setPage) => {
+      const users = [
+        { id: 1, name: "Ada Lovelace", email: "ada@example.com", age: 36 },
+        { id: 2, name: "Alan Turing", email: "alan@example.com", age: 41 },
+        { id: 3, name: "Grace Hopper", email: "grace@example.com", age: 85 },
+        { id: 4, name: "Katherine Johnson", email: "katherine@example.com", age: 101 },
+        { id: 5, name: "Linus Torvalds", email: "linus@example.com", age: 56 },
+        { id: 6, name: "Margaret Hamilton", email: "margaret@example.com", age: 90 },
+        { id: 7, name: "Tim Berners-Lee", email: "tim@example.com", age: 71 },
+      ];
+      const perPage = 3;
+      return (
+        <Box>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHeaderCell>Name</TableHeaderCell>
+                <TableHeaderCell>Email</TableHeaderCell>
+                <TableHeaderCell align="right">Age</TableHeaderCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {users.slice(page * perPage, page * perPage + perPage).map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell align="left">{user.name}</TableCell>
+                  <TableCell align="left">{user.email}</TableCell>
+                  <TableCell align="right">{user.age}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <TablePagination
+            currentPage={page}
+            totalPages={Math.ceil(users.length / perPage)}
+            totalItems={users.length}
+            itemsPerPage={perPage}
+            onPageChange={setPage}
+          />
+        </Box>
+      );
+    }}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableHeaderCell,
+  TablePagination,
+  useTableControls,
+} from "@reactberry/system/blocks";
+import { Box, Button } from "@reactberry/system/elements";
+
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  age: number;
+  status: "active" | "inactive";
+};
+
+export default function UsersTable({ users }: { users: User[] }) {
+  const controls = useTableControls({ data: users, initialItemsPerPage: 10 });
+
+  const toggleSort = (key: string) =>
+    controls.handleSort(
+      key,
+      controls.sortKey === key && controls.sortDirection === "asc" ? "desc" : "asc",
+    );
+
+  return (
+    <Box>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderCell>
+              <Button variant="ghost" $size="small" onClick={() => toggleSort("name")}>
+                Name
+              </Button>
+            </TableHeaderCell>
+            <TableHeaderCell>Email</TableHeaderCell>
+            <TableHeaderCell align="right">Age</TableHeaderCell>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {controls.currentData.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell align="left">{user.name}</TableCell>
+              <TableCell align="left">{user.email}</TableCell>
+              <TableCell align="right">{user.age}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <TablePagination
+        currentPage={controls.currentPage}
+        totalPages={controls.totalPages}
+        totalItems={controls.totalItems}
+        itemsPerPage={controls.itemsPerPage}
+        onPageChange={controls.handlePageChange}
+        showPageSize
+        onPageSizeChange={controls.handlePageSizeChange}
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+### Table
+
+Renders `Text` with `as="table"` and `width="100%"`. All props (HTML table attributes and `Text`/`Box` style props) are spread onto it after the defaults.
+
+### TableHeader, TableBody, TableFooter
+
+Render `Text` as `thead`, `tbody`, and `tfoot` respectively. They add no styles; all props are spread onto the element.
+
+### TableRow
+
+Renders `Text` as `tr`. All props are spread onto it.
+
+- `selected` (`boolean`) — declared in the type; not used by the component and forwarded to the DOM.
+- `clickable` (`boolean`) — declared in the type; not used by the component and forwarded to the DOM.
+- `width` (`string | number`) — forwarded to `Text` as a style prop.
+
+### TableCell
+
+Renders a `td` via `Text` with `position="relative"`, `border="1px solid"`, and a fixed `height="2rem"`. Forwards its ref to the `td`.
+
+- `align` (`"left" | "center" | "right"`, default `"center"`) — mapped to `textAlign`.
+- `truncate` (`boolean`, default `true`) — when children are a string or number, they are wrapped in a `Text` with `fontSize="s"` and single-line truncation; the full value is set as `title`.
+- `colSpan` / `rowSpan` (`number`) — passed to the `td`.
+- `width` (`string | number`) — passed to `Text` as a style prop.
+- `header` (`boolean`) — declared in the type; not used. The cell always renders a `td` and the prop is forwarded to the DOM.
+
+Remaining props are spread onto the `td` before `width`, `colSpan`, `rowSpan`, and `height`, so `height` cannot be overridden.
+
+### TableHeaderCell
+
+Renders a `th` via `Text` with `skin="row.header"`, `border="1px solid"`, `borderColor="surface"`, `fontSize="xxs"`, and `fontWeight="700"`. Children are wrapped in an inner `div`.
+
+- `align` (`"left" | "center" | "right"`, default `"left"`) — mapped to `textAlign`.
+- `width` (`string | number`, default `"auto"`) — applied to the `th` and the inner `div`.
+- `colSpan` / `rowSpan` (`number`) — passed to the `th`.
+- `sortable` (`boolean`) — declared as "show a visual sort indicator"; no indicator is rendered and the prop is forwarded to the DOM.
+- `truncate` (`boolean`) — not destructured; it reaches `Text`, which applies its truncate styles (including `display: inline-block`) to the `th` itself.
+
+Remaining props are spread onto the `th` after the default styles.
+
+### TablePagination
+
+A client component that renders an item count, an optional page size `select`, and previous/next and page number buttons.
+
+- `currentPage` (`number`, required) — 0-based current page.
+- `totalPages` (`number`, required) — total page count.
+- `totalItems` (`number`, required) — total item count, used in the "Showing X-Y of N items" text.
+- `itemsPerPage` (`number`, required) — page size; also the selected value of the page size `select`.
+- `onPageChange` (`(page: number) => void`, required) — called with the 0-based target page.
+- `showPageSize` (`boolean`, default `false`) — shows the page size `select`. It renders only when `onPageSizeChange` is also provided.
+- `pageSizeOptions` (`number[]`, default `[10, 25, 50, 100]`) — options for the page size `select`.
+- `onPageSizeChange` (`(pageSize: number) => void`) — called with the selected page size.
+- `showItemCount` (`boolean`, default `true`) — shows the item count text.
+- `maxPageButtons` (`number`, default `5`) — when `totalPages` exceeds this, the first and last pages are always shown with `...` around a range centred on the current page.
+
+No other props are accepted.
+
+## Examples
+
+Filtering, sorting, and pagination combined:
+
+```tsx
+type Filters = { search: string; status: "all" | "active" | "inactive" };
+
+const table = useFilteredTableControls<User, Filters>(
+  {
+    data: users,
+    filterFunctions: {
+      search: (user, value) => user.name.toLowerCase().includes(value.toLowerCase()),
+      status: (user, value) => value === "all" || user.status === value,
+    },
+    initialFilters: { search: "", status: "all" },
+  },
+  { initialItemsPerPage: 25, initialSortKey: "name", initialSortDirection: "asc" },
+);
+
+// table.data is the current page; table.updateFilter("search", "ann") filters it.
+```
+
+A footer row:
+
+```tsx
+<TableFooter>
+  <TableRow>
+    <TableCell colSpan={2} align="right">Total</TableCell>
+    <TableCell align="right">{total}</TableCell>
+  </TableRow>
+</TableFooter>
+```
+
+## Related exports
+
+### useTableControls
+
+`useTableControls(options)` sorts and paginates an array in memory.
+
+Options (`UseTableControlsOptions<T>`):
+
+- `data` (`T[]`, required) — source rows.
+- `initialItemsPerPage` (`number`, default `10`).
+- `initialSortKey` (`string | null`, default `null`).
+- `initialSortDirection` (`"asc" | "desc" | null`, default `null`).
+- `customSort` (`(data: T[], key: string, direction: "asc" | "desc") => T[]`) — replaces the default sort.
+
+Returns (`UseTableControlsReturn<T>`):
+
+- `currentData` — rows for the current page after sorting.
+- `sortKey`, `sortDirection` — current sort state.
+- `handleSort(key, direction)` — sets the sort; a `null` direction clears the key. Resets to page 0.
+- `currentPage` (0-based, clamped to the last valid page), `totalPages`, `totalItems`, `itemsPerPage`.
+- `handlePageChange(page)` — sets the page.
+- `handlePageSizeChange(pageSize)` — sets the page size and resets to page 0.
+- `resetPagination()`, `resetSorting()`, `resetAll()` — restore initial values.
+
+The default sort compares `row[key]`; strings are compared case-insensitively with `localeCompare`, and `null`/`undefined` values sort last.
+
+### useTableFilters
+
+`useTableFilters(options)` filters an array with one predicate per filter key.
+
+Options (`UseTableFiltersOptions<T, F>`):
+
+- `data` (`T[]`, required).
+- `filterFunctions` (required) — an object mapping each key of `F` to `(item: T, value: F[K]) => boolean`.
+- `initialFilters` (`F`, required).
+
+Returns (`UseTableFiltersReturn<T, F>`):
+
+- `filteredData` — rows that pass every predicate.
+- `filters` — current filter values.
+- `updateFilter(key, value)` and `updateFilters(partial)` — merge new values.
+- `resetFilters()` — restore `initialFilters`.
+- `hasActiveFilters` — `true` when any value differs (strict equality) from `initialFilters`.
+
+### useFilteredTableControls
+
+`useFilteredTableControls(filterOptions, controlOptions)` runs `useTableFilters` and passes `filteredData` into `useTableControls`. `controlOptions` is `Omit<UseTableControlsOptions<T>, "data">`. It returns every field from both hooks plus `data`, which equals `currentData`.
+
+## Notes
+
+- There is no `SortableTableHeader` export and `Table` has no `striped`, `hoverable`, `compact`, `bordered`, `stickyHeader`, or `skin` props, despite references in `src/blocks/Table/README.md` and `src/docs/api/blocks/Table.md`. Build sort controls inside `TableHeaderCell` as shown above.
+- `filterFunctions` and `initialFilters` are memo dependencies; define them outside the component or memoise them to avoid recomputation on every render.
+- Changing filters does not reset the page, but `useTableControls` clamps `currentPage` to the last valid page.
+- In `TablePagination`, the next button is disabled only when `currentPage === totalPages - 1`; with `totalPages` of `0` it remains enabled.
+- The page size `select` is a native element with inline styles and is not programmatically labelled by the "Items per page:" text.
+- Page buttons have `aria-label` values such as `"Go to page 2"` and the active page sets `aria-current="page"`.

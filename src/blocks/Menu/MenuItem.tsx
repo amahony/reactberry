@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useContext } from "react";
 import { motion } from "motion/react";
 import { Box, Text } from "../../elements";

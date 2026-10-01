@@ -1,0 +1,96 @@
+---
+title: GradientMesh
+description: Render an animated WebGL mesh gradient background using brand colours or custom colours.
+navTitle: GradientMesh
+order: 1
+---
+
+`GradientMesh` is a client component that renders the `MeshGradient` shader from `@paper-design/shaders-react` inside a `Box` with `overflow: hidden` and `pointer-events: none`.
+
+## Import
+
+```tsx
+import { GradientMesh } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview p="0" alignItems="stretch">
+  <State initial="medium">
+    {(intensity, setIntensity) => (
+      <Box position="relative" width="100%" height="16rem" overflow="hidden">
+        <GradientMesh intensity={intensity} position="absolute" top="0" left="0" width="100%" height="100%" />
+        <Box position="relative" p="l" display="flex" flexDirection="column" gap="m">
+          <Text as="p" fontSize="xxl" fontWeight="700" color="white" m="0">Mesh intensity: {intensity}</Text>
+          <Box display="flex" gap="s">
+            <Button type="button" variant={intensity === "low" ? "primary" : undefined} onClick={() => setIntensity("low")}>Low</Button>
+            <Button type="button" variant={intensity === "medium" ? "primary" : undefined} onClick={() => setIntensity("medium")}>Medium</Button>
+            <Button type="button" variant={intensity === "high" ? "primary" : undefined} onClick={() => setIntensity("high")}>High</Button>
+          </Box>
+        </Box>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+import { GradientMesh } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function Hero() {
+  return (
+    <Box position="relative" height="70vh" overflow="hidden">
+      <GradientMesh position="absolute" top="0" left="0" width="100%" height="100%" />
+      <Box position="relative" p="l">
+        <Text as="h1" fontSize="xxxl" fontWeight="700" color="white">
+          Ship faster
+        </Text>
+      </Box>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `intensity` (`"low" | "medium" | "high"`, default `"medium"`) — preset for `distortion` and `swirl`: low is 0.3 / 0.05, medium is 0.6 / 0.1, high is 0.9 / 0.2.
+- `colors` (`{ primary?, secondary?, tertiary? }`) — gradient colours. Defaults are `#0099c2`, `#7c4dff` and `#1565ef`.
+- `speed` (`number`, default `1`) — shader animation speed.
+- `animated` (`boolean`, default `true`) — when `false`, speed is set to 0.
+- `distortion` (`number`) — overrides the intensity preset's distortion.
+- `swirl` (`number`) — overrides the intensity preset's swirl.
+- `grainMixer` (`number`, default `0`) — shader grain mixer amount.
+- `grainOverlay` (`number`, default `0`) — shader grain overlay amount.
+- `scale` (`number`, default `1`) — shader scale.
+- `rotation` (`number`, default `0`) — shader rotation in degrees.
+- `offsetX` (`number`, default `0`) — shader X offset.
+- `offsetY` (`number`, default `0`) — shader Y offset.
+
+All remaining props are spread onto the container `Box` (typed as `[key: string]: any`). The shader canvas fills the container at 100% width and height, so size the container with layout props.
+
+## Examples
+
+Custom colours with low intensity:
+
+```tsx
+<GradientMesh
+  intensity="low"
+  colors={{ primary: "#ff7a59", secondary: "#ffc857", tertiary: "#e84a5f" }}
+  height="400px"
+/>
+```
+
+Static gradient with grain:
+
+```tsx
+<GradientMesh animated={false} grainOverlay={0.3} height="400px" />
+```
+
+## Notes
+
+- Four colours are sent to the shader: `primary`, `secondary`, `tertiary`, then `primary` again.
+- When the user prefers reduced motion, speed is set to 0 regardless of `animated`.
+- The container has `pointer-events: none`, so it does not intercept clicks on content behind it.
+- Rendering uses WebGL; keep the number of instances on a page low.

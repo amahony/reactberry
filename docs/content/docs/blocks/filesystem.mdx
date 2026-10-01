@@ -1,0 +1,136 @@
+---
+title: Filesystem
+description: Render a collapsible file and folder tree with optional custom row rendering and selection state.
+navTitle: Filesystem
+order: 1
+---
+
+`Filesystem` is a client component that renders a nested list of folders and files. Folders with children expand and collapse with a `motion/react` height animation, and rows can be customised through render callbacks.
+
+## Import
+
+```tsx
+import { Filesystem } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column">
+  <State initial={["src/theme.config.ts"]}>
+    {(selected, setSelected) => (
+      <Box display="flex" flexDirection="column" gap="s" width="16rem">
+        <Filesystem
+          nodes={[
+            {
+              id: "src",
+              name: "src",
+              nodes: [
+                { id: "src/theme.config.ts", name: "theme.config.ts" },
+                {
+                  id: "src/components",
+                  name: "components",
+                  nodes: [
+                    { id: "src/components/Avatar.tsx", name: "Avatar.tsx" },
+                    { id: "src/components/Drawer.tsx", name: "Drawer.tsx" },
+                  ],
+                },
+              ],
+            },
+            { id: "docs", name: "docs", nodes: [{ id: "docs/intro.mdx", name: "intro.mdx" }] },
+            { id: "package.json", name: "package.json" },
+          ]}
+          initiallyOpenNames={["src"]}
+          selectedIds={selected}
+          onSelectNode={(node) => node.id && setSelected([node.id])}
+        />
+        <Text fontSize="s" color="secondary">Selected: {selected[0]}</Text>
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Filesystem } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+const tree = [
+  {
+    id: "src",
+    name: "src",
+    nodes: [
+      { id: "src/index.ts", name: "index.ts" },
+      { id: "src/components", name: "components", nodes: [{ id: "src/components/Button.tsx", name: "Button.tsx" }] },
+    ],
+  },
+  { id: "package.json", name: "package.json" },
+];
+
+export default function ProjectTree() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <Box width="16rem">
+      <Filesystem
+        nodes={tree}
+        initiallyOpenNames={["src"]}
+        selectedIds={selected}
+        onSelectNode={(node) => node.id && setSelected([node.id])}
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `nodes` (`FilesystemNode[]`, required) — top-level nodes. Each node has `name` (`string`) and optional `id` (`string`) and `nodes` (`FilesystemNode[]`). Nothing is rendered when empty.
+- `initiallyOpenNames` (`string[]`) — names (not ids) of folders that start expanded, at any depth.
+- `onSelectNode` (`(node: FilesystemNode) => void`) — called when a row or a folder toggle is clicked.
+- `selectedIds` (`string[]`) — ids of selected nodes. Selected rows get `skin="brand.subtle"`, and the flag is passed to the render callbacks.
+- `renderNode` (`(node, defaultContent, ctx) => React.ReactNode`) — replaces the icon and name. `defaultContent` is the default icon and name; `ctx` is `{ isSelected }`.
+- `renderLeading` (`(node, ctx) => React.ReactNode`) — replaces the leading slot (the expand toggle for folders with children, a spacer otherwise). `ctx` contains `hasChildren`, `isOpen`, `toggle`, `defaultLeading`, and `isSelected`.
+
+No other props are accepted.
+
+## Examples
+
+Checkbox in the leading slot, keeping the default toggle:
+
+```tsx
+<Filesystem
+  nodes={tree}
+  renderLeading={(node, { defaultLeading }) => (
+    <Box display="flex" alignItems="center" gap="xxs">
+      <input type="checkbox" aria-label={`Select ${node.name}`} />
+      {defaultLeading}
+    </Box>
+  )}
+/>
+```
+
+Appending metadata to each row:
+
+```tsx
+<Filesystem
+  nodes={tree}
+  renderNode={(node, defaultContent) => (
+    <Box display="flex" alignItems="center" gap="xxs" flex="1">
+      {defaultContent}
+      {node.nodes && <Text fontSize="xs" color="tertiary">{node.nodes.length}</Text>}
+    </Box>
+  )}
+/>
+```
+
+## Notes
+
+- A node with a `nodes` array is shown with a folder icon, even when empty; only folders with at least one child get a toggle and can expand.
+- Clicking a row toggles folders with children and calls `onSelectNode`. The toggle button stops propagation, toggles, and also calls `onSelectNode`.
+- Open state is local to each row; `initiallyOpenNames` is read only on first render.
+- Nested levels are not indented by default; the internal `depth` value is tracked but not used for styling.
+- The root list does not reset `listStyleType`, while nested lists set it to `none`.
+- Row names are clamped to one line, with the full name in the row's `title` attribute.
+- The `FilesystemNode` and related types are not re-exported from the blocks entry point.

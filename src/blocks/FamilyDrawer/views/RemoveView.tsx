@@ -7,9 +7,10 @@ import { FamilyDrawerView } from "../index";
 
 interface RemoveViewProps {
   setView: (view: FamilyDrawerView) => void;
+  onConfirm: () => void;
 }
 
-export const RemoveView: React.FC<RemoveViewProps> = ({ setView }) => {
+export const RemoveView: React.FC<RemoveViewProps> = ({ setView, onConfirm }) => {
   return (
     <Box>
       <ViewHeader
@@ -33,7 +34,7 @@ export const RemoveView: React.FC<RemoveViewProps> = ({ setView }) => {
         <Button
           variant="primary"
           $size="medium"
-          onClick={() => setView("default")}
+          onClick={onConfirm}
           flex="1"
           skin="danger"
           color="white"

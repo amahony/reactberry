@@ -55,6 +55,18 @@ export const cursor = style({
   cssProperty: "cursor",
 })
 
+export const transform = style({
+  prop: "transform",
+  cssProperty: "transform",
+})
+
+// `place-items` shorthand (align-items + justify-items). styled-system only
+// ships the longhands, so expose the shorthand for grid/flex centering.
+export const placeItems = style({
+  prop: "placeItems",
+  cssProperty: "place-items",
+})
+
 // used by Text
 export const textTransform = style({
   prop: "textTransform",
@@ -69,6 +81,16 @@ export const textDecoration = style({
 export const textOverflow = style({
   prop: "textOverflow",
   cssProperty: "text-overflow",
+})
+
+export const whiteSpace = style({
+  prop: "whiteSpace",
+  cssProperty: "white-space",
+})
+
+export const overflowWrap = style({
+  prop: "overflowWrap",
+  cssProperty: "overflow-wrap",
 })
 
 export const outline = css`

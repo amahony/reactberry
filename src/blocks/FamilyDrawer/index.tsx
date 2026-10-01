@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { cloneElement, isValidElement, useState } from "react";
 import { Box, Button, Text } from "../../elements";
-import { Drawer, DrawerButton } from "../Drawer";
+import { Drawer } from "../Drawer";
+import { useSidebar } from "../../hooks/use-sidebar";
 import { AnimatePresence, motion } from "motion/react";
 import { IconGear } from "../../icons";
 import useMeasure from "react-use-measure";
@@ -25,6 +26,14 @@ interface FamilyDrawerProps {
   onViewChange?: (view: FamilyDrawerView) => void;
   /** Custom drawer width */
   width?: string | number | object;
+  /** Private key shown in the key view after "Reveal" is pressed */
+  privateKey?: string;
+  /** Recovery phrase shown in the phrase view after "Reveal" is pressed */
+  recoveryPhrase?: string;
+  /** Callback when "Reveal" is pressed in the key or phrase view */
+  onReveal?: (view: "key" | "phrase") => void;
+  /** Callback when removal is confirmed in the remove view */
+  onRemove?: () => void;
 }
 
 export const FamilyDrawer: React.FC<FamilyDrawerProps> = ({
@@ -33,33 +42,61 @@ export const FamilyDrawer: React.FC<FamilyDrawerProps> = ({
   trigger,
   onViewChange,
   width = "360px",
+  privateKey,
+  recoveryPhrase,
+  onReveal,
+  onRemove,
 }) => {
   const [view, setView] = useState<FamilyDrawerView>(initialView);
   const [elementRef, bounds] = useMeasure();
+  const { toggleSidebar } = useSidebar(id);
 
   const handleViewChange = (newView: FamilyDrawerView) => {
     setView(newView);
     onViewChange?.(newView);
   };
 
-  const content = useMemo(() => {
-    const commonProps = { setView: handleViewChange };
-    
-    switch (view) {
-      case "default":
-        return <DefaultView {...commonProps} />;
-      case "phrase":
-        return <PhraseView {...commonProps} />;
-      case "key":
-        return <KeyView {...commonProps} />;
-      case "remove":
-        return <RemoveView {...commonProps} />;
-      default:
-        return <DefaultView {...commonProps} />;
-    }
-  }, [view]);
+  const handleRemove = () => {
+    onRemove?.();
+    handleViewChange("default");
+    toggleSidebar();
+  };
 
-  const defaultTrigger = (
+  let content: React.ReactNode;
+  switch (view) {
+    case "phrase":
+      content = (
+        <PhraseView
+          setView={handleViewChange}
+          secret={recoveryPhrase}
+          onReveal={() => onReveal?.("phrase")}
+        />
+      );
+      break;
+    case "key":
+      content = (
+        <KeyView
+          setView={handleViewChange}
+          secret={privateKey}
+          onReveal={() => onReveal?.("key")}
+        />
+      );
+      break;
+    case "remove":
+      content = <RemoveView setView={handleViewChange} onConfirm={handleRemove} />;
+      break;
+    default:
+      content = <DefaultView setView={handleViewChange} />;
+  }
+
+  const triggerElement = isValidElement<{ onClick?: (event: React.MouseEvent) => void }>(trigger) ? (
+    cloneElement(trigger, {
+      onClick: (event: React.MouseEvent) => {
+        trigger.props.onClick?.(event);
+        toggleSidebar();
+      },
+    })
+  ) : (
     <Button
       variant="ghost"
       $size="medium"
@@ -68,20 +105,23 @@ export const FamilyDrawer: React.FC<FamilyDrawerProps> = ({
       gap="small"
       shape="rounded"
       skin="translucent"
+      onClick={() => toggleSidebar()}
     >
-      <Text fontSize="medium" fontWeight="semibold">
-        Settings
-      </Text>
-      <Box as={IconGear} size="1.25rem" />
+      {trigger ?? (
+        <>
+          <Text fontSize="medium" fontWeight="semibold">
+            Settings
+          </Text>
+          <Box as={IconGear} size="1.25rem" />
+        </>
+      )}
     </Button>
   );
 
   return (
     <>
-      <DrawerButton drawerId={id} label="">
-        {trigger || defaultTrigger}
-      </DrawerButton>
-      
+      {triggerElement}
+
       <Drawer id={id} title="Options" width={width}>
         <Box
           as={motion.div}

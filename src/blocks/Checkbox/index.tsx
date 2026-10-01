@@ -19,6 +19,8 @@ export interface CheckboxProps {
   size?: string
   /** Title attribute for accessibility */
   title?: string
+  /** Accessible name for the checkbox (sets aria-label) */
+  ariaLabel?: string
   /** Additional props for the container */
   containerProps?: React.ComponentProps<typeof Group>
 }
@@ -43,6 +45,7 @@ export default function Checkbox({
   disabled = false,
   size = "1.375rem",
   title,
+  ariaLabel,
   containerProps,
 }: CheckboxProps) {
   const handleClick = (e: React.MouseEvent) => {
@@ -59,6 +62,11 @@ export default function Checkbox({
   return (
     <Group
       as={motion.button}
+      role="checkbox"
+      aria-checked={checked}
+      aria-disabled={isLoading || disabled}
+      aria-busy={isLoading || undefined}
+      aria-label={ariaLabel}
       size={size}
       shape="rounded"
       justifyContent="center"
@@ -72,6 +80,7 @@ export default function Checkbox({
       transition={{ duration: 0.15 }}
       position="relative"
       flex="none"
+      interactive={{ focusVisible: { borderColor: "primary" } }}
       {...containerProps}
     >
       {isLoading && (
@@ -82,9 +91,9 @@ export default function Checkbox({
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        strokeWidth="3.5"
+        strokeWidth="4"
         stroke="currentColor"
-        size={"0.875rem"}
+        size={"0.75em"}
         initial={false}
         animate={checked ? "checked" : "unchecked"}
         opacity={isLoading ? 0 : 1}

@@ -1,0 +1,63 @@
+---
+title: Main
+description: Render the outermost page wrapper using the theme's main styles.
+navTitle: Main
+order: 1
+---
+
+`Main` is a client component (`"use client"`) that renders a `Box` with the theme's `main` entry applied, followed by any props you pass. It reads the theme through styled-components' `ThemeContext`.
+
+## Import
+
+```tsx
+import { Main } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Main minHeight="12rem" shape="rounded" p="l" display="flex" flexDirection="column" justifyContent="center" gap="s">
+    <Text as="h3" fontSize="xl" fontWeight="700" m="0">Dashboard</Text>
+    <Text as="p" color="secondary" m="0">Welcome back. This wrapper uses the theme's main styles with minHeight overridden.</Text>
+  </Main>
+</Preview>
+
+## Usage
+
+```tsx
+import { Container, Heading, Main } from "@reactberry/system/blocks";
+import { Text } from "@reactberry/system/elements";
+
+export default function Page() {
+  return (
+    <Main>
+      <Container>
+        <Heading title="Dashboard" />
+        <Text as="p">Welcome back.</Text>
+      </Container>
+    </Main>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — content rendered inside the wrapper.
+- All other props are `BoxProps` and are spread onto the `Box` after the theme defaults, so they override them.
+
+## Examples
+
+Override the theme background and layout:
+
+```tsx
+<Main bg="base" display="flex" flexDirection="column">
+  <Container>Content</Container>
+</Main>
+```
+
+## Notes
+
+- `Main` renders a `div` by default. It does not set `as="main"`; pass `as="main"` yourself if you need the landmark, or rely on `Container`, which renders `main` under the default light theme.
+- The default light theme sets `width="100%"`, `minHeight="100vh"` and a blue-tinted background. The default dark theme sets a neutral background, light text colour, `minHeight="100dvh"` and `display="grid"`.
+- The prop type declares an optional `props` key (`props?: any`). It has no special handling and is forwarded to the `Box` like any other prop.
+- Must render inside a styled-components `ThemeProvider` for the theme defaults to apply.

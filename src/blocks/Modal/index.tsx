@@ -40,8 +40,12 @@ export { pushThemeColor, popThemeColor } from "../../utils/overlayTheme";
  * Context that exposes the Modal's close function to children.
  * When `animated` is true, this triggers the exit animation before unmounting.
  * When `animated` is false, this calls the close handler directly.
+ *
+ * Exported so sibling overlay wrappers (e.g. DraggableResizableModal) can
+ * provide the same context, keeping `useModalClose()`/`ModalCloseButton`
+ * working regardless of which shell rendered the children.
  */
-const ModalCloseContext = createContext<(() => void) | null>(null);
+export const ModalCloseContext = createContext<(() => void) | null>(null);
 
 /**
  * Hook to access the parent Modal's close function.
@@ -75,6 +79,12 @@ interface ModalProps {
    */
   backdrop?: boolean;
   /**
+   * Additional props forwarded to the underlying `Backdrop` element
+   * (e.g. `bg`, `zIndex`, custom `transition`). Spread after the
+   * Modal-managed defaults so callers can override them.
+   */
+  backdropProps?: Record<string, any>;
+  /**
    * Whether to animate the modal open/close with a scale + fade
    * animation matching the sign-in card style. Defaults to false.
    */
@@ -93,6 +103,7 @@ export default function Modal({
   forceFallback = false,
   closeOnOverlayClick = true,
   backdrop = true,
+  backdropProps,
   animated = false,
   ...rest
 }: ModalProps) {
@@ -155,7 +166,31 @@ export default function Modal({
    */
   const stopPropagation = useCallback(
     (e: React.MouseEvent) => e.stopPropagation(),
-    []
+    [],
+  );
+
+  /**
+   * Stop React synthetic keyboard events from bubbling past the modal. The
+   * modal is portaled to document.body, but React events still propagate
+   * through the component tree — so without this, key presses inside the
+   * modal can reach ancestor handlers (e.g. dnd-kit's KeyboardSensor
+   * listeners on a draggable parent) and have their default suppressed,
+   * breaking typing inside form fields like the InlineEditor textarea.
+   */
+  const stopKeyPropagation = useCallback(
+    (e: React.KeyboardEvent) => e.stopPropagation(),
+    [],
+  );
+
+  /**
+   * Same rationale as `stopKeyPropagation`, applied to pointer/mouse/touch
+   * events. Without this, interactions inside the dialog (e.g. dragging the
+   * PDF preview) can reach a draggable ancestor's PointerSensor listeners
+   * and start a drag on the underlying item.
+   */
+  const stopPointerPropagation = useCallback(
+    (e: React.SyntheticEvent) => e.stopPropagation(),
+    [],
   );
 
   // For animated modals, manage a closing state to allow exit animations
@@ -167,7 +202,12 @@ export default function Modal({
   }, []);
 
   const onExitComplete = useCallback(() => {
-    setIsClosing(false);
+    // Exit animation finished; notify the consumer to unmount the Modal.
+    // We intentionally do not reset `isClosing` here — flipping it back to
+    // `false` would re-mount the children inside AnimatePresence and play an
+    // enter animation in the brief window before the parent's conditional
+    // render tears the Modal down (e.g. when `onClose` triggers an async
+    // `router.push`). The parent owns mount/unmount in response to onClose.
     handleClose();
   }, [handleClose]);
 
@@ -197,11 +237,14 @@ export default function Modal({
       zIndex="100002"
       pb="m"
       px="xs"
-      style={{
-        paddingTop: isStandalone
-          ? "calc(1rem + env(safe-area-inset-top, 0px))"
-          : "1rem",
-      }}
+      pt={isStandalone ? "calc(1rem + env(safe-area-inset-top, 0px))" : "1rem"}
+      onClick={stopPropagation}
+      onPointerDown={stopPointerPropagation}
+      onMouseDown={stopPointerPropagation}
+      onTouchStart={stopPointerPropagation}
+      onKeyDown={stopKeyPropagation}
+      onKeyUp={stopKeyPropagation}
+      onKeyPress={stopKeyPropagation}
     >
       <AnimatePresence onExitComplete={animated ? onExitComplete : undefined}>
         {showContent && (
@@ -229,11 +272,11 @@ export default function Modal({
               overflow="hidden"
               height="100%"
               skin="surface"
-              onClick={stopPropagation}
               {...rest}
             >
               <Box
                 height="100%"
+                minHeight={0}
                 width="100%"
                 overflow="hidden"
                 display="flex"
@@ -251,9 +294,8 @@ export default function Modal({
               animated={animated}
               transition={animated ? animatedTransition : { duration: 0.2 }}
               bg={backdrop ? "transparent.light.9" : "transparent"}
-              onClick={
-                closeOnOverlayClick ? effectiveClose : undefined
-              }
+              onClick={closeOnOverlayClick ? effectiveClose : undefined}
+              {...backdropProps}
             />
           </>
         )}

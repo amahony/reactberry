@@ -28,6 +28,8 @@ import {
   shape,
   aspect,
   cursor,
+  transform,
+  placeItems,
   hover,
   $size,
   focus,
@@ -52,6 +54,8 @@ export interface BaseElementProps
   shape?: string;
   aspect?: number | number[] | string[] | {};
   cursor?: string;
+  transform?: string | string[];
+  placeItems?: string;
   hover?: string | object;
   focus?: string | object;
   ref?: any;
@@ -62,6 +66,8 @@ export interface BaseElementProps
   interactive?: {
     hover?: Record<string, any>;
     focus?: Record<string, any>;
+    focusWithin?: Record<string, any>;
+    focusVisible?: Record<string, any>;
     active?: Record<string, any>;
     disabled?: Record<string, any>;
     visited?: Record<string, any>;
@@ -86,6 +92,11 @@ const mergeResult = [newArr].concat(
   shadow.propNames,
 );
 
+// Convert camelCase interactive keys (e.g. `focusWithin`) to their CSS
+// pseudo-class selector equivalents (e.g. `focus-within`).
+const toPseudoSelector = (state: string): string =>
+  state.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
+
 const processInteractiveStyles = (state: string, styles: any) => {
   return (props: any) => {
     const systemStyles = compose(
@@ -102,12 +113,14 @@ const processInteractiveStyles = (state: string, styles: any) => {
       shape,
       aspect,
       cursor,
+      transform,
+      placeItems,
       $size,
       $shadow,
     )({ ...props, ...styles });
 
     return css`
-      &${`:${state}`} {
+      &${`:${toPseudoSelector(state)}`} {
         ${systemStyles}
       }
     `;
@@ -123,6 +136,8 @@ const Box = styled("div").withConfig({
       "shape",
       "aspect",
       "cursor",
+      "transform",
+      "placeItems",
       "interactive",
     ].includes(prop),
 })<BoxProps>`
@@ -142,6 +157,8 @@ const Box = styled("div").withConfig({
       shape,
       aspect,
       cursor,
+      transform,
+      placeItems,
       $size,
       $shadow,
     )(props);

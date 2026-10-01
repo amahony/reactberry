@@ -1,0 +1,73 @@
+---
+title: Container
+description: Wrap page content in a Box that picks up layout defaults from the active theme.
+navTitle: Container
+order: 1
+---
+
+`Container` is a client component (`"use client"`) that renders a `Box` as a `section` and applies the theme's `container` entry before any props you pass. It reads the theme through styled-components' `ThemeContext`.
+
+## Import
+
+```tsx
+import { Container } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Container as="div" maxWidth="32rem" mx="auto" p="l" skin="panel" shape="rounded">
+    <Heading title="Workspace settings" subtitle="Manage your workspace preferences." />
+    <Box skin="surface" shape="rounded" p="m">
+      <Text>General settings go here.</Text>
+    </Box>
+  </Container>
+</Preview>
+
+## Usage
+
+```tsx
+import { Container, Heading } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function SettingsPage() {
+  return (
+    <Container>
+      <Heading title="Settings" subtitle="Manage your workspace preferences." />
+      <Box skin="surface" shape="rounded" p="m">
+        <Text>General settings go here.</Text>
+      </Box>
+    </Container>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — content rendered inside the container.
+- All other props are `BoxProps` and are spread onto the root `Box` after the theme defaults, so they override them.
+
+## Examples
+
+Override the theme width and padding for a narrow form column:
+
+```tsx
+<Container maxWidth="40rem" mx="auto" p="l">
+  <Text as="p">Narrow content column.</Text>
+</Container>
+```
+
+Render a different element:
+
+```tsx
+<Container as="article">
+  <Text as="p">Article body.</Text>
+</Container>
+```
+
+## Notes
+
+- Element order of precedence is `as="section"`, then `theme.container`, then your props. The default light theme sets `container.as` to `"main"`, so under that theme the component renders a `main` element unless you pass `as`. The default dark theme does not set `as`, so it renders a `section`.
+- The light theme supplies `maxWidth`, `mx="auto"` and responsive padding; the dark theme supplies a background, border, shadow, `overflow="auto"` and padding. Visual output therefore depends on the active theme.
+- Must render inside a styled-components `ThemeProvider` (for example via `DesignSystemProvider`) for the theme defaults to apply. Without a theme it renders a plain `section`.
+- Avoid nesting multiple `Container` instances when the theme sets `as="main"`, as a document should contain only one visible `main` element.

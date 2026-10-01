@@ -17,6 +17,8 @@
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepack": "node scripts/js-types.mjs build",
+    "postpack": "node scripts/js-types.mjs clean",
     "docs:dev": "npm --prefix docs run dev",
     "docs:build": "npm --prefix docs run build",
     "docs:typecheck": "npm --prefix docs run typecheck"
@@ -34,20 +36,22 @@
     "@nivo/pie": "^0.99.0",
     "@number-flow/react": "^0.5.14",
     "@paper-design/shaders-react": "^0.0.69",
+    "@types/styled-system": "^5.1.25",
     "chroma-js": "^2.4.2",
     "motion": "^12.35.2",
+    "react-colorful": "^5.8.1",
     "react-dropzone": "^14.4.1",
     "react-number-format": "^5.4.4",
     "react-swipeable": "^7.0.2",
     "react-textarea-autosize": "^8.5.9",
     "react-use-measure": "^2.1.7",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@types/styled-system": "^5.1.22",
     "next": "^16.1.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

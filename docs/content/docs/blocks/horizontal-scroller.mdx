@@ -1,0 +1,100 @@
+---
+title: HorizontalScroller
+description: Render items in a horizontally scrolling row with an optional title, progress ring and edge fade.
+navTitle: HorizontalScroller
+order: 1
+---
+
+`HorizontalScroller` is a client component (`"use client"`) that renders items in an `overflowX="scroll"` flex row. It uses `motion/react` to track horizontal scroll progress for a circular progress indicator and an animated gradient mask, and `ResizeObserver` to detect overflow.
+
+## Import
+
+```tsx
+import { HorizontalScroller } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Box width="100%" minWidth="0">
+    <HorizontalScroller
+      title="Release history"
+      gap="m"
+      items={[
+        { id: "r1", name: "v1.8", date: "January" },
+        { id: "r2", name: "v1.9", date: "February" },
+        { id: "r3", name: "v2.0", date: "March" },
+        { id: "r4", name: "v2.1", date: "June" },
+        { id: "r5", name: "v2.2", date: "September" },
+        { id: "r6", name: "v2.3", date: "November" },
+      ]}
+      renderItem={(release) => (
+        <Box key={release.id} minWidth="12rem" skin="panel" shape="rounded" p="m">
+          <Text fontWeight="600">{release.name}</Text>
+          <Text as="p" color="secondary" m="0">{release.date}</Text>
+        </Box>
+      )}
+    />
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { HorizontalScroller } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+const releases = [
+  { id: "r1", name: "v2.0", date: "March" },
+  { id: "r2", name: "v2.1", date: "June" },
+  { id: "r3", name: "v2.2", date: "September" },
+];
+
+export default function ReleaseRow() {
+  return (
+    <HorizontalScroller
+      title="Recent releases"
+      items={releases}
+      gap="m"
+      renderItem={(release) => (
+        <Box minWidth="16rem" skin="surface" shape="rounded" p="m">
+          <Text fontWeight="600">{release.name}</Text>
+          <Text as="p" color="secondary">{release.date}</Text>
+        </Box>
+      )}
+    />
+  );
+}
+```
+
+## Props
+
+- `items` (`any[]`, required) — data to render.
+- `renderItem` (`(item: any, index: number) => ReactNode`, required) — renders each item.
+- `gap` (`number | string`, default `"small"`) — gap between items.
+- `title` (`string`) — rendered as an `h3` above the row.
+- `progressIndicator` (`boolean`, default `true`) — show a 2rem circular ring that fills with scroll progress.
+- `withMask` (`boolean`, default `true`) — fade the edges with a gradient mask while content overflows.
+- No other props are accepted; nothing is spread onto the root.
+
+## Examples
+
+Plain row without title, ring or fade:
+
+```tsx
+<HorizontalScroller
+  items={tags}
+  progressIndicator={false}
+  withMask={false}
+  renderItem={(tag) => <Tag skin="surface">{tag}</Tag>}
+/>
+```
+
+## Notes
+
+- Each rendered item is wrapped in a `Box` keyed by its index, so give items a fixed or minimum width to stop them shrinking.
+- The mask fades the right edge at the start, the left edge at the end, and both edges in between. It is only applied when the content is wider than the container, re-checked on resize and when `items` changes.
+- The progress ring is drawn in the `brand` colour with a fixed light translucent track, which may have low contrast on light backgrounds.
+- The row always uses `overflow-x: scroll`, so some platforms show a scrollbar even when content fits.
+- The progress ring has no accessible label, and the scroll row is not keyboard-focusable by default. Ensure items contain focusable elements or add `tabIndex` inside `renderItem` output where needed.
+- The outer wrapper cannot be styled through props; wrap the component in a `Box` for spacing.

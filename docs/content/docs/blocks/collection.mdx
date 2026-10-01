@@ -1,0 +1,82 @@
+---
+title: Collection
+description: Lay out items in a responsive auto-fill grid using named column sizes.
+navTitle: Collection
+order: 1
+---
+
+`Collection` is a client component (`"use client"`) that renders a CSS grid `Box` whose `gridTemplateColumns` is chosen from a set of named, responsive `auto-fill` presets. It also applies the theme's `collection` entry via styled-components' `ThemeContext`.
+
+## Import
+
+```tsx
+import { Collection } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Collection colsize="xsmall" gap="m">
+    {["Blog", "Portfolio", "Store", "Docs", "Landing", "Wiki"].map((name) => (
+      <Box key={name} skin="panel" shape="rounded" p="m">
+        <Text fontWeight="600">{name} template</Text>
+      </Box>
+    ))}
+  </Collection>
+</Preview>
+
+## Usage
+
+```tsx
+import { Collection } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+const templates = ["Blog", "Portfolio", "Store", "Docs"];
+
+export default function TemplateGrid() {
+  return (
+    <Collection colsize="medium" gap="m">
+      {templates.map((name) => (
+        <Box key={name} skin="surface" shape="rounded" p="m">
+          <Text fontWeight="600">{name}</Text>
+        </Box>
+      ))}
+    </Collection>
+  );
+}
+```
+
+## Props
+
+- `colsize` (`string`, default `"small"`) — named column preset (see Notes).
+- `children` (`React.ReactNode`, required) — grid items.
+- All other props are `BoxProps` and are spread onto the grid `Box` after `display="grid"`, `gap="small"`, `placeItems="stretch"`, the preset columns and `theme.collection`.
+
+## Examples
+
+Large cards:
+
+```tsx
+<Collection colsize="xlarge">{cards}</Collection>
+```
+
+Single-column stack:
+
+```tsx
+<Collection colsize="row" gap="xs">{rows}</Collection>
+```
+
+## Notes
+
+- Column presets (minimum column width at the base breakpoint, then at the larger breakpoint where defined), each `repeat(auto-fill, minmax(min, 1fr))`:
+  - `xsmall` — `6rem`, then `10rem` from `sm`
+  - `small` — `10rem`, then `12rem` from `md`
+  - `medium` — `auto`, then `18rem` from `md` (browsers reject `auto` as the minimum in an `auto-fill` repeat, so below `md` the declaration is dropped and items stack in one column)
+  - `large` — `20rem`
+  - `xlarge` — `20rem`, then `25rem` from `sm`
+  - `xxlarge` — `30rem`
+  - `auto` — `50cqb` (container query block units; requires an ancestor with a size container)
+  - `row` — a single `1fr` column
+- An unknown `colsize` yields no `gridTemplateColumns`, so items fall back to a single implicit column.
+- Passing `gridTemplateColumns` directly overrides the preset.
+- The default themes do not define `collection`, so no theme overrides apply unless your theme adds one.

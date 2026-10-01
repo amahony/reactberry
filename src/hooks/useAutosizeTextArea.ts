@@ -15,31 +15,43 @@ interface UseAutosizeTextAreaOptions {
 export function useAutosizeTextArea(
   textareaRef: HTMLTextAreaElement | null,
   value: string,
-  options: UseAutosizeTextAreaOptions = {}
+  options: UseAutosizeTextAreaOptions = {},
 ): void {
   const { minRows = 1, maxRows = 10 } = options;
 
   useEffect(() => {
     if (!textareaRef) return;
 
-    // Reset height to auto to get the correct scrollHeight
+    const style = window.getComputedStyle(textareaRef);
+
+    // `line-height` can compute to "normal" (parses to NaN); fall back to a
+    // 1.5x font-size ratio so the row math still works.
+    let lineHeight = parseFloat(style.lineHeight);
+    if (Number.isNaN(lineHeight)) {
+      lineHeight = parseFloat(style.fontSize) * 1.5 || 20;
+    }
+
+    const paddingY =
+      parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    const borderY =
+      parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+    const isBorderBox = style.boxSizing === "border-box";
+
+    // Reset height to auto so scrollHeight reflects the true content height.
     textareaRef.style.height = "auto";
 
-    // Get the line height
-    const lineHeight = parseInt(
-      window.getComputedStyle(textareaRef).lineHeight,
-      10
-    );
+    // scrollHeight includes vertical padding, so subtract it before counting
+    // rows — otherwise a single line rounds up to two.
+    const contentHeight = textareaRef.scrollHeight - paddingY;
+    const currentRows = Math.round(contentHeight / lineHeight);
 
-    // Calculate the number of rows needed
-    const scrollHeight = textareaRef.scrollHeight;
-    const currentRows = Math.ceil(scrollHeight / lineHeight);
-
-    // Constrain between min and max rows
+    // Constrain between min and max rows.
     const rowsToShow = Math.max(minRows, Math.min(currentRows, maxRows));
 
-    // Set the height based on rows
-    textareaRef.style.height = `${rowsToShow * lineHeight}px`;
+    // Re-add padding/border for border-box so the visible box fits the rows.
+    const contentTarget = rowsToShow * lineHeight;
+    textareaRef.style.height = `${
+      isBorderBox ? contentTarget + paddingY + borderY : contentTarget
+    }px`;
   }, [textareaRef, value, minRows, maxRows]);
 }
-

@@ -50,7 +50,7 @@ export default function Modal({
       display="flex"
       alignItems="center"
       justifyContent="center"
-      zIndex="99999"
+      zIndex="100100"
       {...props}
     >
       <Box

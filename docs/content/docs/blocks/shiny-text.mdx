@@ -1,0 +1,76 @@
+---
+title: ShinyText
+description: Render inline text with a looping white highlight that sweeps across the glyphs.
+navTitle: ShinyText
+order: 1
+---
+
+`ShinyText` is a client component that renders `Text` as a Motion `div` with a text-clipped gradient whose background position animates on a loop. It depends on `motion/react`.
+
+## Import
+
+```tsx
+import { ShinyText } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column">
+  <ShinyText fontSize="small" fontWeight={600} textTransform="uppercase">
+    New in version 2
+  </ShinyText>
+  <ShinyText fontSize="xl" speed={4}>
+    Limited offer
+  </ShinyText>
+  <ShinyText disabled>Paused</ShinyText>
+</Preview>
+
+## Usage
+
+```tsx
+import { ShinyText } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+export default function Eyebrow() {
+  return (
+    <Box p="m">
+      <ShinyText fontSize="small" fontWeight={600} textTransform="uppercase">
+        New in version 2
+      </ShinyText>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — wrapped in a `span` inside the text element.
+- `disabled` (`boolean`, default `false`) — stops the animation.
+- `speed` (`number`, default `10`) — duration of one sweep in seconds; higher values are slower.
+- `color` (`string`, default `"tertiary"`) — text colour.
+- `fontSize` (`string`, default `"medium"`) — font size token.
+- `fontWeight` (`string | number`, default `"normal"`) — font weight.
+- `textTransform` (`string`) — passed through to `Text`.
+
+All remaining props are spread onto the `Text` element (typed as `[key: string]: any`). The element renders with `display="inline-block"`.
+
+## Examples
+
+Faster sweep:
+
+```tsx
+<ShinyText speed={4}>Limited offer</ShinyText>
+```
+
+Static text:
+
+```tsx
+<ShinyText disabled>Paused</ShinyText>
+```
+
+## Notes
+
+- The animation moves `backgroundPosition` from `200% 0` to `-200% 0` with linear easing, repeats indefinitely and starts after a 3 second delay.
+- The highlight is a 120 degree white gradient clipped to the text with `background-clip: text`. It is painted behind the text fill, so it is only visible where the text colour is not fully opaque.
+- Passing `style` replaces the gradient and clipping styles.
+- There is no reduced-motion handling. Set `disabled` to stop the animation, for example with `useReducedMotion` from `@reactberry/system`.

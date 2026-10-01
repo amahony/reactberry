@@ -68,6 +68,19 @@ const normalizePlacement = (placement: string): FloatingPlacement => {
   return trimmed.replace(/\s+/g, "-") as FloatingPlacement;
 };
 
+/**
+ * True when the currently-focused element lives inside the popover panel.
+ * Used to suppress scroll-to-close: on mobile, focusing an in-panel input
+ * (e.g. a search field) opens the virtual keyboard, which fires a window
+ * scroll/resize event that would otherwise dismiss the popover immediately.
+ */
+export function isFocusWithinPanel(
+  panel: HTMLElement | null,
+  activeElement: Element | null,
+): boolean {
+  return !!panel && !!activeElement && panel.contains(activeElement);
+}
+
 function mergeRefs<T = any>(
   ...refs: Array<
     ((instance: T | null) => void) | { current: T | null } | null | undefined
@@ -160,6 +173,16 @@ export default function Popover({
         setIsHovering(false);
       } else {
         if (isOpenRef.current && buttonRef.current) {
+          // On mobile, tapping an input inside the panel (e.g. a search
+          // field) opens the virtual keyboard, which fires a scroll/resize
+          // event on the window. Auto-closing here would dismiss the popover
+          // the instant the field is focused, making in-panel inputs unusable.
+          // Skip the scroll-to-close while focus is within the panel.
+          if (
+            isFocusWithinPanel(refs.floating.current, document.activeElement)
+          ) {
+            return;
+          }
           // Close the popover by toggling the trigger button
           buttonRef.current.click();
         }
@@ -177,7 +200,7 @@ export default function Popover({
       }
       target.removeEventListener("scroll", handleScroll as EventListener);
     };
-  }, [triggerMode, scrollContainer]);
+  }, [triggerMode, scrollContainer, refs]);
 
   // Handle mouse enter
   const handleMouseEnter = () => {

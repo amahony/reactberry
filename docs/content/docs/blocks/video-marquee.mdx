@@ -1,0 +1,85 @@
+---
+title: VideoMarquee
+description: Scroll a looping, draggable row of portrait video, embed, or image cards with optional controls.
+navTitle: VideoMarquee
+order: 1
+---
+
+`VideoMarquee` is a client component that renders two copies of a card sequence in a `motion` track and advances it every animation frame. Cards are `18rem` wide with a `9/16` aspect ratio. It depends on `motion` and `react-use-measure` and should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { VideoMarquee } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch" bg="black" p="m">
+  <VideoMarquee
+    speed={30}
+    items={[
+      { id: "flower", src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", title: "Spring bloom", handle: "@studio" },
+      { id: "harbour", imageSrc: "https://picsum.photos/seed/harbour/400/700", title: "Harbour walk", handle: "@studio", description: "Behind the scenes." },
+      { id: "flower-close", src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", title: "Close-up", handle: "@macro" },
+      { id: "forest", imageSrc: "https://picsum.photos/seed/forest/400/700", title: "Forest trail", handle: "@outdoors" },
+    ]}
+  />
+</Preview>
+
+## Usage
+
+```tsx
+import { VideoMarquee } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+const items = [
+  { id: "reel", src: "/videos/reel.mp4", title: "Product reel", handle: "@studio" },
+  { id: "tour", imageSrc: "/images/tour.jpg", title: "Studio tour", handle: "@studio", description: "Behind the scenes." },
+  { id: "tiktok", embedUrl: "https://www.tiktok.com/embed/v2/1234567890", sourceUrl: "https://www.tiktok.com/@studio/video/1234567890", title: "Launch clip", handle: "@studio" },
+];
+
+export default function Showcase() {
+  return (
+    <Box bg="black">
+      <VideoMarquee items={items} speed={30} />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `items` (`VideoMarqueeItem[]`, required) — cards to render. Returns `null` when empty.
+- `speed` (`number`, default `42`) — auto-scroll speed in pixels per second (minimum 1).
+- `direction` (`"left" | "right"`, default `"left"`) — auto-scroll direction.
+- `pauseOnHover` (`boolean`, default `true`) — pauses auto-scroll while the pointer is over a card.
+- `gap` (`string | number`, default `"1rem"`) — space between cards.
+- `showControls` (`boolean`, default `true`) — shows previous and next controls over the track (only with more than one item).
+- `showDots` (`boolean`, default `true`) — shows one dot per item; the active dot follows the scroll position.
+- `showPlayPause` (`boolean`, default `true`) — shows a Play/Pause toggle for auto-scroll.
+
+No other props are accepted and nothing is spread.
+
+## Related exports
+
+`VideoMarqueeItem` shape (the type is defined in `src/blocks/VideoMarquee` but not re-exported from `@reactberry/system/blocks`):
+
+- `id` (`string`, required) — unique key for the card.
+- `title` (`string`, required) — shown in bold in the caption; also used as image `alt` and iframe `title`.
+- `handle` (`string`, required) — shown below the title.
+- `src` (`string`) — video URL, played muted, looping, and inline with `autoPlay`.
+- `embedUrl` (`string`) — iframe URL. Takes priority over all other media fields.
+- `imageSrc` (`string`) — static image URL.
+- `poster` (`string`) — image URL, used as the video poster or as a static image.
+- `description` (`string`) — optional caption text.
+- `sourceUrl` (`string`) — renders an "Open on TikTok" link opening in a new tab.
+
+## Notes
+
+- Media priority per card: `embedUrl` renders an iframe; otherwise `imageSrc` or `poster` renders an `img`; otherwise `src` renders a `video`. Setting `poster` together with `src` (without `embedUrl`) therefore shows the poster image and the video is not rendered.
+- The corner badge reads "TikTok" for embed and image cards and "Demo reel" for video cards. These labels and the "Open on TikTok" link text are fixed.
+- Auto-scroll stops when toggled off, and pauses while hovered (if `pauseOnHover`), while dragging, and during the 0.35 second settle animation after a control, dot, or drag.
+- The track can be dragged horizontally; on release it snaps to the nearest card. The previous and next controls move by one card width, and dots take the shortest path to their card.
+- The duplicated sequence is `aria-hidden`. Dots are `button` elements labelled "Go to demo N", and the toggle is a `button` with `aria-pressed`. The previous and next controls are `div` elements without a button role or label.
+- Auto-scroll runs on `useAnimationFrame` and does not check for reduced-motion preferences; the Play/Pause toggle is the only way to stop it.

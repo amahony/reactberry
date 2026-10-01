@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import Dropzone from "./Dropzone";

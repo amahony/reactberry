@@ -1,0 +1,78 @@
+---
+title: AnimatedCard
+description: Render a solid card with an optional pointer-driven 3D tilt and a spotlight that follows the cursor.
+navTitle: AnimatedCard
+order: 1
+---
+
+`AnimatedCard` is a client component that wraps its children in a card with spring-based 3D tilt and a radial spotlight drawn above the content on hover. It depends on `motion/react`.
+
+## Import
+
+```tsx
+import { AnimatedCard } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <AnimatedCard p="l" maxWidth="280px">
+    <Text as="h3" fontSize="l" fontWeight="700" m="0">Pro plan</Text>
+    <Text as="p" color="secondary">Unlimited projects and priority support. Hover to tilt.</Text>
+  </AnimatedCard>
+  <AnimatedCard p="l" maxWidth="280px" tiltEnabled={false} spotlightColor="rgba(124, 77, 255, 0.25)">
+    <Text as="h3" fontSize="l" fontWeight="700" m="0">Spotlight only</Text>
+    <Text as="p" color="secondary">Tilt disabled, tinted spotlight.</Text>
+  </AnimatedCard>
+</Preview>
+
+## Usage
+
+```tsx
+import { AnimatedCard } from "@reactberry/system/blocks";
+import { Text } from "@reactberry/system/elements";
+
+export default function PlanCard() {
+  return (
+    <AnimatedCard p="l" maxWidth="360px">
+      <Text as="h3" fontSize="l" fontWeight="700">
+        Pro
+      </Text>
+      <Text as="p" color="secondary">
+        Unlimited projects and priority support.
+      </Text>
+    </AnimatedCard>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — card content.
+- `spotlightColor` (`string`, default `"rgba(255, 255, 255, 0.2)"`) — inner colour of the spotlight gradient. Used directly in CSS, so theme tokens are not resolved.
+- `spotlightSize` (`number`, default `300`) — spotlight radius in pixels.
+- `tiltEnabled` (`boolean`, default `true`) — enables the 3D tilt.
+- `spotlightEnabled` (`boolean`, default `true`) — enables the spotlight.
+- `maxTilt` (`number`, default `2.3`) — maximum rotation in degrees on each axis.
+- `stiffness` (`number`, default `300`) — spring stiffness for tilt and spotlight position.
+- `damping` (`number`, default `30`) — spring damping for tilt and spotlight position.
+
+All remaining `BoxProps` (except `ref` and `children`) are spread onto the outer `Box`, after its defaults: `skin="card"`, `shape="rounded"`, `$shadow="medium"`, `position="relative"` and `overflow="hidden"`.
+
+## Examples
+
+Spotlight only, no tilt:
+
+```tsx
+<AnimatedCard tiltEnabled={false} spotlightColor="rgba(124, 77, 255, 0.25)" p="l">
+  <Text>Spotlight only</Text>
+</AnimatedCard>
+```
+
+## Notes
+
+- When the user prefers reduced motion, or when both `tiltEnabled` and `spotlightEnabled` are `false`, the card renders without transforms, hover lift, or spotlight.
+- On hover the content layer moves to `translateZ(24px)` over 0.3 s. This lift applies whenever animation is active, even if `tiltEnabled` is `false`.
+- The spotlight layer sits above the content (`zIndex` 2) with `pointer-events: none`.
+- The card sets an inline `backgroundColor` of `rgba(255, 255, 255, 0.95)`, which takes precedence over `bg` or `skin` backgrounds. Passing `style` replaces the inline style, including the tilt transform.
+- There is no touch-device check; interaction relies on mouse events. See `FluorescentCard` for a variant that disables effects on touch devices.

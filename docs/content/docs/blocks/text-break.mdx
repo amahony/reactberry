@@ -1,0 +1,75 @@
+---
+title: TextBreak
+description: Render a horizontal divider line with an optional inline label and loading indicator.
+navTitle: TextBreak
+order: 1
+---
+
+`TextBreak` is a client component that renders a full-width row with thin rule lines on either side of a text label. It uses `Box`, `Text` and the `IconDotsAnim` icon.
+
+## Import
+
+```tsx
+import { TextBreak } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <TextBreak message="or continue with" />
+  <TextBreak message="Unread messages" colorSchema="attention" />
+  <TextBreak position="left" colorSchema="accent">Recent activity</TextBreak>
+  <TextBreak message="Syncing" loading />
+</Preview>
+
+## Usage
+
+```tsx
+import { TextBreak } from "@reactberry/system/blocks";
+import { Box, Button } from "@reactberry/system/elements";
+
+export default function SignInOptions() {
+  return (
+    <Box display="flex" flexDirection="column" gap="m" p="l">
+      <Button variant="default">Continue with email</Button>
+      <TextBreak message="or" />
+      <Button variant="default">Continue with SSO</Button>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `message` (`string`) — label text. Takes precedence over `children`.
+- `children` (`React.ReactNode`) — label content used when `message` is not set.
+- `colorSchema` (`string`, default `"default"`) — one of `"default"`, `"attention"` or `"accent"`. Sets the label colour and the line colour. Unknown values fall back to `"default"`.
+- `position` (`"left" | "center" | "right"`, default `"center"`) — label alignment. `"left"` hides the left line and `"right"` hides the right line.
+- `showBreaks` (`boolean`, default `true`) — renders the rule lines.
+- `loading` (`boolean`) — shows an animated dots icon before the label.
+- `contentProps` (`object`, default `{}`) — spread onto the label wrapper.
+- `breakProps` (`object`, default `{}`) — spread onto each rule line.
+
+All remaining props are spread onto the outer `Text` (rendered as a `div`), which defaults to `display="flex"`, `width="100%"`, `fontSize="xsmall"` and `gap="xsmall"`.
+
+## Examples
+
+Left-aligned section label:
+
+```tsx
+<TextBreak position="left">Recent activity</TextBreak>
+```
+
+Loading state with the accent schema:
+
+```tsx
+<TextBreak message="Syncing" loading colorSchema="accent" />
+```
+
+## Notes
+
+- Colour schemas map to `[lineColour, textColour]`: `default` is `tertiary` / `secondary`, `attention` is `currentColor` / `red`, `accent` is `currentColor` / `accent`.
+- Any other `colorSchema` value falls back to the `default` palette.
+- Lines are 1px high with `opacity` 0.25. Use `breakProps` to override.
+- The label is not rendered when both `message` and `children` are empty; only the lines remain.
+- With `position="left"` the label has no horizontal padding; otherwise it uses `px="small"`.

@@ -1,0 +1,75 @@
+---
+title: Tag
+description: Display a small inline label for statuses, categories or counts.
+navTitle: Tag
+order: 1
+---
+
+`Tag` renders a `Text` as a `div` styled as a compact, fit-content flex row. It is not marked `"use client"` and has no dependencies beyond `Text`.
+
+## Import
+
+```tsx
+import { Tag } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <Tag skin="surface">v2.1.0</Tag>
+  <Tag skin="success"><Icon icon="IconCCheck" size="0.875rem" />Stable</Tag>
+  <Tag shape="pill" bg="palette.blues.1" color="palette.blues.8">Beta</Tag>
+  <Tag skin="panel">Deprecated</Tag>
+</Preview>
+
+## Usage
+
+```tsx
+import { Icon, Tag } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+export default function ReleaseTags() {
+  return (
+    <Box display="flex" gap="xxsmall">
+      <Tag skin="surface">v2.1.0</Tag>
+      <Tag skin="success">
+        <Icon icon="IconCCheck" size="0.875rem" />
+        Stable
+      </Tag>
+    </Box>
+  );
+}
+```
+
+## Props
+
+`Tag` declares no props of its own (its props are typed as an open record). `children` is rendered inside; every other prop is spread onto the `Text` after these defaults:
+
+- `display` (default `"flex"`), `alignItems` (default `"center"`), `gap` (default `"xxsmall"`)
+- `p` (default `"xs"`), `py` (default `"xxxs"`)
+- `color` (default `"secondary"`), `fontSize` (default `"small"`), `fontWeight` (default `"600"`)
+- `shape` (default `"rounded"`), `width` (default `"fit-content"`), `flex` (default `"none"`)
+
+## Examples
+
+Pill-shaped tag with a custom colour:
+
+```tsx
+<Tag shape="pill" bg="palette.blues.1" color="palette.blues.8">
+  Beta
+</Tag>
+```
+
+Render as a link:
+
+```tsx
+<Tag as="a" href="/docs/changelog" skin="surface">
+  Changelog
+</Tag>
+```
+
+## Notes
+
+- `Tag` is a named export (`export const Tag`), unlike most blocks, which are default exports re-exported by name.
+- No background is set by default; use `skin` or `bg` to give the tag a fill.
+- Props are untyped, so there is no compile-time checking of what you pass.

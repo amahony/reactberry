@@ -1,0 +1,116 @@
+---
+title: Accordion
+description: Expand and collapse a list of items with animated content and optional localStorage persistence.
+navTitle: Accordion
+order: 1
+---
+
+`Accordion` is a client component that renders a vertical list of items, each with a clickable trigger row and animated collapsible content. Open state can be persisted to `localStorage` through the `persistKey` prop.
+
+## Import
+
+```tsx
+import { Accordion } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Accordion
+    allowMultiple={false}
+    defaultOpen={["shipping"]}
+    headerProps={{ py: "small" }}
+    items={[
+      {
+        id: "shipping",
+        trigger: <Text fontWeight="600">How long does shipping take?</Text>,
+        content: <Text py="small">Orders arrive within 3–5 business days.</Text>,
+      },
+      {
+        id: "returns",
+        trigger: <Text fontWeight="600">Can I return an item?</Text>,
+        content: <Text py="small">Returns are accepted within 30 days.</Text>,
+      },
+      {
+        id: "archived",
+        trigger: <Text fontWeight="600">Archived question</Text>,
+        content: <Text py="small">Hidden</Text>,
+        disabled: true,
+      },
+    ]}
+  />
+</Preview>
+
+## Usage
+
+```tsx
+import { Accordion } from "@reactberry/system/blocks";
+import { Text } from "@reactberry/system/elements";
+
+const faqs = [
+  {
+    id: "shipping",
+    trigger: <Text fontWeight="600">How long does shipping take?</Text>,
+    content: <Text py="small">Orders arrive within 3–5 business days.</Text>,
+  },
+  {
+    id: "returns",
+    trigger: <Text fontWeight="600">Can I return an item?</Text>,
+    content: <Text py="small">Returns are accepted within 30 days.</Text>,
+  },
+];
+
+export default function Faq() {
+  return (
+    <Accordion
+      items={faqs}
+      allowMultiple={false}
+      defaultOpen={["shipping"]}
+      headerProps={{ py: "small" }}
+    />
+  );
+}
+```
+
+## Props
+
+- `items` (`AccordionItem[]`, required) — each item has `id` (`string`), `trigger` (`React.ReactNode`), `content` (`React.ReactNode`), and optional `disabled` and `hideIcon` (`boolean`).
+- `allowMultiple` (`boolean`, default `true`) — when `false`, opening an item closes the others.
+- `defaultOpen` (`string[]`, default `[]`) — ids open on first render.
+- `onToggle` (`(itemId: string, isOpen: boolean, openItems: string[]) => void`) — called after each toggle with the new open state and all open ids.
+- `persistKey` (`string`) — persist open ids to `localStorage` under `accordion-` followed by the key. Stored values replace `defaultOpen`.
+- `iconPosition` (`"start" | "end"`, default `"end"`) — side of the trigger row the icon is placed on.
+- `icon` (`React.ElementType`, default `IconArrowSmDown`) — icon component rendered in the trigger row.
+- `iconSize` (`string | number`, default `"1.75em"`) — passed to the icon's `size`.
+- `containerProps` (`object`, default `{}`) — spread onto the outer column `Box`.
+- `itemProps` (`object`, default `{}`) — spread onto each item wrapper.
+- `headerProps` (`object`, default `{}`) — spread onto each trigger row.
+
+Remaining props are accepted by the type but not spread onto any element.
+
+## Examples
+
+Icon on the leading side, with persisted state:
+
+```tsx
+<Accordion items={faqs} iconPosition="start" persistKey="faq" />
+```
+
+Static and disabled rows:
+
+```tsx
+<Accordion
+  items={[
+    { id: "summary", trigger: <Text>Summary</Text>, content: null, hideIcon: true },
+    { id: "archived", trigger: <Text>Archived</Text>, content: <Text>Hidden</Text>, disabled: true },
+  ]}
+/>
+```
+
+## Notes
+
+- Disabled items render at 50% opacity with a `not-allowed` cursor and ignore clicks.
+- Items with `hideIcon` hide the icon, use a default cursor, and never expand.
+- The icon rotates to indicate state: `180` degrees when open at the end position, and from `-90` to `0` degrees at the start position.
+- Trigger rows are clickable `div` elements with no `button` role, `aria-expanded`, or keyboard handling.
+- `fontSize` and `spacing` are declared in the props type but are not used.

@@ -59,8 +59,8 @@ export const Drawer: React.FC<DrawerProps> = ({
             {...sidePositionProps}
             width={width}
             height="100dvh"
-            bg="surface"
-            skin="translucent"
+            // bg="surface"
+            skin="panel"
             zIndex={10009}
             {...motionProps}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
@@ -76,22 +76,25 @@ export const Drawer: React.FC<DrawerProps> = ({
           >
             {/* Header */}
             <Box
-              pt="small"
+              py="small"
               px="medium"
               display="flex"
               justifyContent="space-between"
               alignItems="center"
+              borderBottom={"1px solid"}
+              skin="card"
             >
               <Text fontSize="medium" fontWeight="bold" color="primary">
                 {title}
               </Text>
               <Button
                 onClick={() => toggleSidebar()}
-                variant="ghost"
+                variant="subtle"
+                shape="circle"
                 $size="icon.xsmall"
                 aria-label="Close drawer"
               >
-                <Box as={IconERemove} size="1.25rem" />
+                <Box as={IconERemove} size="1.125rem" />
               </Button>
             </Box>
             {children}
@@ -110,11 +113,13 @@ export const DrawerButton: React.FC<{
   drawerId: string;
   label?: string;
   icon?: React.ReactNode;
+  children?: React.ReactNode;
   [key: string]: any;
 }> = ({
   drawerId,
   label = "Open",
   icon = <Box as={IconEAdd} size="1rem" />,
+  children,
   ...props
 }) => {
   const { isSidebarOpen, toggleSidebar } = useSidebar(drawerId);
@@ -129,8 +134,12 @@ export const DrawerButton: React.FC<{
       gap="xxsmall"
       {...props}
     >
-      {icon}
-      <Text display={{ _: "none", md: "initial" }}>{label}</Text>
+      {children ?? (
+        <>
+          {icon}
+          <Text display={{ _: "none", md: "initial" }}>{label}</Text>
+        </>
+      )}
     </Button>
   );
 };

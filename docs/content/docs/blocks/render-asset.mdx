@@ -1,0 +1,74 @@
+---
+title: RenderAsset
+description: Render a component passed by reference, such as an icon or illustration, with optional props.
+navTitle: RenderAsset
+order: 1
+---
+
+`RenderAsset` renders a component type supplied through the `asset` prop by calling `React.createElement`. It has no `"use client"` directive and no dependencies beyond React.
+
+## Import
+
+```tsx
+import { RenderAsset } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="flex-start">
+  {[
+    { title: "Inline editing", icon: props.components.IconPencil },
+    { title: "Access control", icon: props.components.IconLock },
+    { title: "Shared folders", icon: props.components.Icon24Folder },
+  ].map((feature) => (
+    <Box key={feature.title} display="flex" alignItems="center" gap="s">
+      <RenderAsset asset={feature.icon} assetProps={{ width: 20, height: 20 }} />
+      <Text>{feature.title}</Text>
+    </Box>
+  ))}
+</Preview>
+
+## Usage
+
+```tsx
+import type { ComponentType } from "react";
+import { RenderAsset } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+import { IconPencil } from "@reactberry/system/icons";
+
+type Feature = { title: string; icon: ComponentType<any> };
+
+const feature: Feature = { title: "Inline editing", icon: IconPencil };
+
+export default function FeatureItem() {
+  return (
+    <Box display="flex" alignItems="center" gap="s">
+      <RenderAsset asset={feature.icon} assetProps={{ width: 20, height: 20 }} />
+      <Text>{feature.title}</Text>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `asset` (`ComponentType<any>`, required) — the component to render.
+- `assetProps` (`Record<string, unknown>`, default an empty object) — props passed to `asset`.
+
+No other props are accepted.
+
+## Examples
+
+Rendering a component chosen at runtime:
+
+```tsx
+const illustrations = { empty: EmptyState, error: ErrorState };
+
+<RenderAsset asset={illustrations[status]} assetProps={{ title: message }} />;
+```
+
+## Notes
+
+- If `asset` is falsy, a `"RenderAsset: No asset provided"` warning is logged with `console.warn` and nothing is rendered.
+- Children are always passed as `null`, so a `children` key in `assetProps` is ignored.
+- Use it where a component reference is stored in data (for example a list of features with icons) and JSX cannot be written directly.

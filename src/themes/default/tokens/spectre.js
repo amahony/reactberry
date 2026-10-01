@@ -7,7 +7,7 @@ export const spectre = {
   gray: chroma.hsl(0, 0, 0.5).hex(),
   red: chroma.hsl(0, 1, 0.6).hex(),
   orange: chroma.hsl(32, 1, 0.6).hex(),
-  yellow: chroma.hsl(48, 0.8, 0.5).hex(),
+  yellow: chroma.hsl(44, 0.84, 0.56).hex(),
   green: chroma.hsl(129, 0.5, 0.6).hex(),
   teal: chroma.hsl(178, 0.84, 0.64).hex(),
   blue: chroma.hsl(230, 0.88, 0.67).hex(),

@@ -1,3 +1,5 @@
+"use client";
+
 import { Box } from "../../elements";
 import { motion } from "motion/react";
 import React from "react";
@@ -48,7 +50,8 @@ const PieProgress: React.FC<ProgressProps> = ({
         fill="none"
         stroke={"currentColor"}
         strokeWidth={32}
-        strokeDasharray={`${progress * 10} 100`}
+        pathLength={100}
+        strokeDasharray={`${Math.min(Math.max(progress, 0), 100)} 100`}
       />
     </Box>
   );

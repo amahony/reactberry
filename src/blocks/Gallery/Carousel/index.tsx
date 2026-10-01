@@ -24,18 +24,8 @@ export default function Carousel({
   current: number;
   navigation?: boolean;
 }) {
-  // Handle undefined or empty photos array
-  if (!photos || photos.length === 0) {
-    return null;
-  }
-
   const [index, setIndex] = useState(Number(current));
-
-  const photo: any = photos[index];
   const [direction, setDirection] = useState(0);
-  const filteredImages = photos;
-
-  // console.log(photo);
 
   function changePhotoId(newVal: number) {
     if (newVal > index) {
@@ -61,7 +51,7 @@ export default function Carousel({
   });
 
   useKeypress("ArrowRight", () => {
-    if (index + 1 < photos.length) {
+    if (index + 1 < photos?.length) {
       changePhotoId(index + 1);
     }
   });
@@ -71,6 +61,15 @@ export default function Carousel({
       changePhotoId(index - 1);
     }
   });
+
+  // Handle undefined or empty photos array — guard runs after all hooks so the
+  // hook order stays unconditional across renders (rules of hooks).
+  if (!photos || photos.length === 0) {
+    return null;
+  }
+
+  const photo: any = photos[index];
+  const filteredImages = photos;
 
   return (
     <>

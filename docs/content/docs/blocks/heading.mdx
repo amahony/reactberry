@@ -1,0 +1,95 @@
+---
+title: Heading
+description: Render a page or section header with an optional strap, subtitle and meta content.
+navTitle: Heading
+order: 1
+---
+
+`Heading` is a client component (`"use client"`) that renders a `Text` as a `header` containing an `h1` title, plus an optional strap line above it and a subtitle paragraph below. It reads theme overrides from `theme.heading` via styled-components' `ThemeContext`.
+
+## Import
+
+```tsx
+import { Heading } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Heading
+    strap="Projects"
+    title="Docs site refresh"
+    subtitle="Last updated 5 minutes ago"
+    meta={<Tag skin="surface">In review</Tag>}
+    $size="large"
+    elementProps={{ title: { as: "p" } }}
+  >
+    <Button type="button" variant="primary" $size="small">Edit project</Button>
+  </Heading>
+  <Heading $size="xsmall" title="Members" subtitle="8 people" elementProps={{ title: { as: "p" } }} />
+</Preview>
+
+## Usage
+
+```tsx
+import { Heading, Tag } from "@reactberry/system/blocks";
+import { Button } from "@reactberry/system/elements";
+
+export default function ProjectHeader() {
+  return (
+    <Heading
+      strap="Projects"
+      title="Website redesign"
+      subtitle="Last updated 2 hours ago"
+      meta={<Tag skin="surface">In progress</Tag>}
+      $size="large"
+    >
+      <Button variant="primary" $size="small">
+        Edit project
+      </Button>
+    </Heading>
+  );
+}
+```
+
+## Props
+
+- `title` (`string | React.ReactNode`, required in the type, default `"Page Title"`) — rendered in an `h1`.
+- `subtitle` (`string | React.ReactNode`) — rendered in a `p` below the title when truthy.
+- `strap` (`any`) — rendered in a `div` above the title when truthy.
+- `meta` (`React.ReactNode`) — rendered after the subtitle.
+- `children` (`React.ReactNode`) — rendered last, after `meta`.
+- `$size` (`"xsmall" | "small" | "medium" | "large" | "xlarge" | "xxlarge" | "xxxlarge"`, default `"medium"`) — selects the title and subtitle font sizes (the strap uses the subtitle size).
+- `color` (default `"primary"`) — applied to the title only.
+- `elementProps` (`object`, default `{}`) — per-part overrides keyed `title`, `subtitle` and `strap`, spread last onto each part.
+- All other `TextProps` are spread onto the outer `header`.
+
+## Examples
+
+Compact section header:
+
+```tsx
+<Heading $size="xsmall" title="Members" subtitle="12 people" />
+```
+
+Override part styles with `elementProps`:
+
+```tsx
+<Heading
+  title="Billing"
+  elementProps={{
+    title: { as: "h2", fontWeight: 700 },
+    subtitle: { color: "secondary" },
+  }}
+  subtitle="Invoices and payment methods"
+/>
+```
+
+## Notes
+
+- Size mapping for title / subtitle: `xsmall` medium / small, `small` large / small, `medium` xlarge / small, `large` xlarge / medium, `xlarge` xxlarge / medium, `xxlarge` and `xxxlarge` xxxlarge / xlarge.
+- Passing a `$size` outside the listed keys throws at render time, because the size lookup returns `undefined`.
+- Style precedence for each part is component defaults, then `theme.heading.title` / `subtitle` / `strap`, then `elementProps`. The default themes set the subtitle and strap colours, so the component's own `"tertiary"` subtitle and `"secondary"` strap colours are overridden by the theme.
+- The outer `header` receives `theme.heading.container` (a flex column with vertical padding in the default themes) before your props.
+- The title is always an `h1` unless overridden via `elementProps.title.as`. Use that when rendering more than one `Heading` on a page.
+- The type declares a `props` key (`props?: any`); it has no special handling and is forwarded with the other props.

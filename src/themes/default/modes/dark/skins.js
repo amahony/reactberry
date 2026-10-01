@@ -4,7 +4,6 @@ import { shadows } from "../../tokens/shadows";
 import { getShade, getTint, getTransparent } from "../../utils";
 import { controlSizes } from "../../tokens/controls";
 import colors from "./config";
-import { borderWidth } from "styled-system";
 
 // TODO: Decide if we want to include borderColor.
 const staticPairs = {
@@ -170,6 +169,18 @@ const specialSkins = {
       backgroundColor: colors.transparent.light[3],
       color: colors.primary,
     },
+    yellow: {
+      borderColor: getTransparent(colors.palette.yellows[6], 0.4),
+      backdropFilter: "blur(8px)",
+      "-webkit-backdrop-filter": "blur(8px)",
+      backgroundColor: getTransparent(colors.palette.yellows[3], 0.82),
+      color: colors.palette.yellows[11],
+    },
+  },
+  contrast: {
+    borderColor: colors.transparent.light[2],
+    backgroundColor: getTransparent(colors.black, 0.8),
+    color: colors.primary,
   },
 };
 

@@ -1,0 +1,83 @@
+---
+title: Tooltip
+description: Show a small floating label when the pointer hovers over an element.
+navTitle: Tooltip
+order: 1
+---
+
+`Tooltip` is a client component that wraps its children in a hover target and shows animated content positioned with `@floating-ui/react`. By default the tooltip is portalled to `document.body`.
+
+## Import
+
+```tsx
+import { Tooltip } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <Tooltip content="Save changes (Cmd+S)" placement="top" arrow>
+    <Button type="button" variant="primary" $size="small">Save</Button>
+  </Tooltip>
+  <Tooltip content="More options" placement="bottom">
+    <Button type="button" variant="default" $size="small">Options</Button>
+  </Tooltip>
+  <Tooltip content="Deleted items are kept for 30 days" placement="right" arrow panelProps={{ maxWidth: "12rem", p: "xsmall" }}>
+    <Text fontWeight="600">Trash</Text>
+  </Tooltip>
+</Preview>
+
+## Usage
+
+```tsx
+import { Tooltip } from "@reactberry/system/blocks";
+import { Button, Text } from "@reactberry/system/elements";
+
+export default function SaveAction() {
+  return (
+    <Tooltip content="Save changes (Cmd+S)" placement="top" arrow>
+      <Button variant="primary" $size="small">
+        <Text>Save</Text>
+      </Button>
+    </Tooltip>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — the hover target.
+- `content` (`React.ReactNode`, required) — content shown inside the tooltip panel.
+- `placement` (`"top" | "bottom" | "left" | "right"`, default `"bottom"`) — preferred side.
+- `offset` (`number`, default `4`) — distance in pixels between the target and the tooltip.
+- `portal` (`boolean`, default `true`) — render the tooltip into `document.body` once mounted.
+- `possiblePlacements` (`string[]`) — fallback sides used by the `flip` middleware. Values other than `top`, `bottom`, `left`, or `right` are ignored.
+- `arrow` (`boolean`, default `false`) — render a small rotated square pointing at the target.
+- `panelProps` (`BoxProps`) — props spread onto the inner panel, overriding its defaults (`skin="translucent.dark"`, `shape="roundedLarge"`, `p="small"`, `maxWidth="20rem"`).
+
+Any other props are spread onto both the hover target `Box` (which defaults to `display="flex"` and `cursor="help"`) and the outer floating wrapper.
+
+## Examples
+
+Fall back to the right or left when there is no room below:
+
+```tsx
+<Tooltip content="More options" possiblePlacements={["right", "left"]}>
+  <Text>Options</Text>
+</Tooltip>
+```
+
+Customise the panel:
+
+```tsx
+<Tooltip content="Deleted items are kept for 30 days" panelProps={{ maxWidth: "12rem", p: "xsmall" }}>
+  <Text>Trash</Text>
+</Tooltip>
+```
+
+## Notes
+
+- The tooltip opens on `mouseenter` and closes on `mouseleave` only. It does not respond to focus, touch, or the Escape key, and no ARIA relationship (such as `aria-describedby`) is set between the target and the tooltip.
+- The floating element has `pointerEvents: "none"` and uses `position: fixed`, with `flip` and `shift` (8px padding) middleware.
+- Because remaining props are spread onto both the target and the floating wrapper, props such as `style` or layout props affect both elements.
+- The enter and exit animation slides vertically by 10px, regardless of the resolved side.

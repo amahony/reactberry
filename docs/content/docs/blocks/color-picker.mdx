@@ -1,0 +1,37 @@
+---
+title: ColorPicker
+description: Pick hex colours, with an optional alpha channel, from a popover swatch.
+navTitle: ColorPicker
+order: 1
+---
+
+`ColorPicker` renders a [react-colorful](https://github.com/omgovich/react-colorful) picker inside Reactberry's `Popover`, so it inherits click-outside, positioning, and animation behaviour.
+
+## Import
+
+```tsx
+import { ColorPicker } from "@reactberry/system/blocks";
+```
+
+## Live examples
+
+<ColorPickerLiveExamples />
+
+## Basic usage
+
+```tsx
+const [color, setColor] = useState("#3b82f6");
+
+<ColorPicker color={color} onChange={setColor} alpha={false} />;
+```
+
+## Useful props
+
+- `color` — current hex value (`#RRGGBB`, or `#RRGGBBAA` with alpha)
+- `onChange` — called with the new hex value
+- `alpha` — show the alpha slider (default `true`)
+- `trigger` — custom trigger; defaults to a colour swatch
+- `placement` — popover placement (default `"bottom end"`)
+- `swatchSize` — size of the default swatch (default `"2rem"`)
+- `disabled` — disable the default swatch
+- `panelProps` / `triggerProps` / `containerProps` — forwarded to `Popover`

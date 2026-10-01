@@ -60,6 +60,10 @@ function MyComponent() {
 | `trigger` | `React.ReactNode` | Default settings button | Custom trigger element |
 | `onViewChange` | `(view: FamilyDrawerView) => void` | `undefined` | Callback when view changes |
 | `width` | `string \| number \| object` | `"360px"` | Drawer width (responsive object supported) |
+| `privateKey` | `string` | `undefined` | Private key shown in the key view after "Reveal" is pressed |
+| `recoveryPhrase` | `string` | `undefined` | Recovery phrase shown in the phrase view after "Reveal" is pressed |
+| `onReveal` | `(view: "key" \| "phrase") => void` | `undefined` | Callback when "Reveal" is pressed in the key or phrase view |
+| `onRemove` | `() => void` | `undefined` | Callback when removal is confirmed in the remove view |
 
 ## Views
 

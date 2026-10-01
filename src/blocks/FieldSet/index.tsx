@@ -57,7 +57,7 @@ const FieldSet = forwardRef<any, FieldSetProps>(function FieldSet(
       color="currentColor"
       fontSize={fontSize}
       width={isRowLayout ? labelWidth : undefined}
-      flex={isRowLayout && !labelWidth ? "none" : undefined}
+      flex={isRowLayout && labelWidth ? "none" : "auto"}
       minWidth={isRowLayout ? "fit-content" : undefined}
       mr={isRowLayout ? "small" : undefined}
     >

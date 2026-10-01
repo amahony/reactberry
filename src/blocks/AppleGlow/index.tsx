@@ -16,7 +16,7 @@ const DEFAULT_COLORS = [
 export type AppleGlowProps = Omit<BoxProps, "children"> & {
   colors?: string[]
   borderRadius?: string | number
-  intensity?: "sm" | "md" | "lg" | "xl"
+  intensity?: "sm" | "md" | "lg" | "xl" | number
   preview?: boolean // Controls visibility
   blurAmount?: number // Custom blur amount in pixels
   backgroundColor?: string // Background color for the mask
@@ -60,7 +60,9 @@ export default function AppleGlow({
   const angleRef = useRef(234.576)
   const rafRef = useRef<number | null>(null)
   const lastTimeRef = useRef(0)
-  const blur = blurAmount ?? BLUR_INTENSITY[intensity]
+  const blur =
+    blurAmount ??
+    (typeof intensity === "number" ? intensity : BLUR_INTENSITY[intensity])
 
   const applyFrame = useCallback(() => {
     if (containerRef.current) {

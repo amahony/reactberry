@@ -1,0 +1,90 @@
+---
+title: Drawer
+description: Slide a side panel in from the left or right, toggled by a matching DrawerButton.
+navTitle: Drawer
+order: 1
+---
+
+`Drawer` is a client component that renders a full-height side panel with a header, close button, and backdrop, portalled to `document.body`. `Drawer` and `DrawerButton` share open state by id through `useSidebar`, which requires a `SidebarProvider` ancestor. `DesignSystemProvider` mounts one for you (see Notes).
+
+## Import
+
+```tsx
+import { Drawer, DrawerButton } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <DrawerButton drawerId="docs-preview-drawer-left" label="Open left drawer" />
+  <DrawerButton drawerId="docs-preview-drawer-right" label="Open right drawer" icon={<IconGear width="1rem" height="1rem" />} />
+  <Drawer id="docs-preview-drawer-left" title="Navigation">
+    <Box p="medium" display="flex" flexDirection="column" gap="s">
+      <Text>Left drawer content</Text>
+      <Text color="secondary">Close with the header button or the backdrop.</Text>
+    </Box>
+  </Drawer>
+  <Drawer id="docs-preview-drawer-right" title="Display settings" placement="right">
+    <Box p="medium" display="flex" flexDirection="column" gap="s">
+      <Text>Right drawer content</Text>
+      <Text color="secondary">This drawer slides in from the right.</Text>
+    </Box>
+  </Drawer>
+</Preview>
+
+## Usage
+
+```tsx
+import { Drawer, DrawerButton } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function FiltersPanel() {
+  return (
+    <>
+      <DrawerButton drawerId="filters" label="Filters" />
+      <Drawer id="filters" title="Filters" placement="right" width={{ _: "100%", md: "400px" }}>
+        <Box p="medium">
+          <Text>Filter controls</Text>
+        </Box>
+      </Drawer>
+    </>
+  );
+}
+```
+
+## Props
+
+- `id` (`string`, required) — state key shared with `DrawerButton`.
+- `children` (`React.ReactNode`, required) — content rendered below the header.
+- `title` (`string`, default `"Drawer"`) — header text.
+- `width` (`string | number | object`, default `"350px"`) — panel width; responsive objects are passed through to `Box`.
+- `placement` (`"left" | "right"`, default `"left"`) — side the panel is attached to and slides in from.
+
+No other props are accepted.
+
+## Related exports
+
+`DrawerButton`:
+
+- `drawerId` (`string`, required) — id of the `Drawer` to toggle.
+- `label` (`string`, default `"Open"`) — button text, hidden below the `md` breakpoint.
+- `icon` (`React.ReactNode`, default `IconEAdd` at `1rem`) — icon rendered before the label.
+
+Any other props are spread onto the `Button` after its defaults (`$size="xxsmall"`, `variant` of `"primary"` when open and `"ghost"` when closed). When `children` are passed, they are rendered instead of `icon` and `label`.
+
+## Examples
+
+Icon-only trigger:
+
+```tsx
+<DrawerButton drawerId="nav" label="" aria-label="Open navigation" />
+```
+
+## Notes
+
+- `useSidebar` reads state from `SidebarProvider`. `DesignSystemProvider` mounts `SidebarProvider` around its children, and both `SidebarProvider` and `useSidebar` are exported from `@reactberry/system/providers`. Outside a provider, the drawer stays closed, `DrawerButton` does nothing, and a `useSidebar must be used within a SidebarProvider` warning is logged.
+- Open state is stored in `localStorage` under `panel_` followed by the id, so it persists across reloads.
+- Clicking the backdrop or the header close button (`aria-label="Close drawer"`) toggles the drawer closed. Escape is not handled.
+- While open, the drawer locks body scroll and, on touch devices, tints the browser theme colour via `pushThemeColor`. It also renders an overscroll guard to cover the bottom safe area on iOS.
+- The panel slides with a spring transition and uses `skin="panel"` and `zIndex` `10009`; the backdrop uses `10002`.
+- Nothing is rendered until after the first client mount.

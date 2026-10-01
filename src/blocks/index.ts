@@ -1,6 +1,18 @@
 // Core layout blocks
 export { default as Container } from "./Container";
 export { default as Main } from "./Main";
+export {
+  default as Screen,
+  ScreenDesktop,
+  ScreenTablet,
+  ScreenPhone,
+} from "./Screen";
+export type {
+  ScreenProps,
+  ScreenPreset,
+  ScreenVariant,
+  ScreenDevice,
+} from "./Screen";
 export { default as Divider } from "./Divider";
 export { default as Heading } from "./Heading";
 
@@ -19,8 +31,13 @@ export { default as Popover } from "./Popover";
 export { default as MorphingPopover } from "./MorphingPopover";
 export { default as Modal, useModalClose, pushThemeColor, popThemeColor } from "./Modal";
 export { Menu, MenuItem, MenuContent } from "./Menu";
+export { default as Breadcrumbs, BreadcrumbCrumb } from "./Breadcrumbs";
+export { humanizeSegment, pathToBreadcrumbItems } from "./Breadcrumbs";
+export type { BreadcrumbItem, BreadcrumbsProps } from "./Breadcrumbs";
 export { default as Accordion } from "./Accordion";
 export { Drawer, DrawerButton } from "./Drawer";
+export { default as BottomSheet } from "./BottomSheet";
+export type { BottomSheetProps } from "./BottomSheet";
 export { default as FamilyDrawer } from "./FamilyDrawer";
 export { default as SystemNotice } from "./SystemNotice";
 export { default as Toast } from "./Toast";
@@ -55,6 +72,8 @@ export {
 // Form components
 export { default as Checkbox } from "./Checkbox";
 export type { CheckboxProps } from "./Checkbox";
+export { default as ColorPicker } from "./ColorPicker";
+export type { ColorPickerProps } from "./ColorPicker";
 export { default as FieldSet } from "./FieldSet";
 export { default as Controls } from "./Controls";
 export { default as InlineEditor } from "./InlineEditor";

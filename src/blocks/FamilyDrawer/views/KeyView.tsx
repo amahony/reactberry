@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Text } from "../../../elements";
 import {
   IconBan,
@@ -13,9 +13,13 @@ import { FamilyDrawerView } from "../index";
 
 interface KeyViewProps {
   setView: (view: FamilyDrawerView) => void;
+  secret?: string;
+  onReveal?: () => void;
 }
 
-export const KeyView: React.FC<KeyViewProps> = ({ setView }) => {
+export const KeyView: React.FC<KeyViewProps> = ({ setView, secret, onReveal }) => {
+  const [revealed, setRevealed] = useState(false);
+
   return (
     <Box>
       <ViewHeader
@@ -46,32 +50,65 @@ export const KeyView: React.FC<KeyViewProps> = ({ setView }) => {
         </Box>
       </Box>
 
+      {revealed && secret ? (
+        <Box
+          as="code"
+          display="block"
+          mt="medium"
+          p="medium"
+          shape="rounded"
+          skin="surface"
+          fontSize="small"
+          style={{ wordBreak: "break-all" }}
+        >
+          {secret}
+        </Box>
+      ) : null}
+
       <Box mt="large" display="flex" gap="medium">
-        <Button
-          variant="ghost"
-          $size="medium"
-          onClick={() => setView("default")}
-          flex="1"
-          skin="translucent"
-        >
-          <Text fontSize="medium" fontWeight="semibold">
-            Cancel
-          </Text>
-        </Button>
-        <Button
-          variant="primary"
-          $size="medium"
-          onClick={() => setView("default")}
-          flex="1"
-          display="flex"
-          alignItems="center"
-          gap="small"
-        >
-          <Box as={IconUserFocus} size="1.25rem" />
-          <Text fontSize="medium" fontWeight="semibold">
-            Reveal
-          </Text>
-        </Button>
+        {revealed ? (
+          <Button
+            variant="primary"
+            $size="medium"
+            onClick={() => setView("default")}
+            flex="1"
+          >
+            <Text fontSize="medium" fontWeight="semibold">
+              Done
+            </Text>
+          </Button>
+        ) : (
+          <>
+            <Button
+              variant="ghost"
+              $size="medium"
+              onClick={() => setView("default")}
+              flex="1"
+              skin="translucent"
+            >
+              <Text fontSize="medium" fontWeight="semibold">
+                Cancel
+              </Text>
+            </Button>
+            <Button
+              variant="primary"
+              $size="medium"
+              onClick={() => {
+                setRevealed(true);
+                onReveal?.();
+              }}
+              flex="1"
+              display="flex"
+              alignItems="center"
+              gap="small"
+            >
+              <Box as={IconUserFocus} size="1.25rem" />
+              <Text fontSize="medium" fontWeight="semibold">
+                Reveal
+              </Text>
+            </Button>
+          </>
+        )}
       </Box>
     </Box>
   );

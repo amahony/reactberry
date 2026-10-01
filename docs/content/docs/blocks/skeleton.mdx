@@ -1,0 +1,76 @@
+---
+title: Skeleton
+description: Show pulsing loading placeholders, either as a grid of cards or a single block.
+navTitle: Skeleton
+order: 1
+---
+
+`Skeleton` is a client component (`"use client"`) that renders animated `Placeholder` blocks using `motion/react`. The `grid` variant lays them out in a `Collection`; the `component` variant renders a single placeholder.
+
+## Import
+
+```tsx
+import { Skeleton } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Skeleton count={3} colsize="small" aspect="4/3" />
+  <Skeleton variant="component" width="12rem" height="2rem" />
+</Preview>
+
+## Usage
+
+```tsx
+import { Collection, Skeleton } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+type Project = { id: string; name: string };
+
+export default function ProjectGrid({ projects }: { projects?: Project[] }) {
+  if (!projects) return <Skeleton count={6} colsize="medium" aspect="4/3" />;
+
+  return (
+    <Collection colsize="medium">
+      {projects.map((project) => (
+        <Box key={project.id} skin="surface" shape="rounded" p="m">
+          <Text>{project.name}</Text>
+        </Box>
+      ))}
+    </Collection>
+  );
+}
+```
+
+## Props
+
+- `variant` (`"grid" | "component"`, default `"grid"`) — layout mode.
+- `count` (`number`, default `9`) — number of placeholders (grid only).
+- `aspect` (`string`, default `"3/2"`) — aspect ratio of each placeholder (grid only).
+- `colsize` (`"small" | "medium" | "large" | "xlarge" | "xxlarge" | "auto" | "row"`, default `"xlarge"`) — passed to `Collection` (grid only).
+- `showText` (`boolean`, default `true`) — render "Loading..." inside each placeholder (grid only).
+- `width` (`string`, default `"100%"`) — placeholder width (component only).
+- `height` (`string`, default `"2.25rem"`) — placeholder height (component only).
+- All other props are spread onto each `Placeholder` (not onto the `Collection`), after the defaults.
+
+## Examples
+
+Single block while a field loads:
+
+```tsx
+<Skeleton variant="component" width="12rem" height="2rem" />
+```
+
+Single-column list rows without text:
+
+```tsx
+<Skeleton colsize="row" count={4} aspect="8/1" showText={false} />
+```
+
+## Notes
+
+- Each placeholder uses `bg="transparent.light.0"`, `shape="rounded"`, the `IconDotsAnim` icon, and a 1.5s infinite opacity pulse (`0.5` to `1` to `0.5`).
+- In the `component` variant, `count`, `aspect`, `colsize` and `showText` are ignored. In the `grid` variant, `width` and `height` are ignored.
+- Because extra props go to every placeholder, layout props such as `gap` or `mb` cannot be applied to the grid container; wrap the `Skeleton` in a `Box` instead.
+- The pulse does not respect `prefers-reduced-motion`, and no `aria-busy` or live-region attributes are set. Mark the loading region yourself if needed.

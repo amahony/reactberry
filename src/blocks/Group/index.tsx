@@ -71,7 +71,6 @@ const HorizontalTabs = css`
   > * {
     text-align: center;
     align-items: center;
-    border: 1px solid transparent;
   }
   > *:first-child {
     border-radius: 8px 0 0 0;
@@ -110,7 +109,9 @@ const VerticalAvatars = css`
   justify-content: center;
 `
 
-const StyledBox = styled(Box)<GroupProps>`
+const StyledBox = styled(Box).withConfig({
+  shouldForwardProp: (prop) => prop !== "vertical" && prop !== "type",
+})<GroupProps>`
   ${(props) => props.type === "buttons" && HorizontalButtons};
   ${(props) => props.type === "avatars" && HorizontalAvatars};
   ${(props) => props.type === "tabs" && HorizontalTabs};

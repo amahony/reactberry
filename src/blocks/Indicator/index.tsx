@@ -16,8 +16,11 @@ export const Indicator = ({ children, ...props }: IndicatorProps) => {
       lineHeight="0.5rem"
       fontWeight="700"
       shape="pill"
+      minHeight="1.25rem"
+      minWidth="1.25rem"
+      bg="red"
       // width="fit-content"
-      // height="fit-content"
+      //aspect="1/1"
       flex="none"
       {...props}
     >

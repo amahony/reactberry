@@ -1,3 +1,5 @@
+"use client";
+
 import { Box } from "../../elements";
 import { IconArrowLeft, IconArrowRight } from "../../icons";
 import { AnimatePresence, motion } from "motion/react";

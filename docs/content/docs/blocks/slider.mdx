@@ -1,0 +1,97 @@
+---
+title: Slider
+description: Page through a row of items with arrows, dots, horizontal scroll, or swipe gestures.
+navTitle: Slider
+order: 1
+---
+
+`Slider` is a client component that lays its children out in a horizontal track and animates between pages with a `motion` spring. Controls render below the track. It reads theme tokens and should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { Slider } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Slider config={{ slidesToShow: 2, spacing: 8 }}>
+    {["Starter", "Team", "Business", "Enterprise", "Custom", "Nonprofit"].map((plan) => (
+      <Box key={plan} p="l" skin="surface" shape="rounded">
+        <Text fontWeight="600">{plan}</Text>
+      </Box>
+    ))}
+  </Slider>
+</Preview>
+
+## Usage
+
+```tsx
+import { Slider } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+const plans = ["Starter", "Team", "Business", "Enterprise"];
+
+export default function PlanSlider() {
+  return (
+    <Slider
+      config={{ slidesToShow: 1, spacing: 8 }}
+      responsiveConfig={[
+        { breakpoint: 1024, settings: { slidesToShow: 3 } },
+        { breakpoint: 640, settings: { slidesToShow: 2 } },
+      ]}
+    >
+      {plans.map((plan) => (
+        <Box key={plan} p="l" skin="surface" shape="rounded">
+          <Text>{plan}</Text>
+        </Box>
+      ))}
+    </Slider>
+  );
+}
+```
+
+## Props
+
+- `children` (`ReactNode[]`, required) — slides. Must be an array; each element is wrapped in its own slide container.
+- `config` (`SliderConfig`, default `{}`) — settings merged over the defaults listed below.
+- `responsiveConfig` (`ResponsiveConfig[]`, default `[]`) — breakpoint overrides, each `{ breakpoint: number; settings: SliderConfig }`.
+
+No other props are accepted and nothing is spread.
+
+`SliderConfig` fields:
+
+- `slidesToShow` (`number`, default `1`) — slides visible per page. Page count is `Math.ceil(children.length / slidesToShow)`.
+- `dots` (`boolean`, default `true`) — shows one dot per page; clicking a dot jumps to that page.
+- `arrows` (`boolean`, default `true`) — shows previous and next arrow controls.
+- `spacing` (`number`, default `0`) — horizontal padding in pixels applied to each side of every slide.
+- `paddingX` (`number`, default `0`) — horizontal padding in pixels on the root.
+- `paddingY` (`number`, default `0`) — vertical padding in pixels on the root.
+- `maxItemWidth` (`number`, default `300`) — maximum slide width in pixels, applied only when there are fewer children than `slidesToShow`.
+- `infinite` (`boolean`, default `false`) — keeps both arrows enabled at all times (see Notes).
+- `slidesToScroll` (`number`, default `1`) — declared but not used.
+
+## Examples
+
+Arrows only, no dots:
+
+```tsx
+<Slider config={{ dots: false, slidesToShow: 2 }}>
+  {items}
+</Slider>
+```
+
+## Related exports
+
+None. The `SliderConfig` and `ResponsiveConfig` types and the internal `SliderControls` component are not exported from `@reactberry/system/blocks`.
+
+## Notes
+
+- Controls render only when there is more than one page.
+- Navigation: arrow controls, dots, horizontal wheel or trackpad scroll (one page per gesture), and dragging. A drag changes page when it travels more than 50px with a velocity above 500.
+- `infinite` only sets both arrows to enabled. Navigation still clamps at the first and last page, so it does not wrap around.
+- `slidesToScroll` is declared in `SliderConfig` and present in the defaults, but paging always moves by `slidesToShow` slides.
+- `responsiveConfig` is evaluated on mount and on every window resize. The first entry whose `breakpoint` is less than `window.innerWidth` is merged into the current settings, so list entries from largest to smallest breakpoint. Matched settings persist; they are not reverted when the viewport shrinks below every breakpoint.
+- Arrow controls and dots are `div` elements without a button role, accessible label, or keyboard focus.
+- The page transition is a spring (`visualDuration` 0.3, `bounce` 0.2). No reduced-motion check is performed.

@@ -1,0 +1,83 @@
+---
+title: SystemNotice
+description: Display a centred inline status message with colour schemas, an optional icon, and a loading state.
+navTitle: SystemNotice
+order: 1
+---
+
+`SystemNotice` is a client component that renders a compact, centred message strip, such as "Saving…" or "Connection restored". It can optionally show an animated loading indicator and dividers above and below.
+
+## Import
+
+```tsx
+import { SystemNotice } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <SystemNotice message="Syncing changes" loading />
+  <SystemNotice message="All changes saved" colorSchema="success" />
+  <SystemNotice
+    colorSchema="warning"
+    icon={<IconOWarning width="1rem" height="1rem" />}
+    message="You are viewing an archived project."
+    showBreaks
+  />
+  <SystemNotice message="Connection lost" colorSchema="error" />
+  <SystemNotice message="A new version is available" colorSchema="info" />
+</Preview>
+
+## Usage
+
+```tsx
+import { SystemNotice } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+export default function SyncStatus({ syncing }: { syncing: boolean }) {
+  return (
+    <Box width="100%">
+      <SystemNotice
+        message={syncing ? "Syncing changes" : "All changes saved"}
+        loading={syncing}
+        colorSchema={syncing ? "default" : "success"}
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `message` (`React.ReactNode`, required) — notice content.
+- `loading` (`boolean`, default `false`) — show an animated dots icon before the message. When `true`, `icon` is not rendered.
+- `showBreaks` (`boolean`, default `false`) — render a `Divider` above and below the notice.
+- `colorSchema` (`"default" | "warning" | "success" | "error" | "info" | string`, default `"default"`) — sets `skin` and `color`. Unknown values fall back to `"default"`.
+- `icon` (`React.ReactNode`) — element shown before the message when not loading.
+
+Any other props (`BoxProps`) are spread onto the outer `Text` element (rendered as a `div`) after the schema styles, so `skin`, `color`, and layout defaults can be overridden.
+
+## Examples
+
+Warning with an icon and dividers:
+
+```tsx
+<SystemNotice
+  colorSchema="warning"
+  icon={<Box as={IconOWarning} size="1rem" />}
+  message="You are viewing an archived project."
+  showBreaks
+/>
+```
+
+Overriding the default spacing:
+
+```tsx
+<SystemNotice message="Offline" colorSchema="error" my="0" p="xs" />
+```
+
+## Notes
+
+- Schema mapping: `default` uses `skin="panel"` with secondary text; `success`, `error`, and `info` use the matching `.subtle` skin with primary text; `warning` uses `warning.subtle` with `palette.yellows.10` text.
+- The notice has no ARIA live region role. Add `role="status"` or `aria-live` through spread props if updates should be announced.
+- `IconOWarning` in the example is exported from `@reactberry/system/icons`; any React node can be used as `icon`.

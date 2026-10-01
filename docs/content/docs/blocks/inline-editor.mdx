@@ -1,0 +1,136 @@
+---
+title: InlineEditor
+description: Click-to-edit text with async save, error display, optional input masks, and native input types.
+navTitle: InlineEditor
+order: 1
+---
+
+`InlineEditor` is a client component that shows a value as text and switches to an editable field with save and cancel buttons. It uses `react-textarea-autosize` for multi-line editing and `MaskedField` when a mask preset is set.
+
+## Import
+
+```tsx
+import { InlineEditor } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={{ description: "Quarterly roadmap for the design system team.", phone: "5551234567" }}>
+    {(value, setValue) => (
+      <Box maxWidth="32rem" width="100%" mx="auto" display="flex" flexDirection="column" gap="m">
+        <InlineEditor
+          id="preview-description"
+          label="Description"
+          editLabel="Edit"
+          initialText={value.description}
+          placeholder="Add a description"
+          onSave={(id, text) =>
+            new Promise((resolve, reject) =>
+              setTimeout(() => {
+                if (!text.trim()) {
+                  reject(new Error("Description cannot be empty."));
+                  return;
+                }
+                setValue({ ...value, description: text });
+                resolve();
+              }, 600)
+            )
+          }
+        />
+        <InlineEditor
+          id="preview-phone"
+          label="Phone"
+          maskPreset="phone"
+          initialText={value.phone}
+          onSave={(id, text) => {
+            setValue({ ...value, phone: text });
+            return Promise.resolve();
+          }}
+        />
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { InlineEditor } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+async function saveField(id: string, text: string) {
+  const res = await fetch(`/api/projects/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ description: text }),
+  });
+  if (!res.ok) throw new Error("Could not save the description.");
+}
+
+export default function ProjectDescription({ project }: { project: { id: string; description: string | null } }) {
+  return (
+    <Box maxWidth="32rem">
+      <InlineEditor
+        id={project.id}
+        label="Description"
+        initialText={project.description}
+        placeholder="Add a description"
+        onSave={saveField}
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `id` (`string | number`, required) — passed to `onSave` as a string and used to build the error element id.
+- `onSave` (`(id: string, text: string) => Promise<void>`, required) — called on save. Resolving exits edit mode; rejecting keeps the editor open and shows the error.
+- `initialText` (`string | undefined | null`) — current stored value.
+- `placeholder` (`string`, default `""`) — field placeholder, also shown in italics when there is no value.
+- `label` (`string | React.ReactNode`) — header label. `"(Wait...)"` is appended while saving.
+- `editLabel` (`string`) — text shown next to the pencil icon on the edit button.
+- `isDisabled` (`boolean`, default `false`) — disables the edit button, the read-only click target, and the field.
+- `displayText` (`string | null`) — read-only text to show instead of `initialText`, for values whose stored form is not human-readable.
+- `maskPreset` (`string`) — a key of `maskPresets`. Valid keys render a `MaskedField` and format the read-only text with the same mask. Unknown keys are ignored.
+- `inputType` (`string`) — renders a single-line `input` of this type instead of the autosizing textarea. Ignored when `maskPreset` is valid.
+- `controlSize` (`string`, default `"small"`) — `$size` for the edit, save, and cancel buttons.
+- `buttonConfig` (`any`) — props spread onto each button, keyed by `edit`, `save`, and `cancel`. Default `edit` uses `variant: "ghost"`, `save` uses `variant: "success"`, and `cancel` uses `variant: "default"`.
+- `fieldProps` (`Record<string, any>`, default an empty object) — spread onto the active field after its defaults.
+- `containerProps` (`Record<string, any>`, default an empty object) — spread onto the outer `Text` (`as="div"`).
+- `headerProps` (`Record<string, any>`, default an empty object) — spread onto the header `Group` containing the label and buttons.
+
+No other props are accepted.
+
+## Examples
+
+Phone number with a mask:
+
+```tsx
+<InlineEditor id={user.id} label="Phone" maskPreset="phone" initialText={user.phone} onSave={savePhone} />
+```
+
+Email with a native input and custom buttons:
+
+```tsx
+<InlineEditor
+  id={user.id}
+  label="Email"
+  inputType="email"
+  initialText={user.email}
+  onSave={saveEmail}
+  editLabel="Edit"
+  buttonConfig={{ edit: { variant: "outline" }, save: { variant: "primary" }, cancel: { variant: "ghost" } }}
+/>
+```
+
+## Notes
+
+- In read-only mode the value area has `role="button"` and `tabIndex` of `0`, and opens the editor on click, Enter, or Space.
+- Error messages use the thrown `Error`'s `message`, or `"Something went wrong. Please try again."`. They render with `role="alert"` and are linked to the field through `aria-describedby`. Errors are also logged with `console.error`.
+- Save and cancel buttons contain only icons and have no `aria-label`; pass one through `buttonConfig.save` and `buttonConfig.cancel`.
+- Passing `buttonConfig` replaces the whole default object. Omitted keys fall back to the inline defaults (`"ghost"` for edit and cancel, `"outline.dark"` for save).
+- There is no keyboard shortcut for saving or cancelling while editing.
+- The draft text resets to `initialText` whenever `initialText` changes or edit mode toggles.

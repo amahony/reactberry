@@ -9,8 +9,9 @@ const Switch: React.FC<{
   onChange?: (newValue: boolean) => void;
   label?: string;
   help?: string;
+  ariaLabel?: string;
   [key: string]: any; // Allow any additional props
-}> = ({ value = false, onChange, label = "", help, ...props }) => {
+}> = ({ value = false, onChange, label = "", help, ariaLabel, ...props }) => {
   const handleToggle = () => {
     onChange?.(!value);
   };
@@ -66,6 +67,7 @@ const Switch: React.FC<{
         p="0"
         role="checkbox"
         aria-checked={value}
+        aria-label={ariaLabel || label || undefined}
         tabIndex={0}
       >
         <Box

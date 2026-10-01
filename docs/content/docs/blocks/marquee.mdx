@@ -1,0 +1,84 @@
+---
+title: Marquee
+description: Scroll content continuously in a seamless horizontal loop using a CSS animation.
+navTitle: Marquee
+order: 1
+---
+
+`Marquee` is a client component that repeats its children inside a track and translates the track with a CSS keyframe animation defined in styled-components. It does not use `motion` and has no JavaScript animation loop. It should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { Marquee } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Marquee speed={40} gap="2rem" pauseOnHover>
+    {["Acme", "Globex", "Initech", "Umbrella", "Hooli"].map((name) => (
+      <Box key={name} px="m" py="s" skin="primary" shape="pill">
+        <Text>{name}</Text>
+      </Box>
+    ))}
+  </Marquee>
+  <Marquee direction="right" fadeEdges={false} repeat={4}>
+    <Text>Free delivery on orders over £50</Text>
+  </Marquee>
+</Preview>
+
+## Usage
+
+```tsx
+import { Marquee } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+const partners = ["Acme", "Globex", "Initech", "Umbrella", "Hooli"];
+
+export default function PartnerStrip() {
+  return (
+    <Marquee speed={40} gap="2rem" pauseOnHover>
+      {partners.map((name) => (
+        <Box key={name} px="m" py="s" skin="surface" shape="pill">
+          <Text>{name}</Text>
+        </Box>
+      ))}
+    </Marquee>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — content to repeat. It is rendered once per copy inside a flex row.
+- `speed` (`number`, default `50`) — relative speed. One loop lasts `20 * (100 / speed)` seconds, so the default is 40 seconds and higher values scroll faster.
+- `direction` (`"left" | "right"`, default `"left"`) — scroll direction. `"right"` reverses the animation.
+- `pauseOnHover` (`boolean`, default `false`) — pauses the animation while the pointer is over the marquee.
+- `gap` (`string | number`, default `"1rem"`) — space between items, also applied as right padding on each copy so the loop seam matches.
+- `repeat` (`number`, default `2`) — number of copies rendered. Values below 2 are raised to 2.
+- `fadeEdges` (`boolean`, default `true`) — applies a horizontal mask so the content fades out over the outer 10% on each side.
+- `className` (`string`) — class name applied to the root element.
+
+No other props are accepted and nothing is spread.
+
+## Examples
+
+Right-to-left with no edge fade and extra copies for short content:
+
+```tsx
+<Marquee direction="right" fadeEdges={false} repeat={4}>
+  <Text>Free delivery on orders over £50</Text>
+</Marquee>
+```
+
+## Related exports
+
+None.
+
+## Notes
+
+- Each copy of the content must be at least as wide as the marquee for the loop to appear seamless. Increase `repeat` when the content is short.
+- Every copy after the first has `aria-hidden` set, so screen readers encounter the content once.
+- The animation runs indefinitely and has no `prefers-reduced-motion` handling. Use `pauseOnHover` or conditionally render static content where motion should be avoided.
+- The root is `position: relative`, `width: 100%`, and clips overflow.

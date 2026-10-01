@@ -1,0 +1,90 @@
+---
+title: CyclingNumber
+description: Animate a formatted number from zero to its value when it scrolls into view.
+navTitle: CyclingNumber
+order: 1
+---
+
+`CyclingNumber` is a client component that renders `NumberFlow` from `@number-flow/react` inside a `Text` span and updates it to `value` once the element is at least half visible. It requires `@number-flow/react` and `motion`, and should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { CyclingNumber } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview gap="xl">
+  <Box display="flex" flexDirection="column" gap="xs" alignItems="center">
+    <Text color="secondary">Revenue this year</Text>
+    <Text fontSize="xxl" fontWeight="bold">
+      <CyclingNumber value={1250000} />
+    </Text>
+  </Box>
+  <Box display="flex" flexDirection="column" gap="xs" alignItems="center">
+    <Text color="secondary">Uptime</Text>
+    <Text fontSize="xxl" fontWeight="bold">
+      <CyclingNumber value={98} format={{ style: "decimal" }} suffix="%" />
+    </Text>
+  </Box>
+  <Box display="flex" flexDirection="column" gap="xs" alignItems="center">
+    <Text color="secondary">Active users</Text>
+    <Text fontSize="xxl" fontWeight="bold">
+      <CyclingNumber value={4200000} format={{ notation: "compact" }} prefix="~" delay={0} />
+    </Text>
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { CyclingNumber } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function RevenueStat() {
+  return (
+    <Box display="flex" flexDirection="column" gap="xs">
+      <Text color="secondary">Revenue this year</Text>
+      <Text fontSize="xxl" fontWeight="bold">
+        <CyclingNumber value={1250000} />
+      </Text>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `value` (`number`, required in the type; default `0` in code) — target number.
+- `delay` (`number`, default `500`) — milliseconds to wait after entering the viewport before updating to `value`.
+- `format` (`Format` from `@number-flow/react`, default `{ style: "currency", currency: "USD", trailingZeroDisplay: "stripIfInteger" }`) — `Intl.NumberFormat` options passed to `NumberFlow`.
+- `prefix` (`string`, default `""`) — text rendered before the number.
+- `suffix` (`string`, default `""`) — text rendered after the number.
+
+No other props are accepted and nothing is spread.
+
+## Examples
+
+Plain integer with a suffix:
+
+```tsx
+<CyclingNumber value={98} format={{ style: "decimal" }} suffix="%" />
+```
+
+Compact notation with a prefix:
+
+```tsx
+<CyclingNumber value={4200000} format={{ notation: "compact" }} prefix="~" delay={0} />
+```
+
+## Related exports
+
+None.
+
+## Notes
+
+- The number starts at `0` and updates once at least 50% of the element is in view. It is not reset when the element leaves the viewport, so later entries do not replay the animation; changing `value` animates to the new value.
+- The default format is US dollar currency. Pass `format` for any other output.
+- Transitions use a 2 second spring when `useCanAnimate()` from `@number-flow/react` returns `true`, and an instant tween otherwise (for example, when the browser cannot animate the number or the user prefers reduced motion).
+- The wrapper `Text` uses `color="primary"` and `display: inline-flex`; font size and weight are inherited from the parent.

@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyles from "../themes/default/global";
 import { themes, type Theme, type ThemeName } from "../themes";
 import { setCurrentTheme } from "../themes/default/utils";
+import { SidebarProvider } from "../hooks/use-sidebar";
 import StyledComponentsRegistry from "./StyledComponentsRegistry";
 
 interface DesignSystemProviderProps extends PropsWithChildren {
@@ -28,7 +29,7 @@ export default function DesignSystemProvider({
     <StyledComponentsRegistry>
       <ThemeProvider theme={theme}>
         {withGlobalStyles ? <GlobalStyles /> : null}
-        {children}
+        <SidebarProvider>{children}</SidebarProvider>
       </ThemeProvider>
     </StyledComponentsRegistry>
   );

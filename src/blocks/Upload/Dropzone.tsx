@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import styled from "styled-components";
 import { Box, Text } from "../../elements";
 import Image from "next/image";
 import { UploadContainerProps } from "./types";
@@ -21,27 +20,13 @@ const getColor = (props: any) => {
   return "brand.subtle";
 };
 
-const DropzoneContainer = styled(Box)`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0.25rem;
-  border-width: 1.5px;
-  border-radius: 8px;
-  border-style: dashed;
-  outline: none;
-  transition: border 0.24s ease-in-out;
-`;
-
 function Dropzone({
   getRootProps,
   isDragActive,
   isDragAccept,
   isDragReject,
   label = "",
+  loading = false,
   dropzoneProps = {},
   children,
   dropzoneContainerProps = {},
@@ -49,17 +34,52 @@ function Dropzone({
   const { imgSrc, showPreview, icon, title, description } = dropzoneProps;
 
   return (
-    <DropzoneContainer
+    <Text
+      as="div"
       {...getRootProps()}
+      flex={1}
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      textAlign="center"
+      borderWidth="1.5px"
+      borderStyle="dashed"
+      shape="rounded"
+      cursor={loading ? "wait" : "pointer"}
       skin={getColor({ isDragActive, isDragAccept, isDragReject })}
-      {...dropzoneContainerProps}
+      // p={showPreview && imgSrc ? 0 : "2rem"}
       style={{
-        cursor: "pointer",
+        outline: "none",
+        transition: "border 0.24s ease-in-out",
+        cursor: loading ? "default" : "pointer",
         padding: showPreview && imgSrc ? 0 : "2rem",
+        opacity: loading ? 0.7 : 1,
         ...dropzoneContainerProps?.style,
       }}
+      {...dropzoneContainerProps}
     >
-      {showPreview && imgSrc ? (
+      {loading ? (
+        <Box display="flex" flexDirection="column" alignItems="center" gap="s">
+          <Box
+            as="span"
+            display="inline-block"
+            size="1.5rem"
+            border="2px solid"
+            borderColor="transparent.light.3"
+            borderTop="2px solid"
+            borderTopColor="primary"
+            borderRadius="50%"
+            style={{
+              animation: "spin 0.8s linear infinite",
+            }}
+          />
+          <Text fontSize="s" color="secondary">
+            Processing…
+          </Text>
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </Box>
+      ) : showPreview && imgSrc ? (
         <Image src={imgSrc} alt="dropzone-result" style={{ width: "100%" }} />
       ) : (
         <>
@@ -75,7 +95,7 @@ function Dropzone({
               {title}
             </Text>
           )}
-          <Text fontSize="small" color="secondary">
+          <Text color="secondary">
             {description || label || (
               <>
                 Drag and drop files here, or <b>click to select files</b>
@@ -85,7 +105,7 @@ function Dropzone({
         </>
       )}
       {children}
-    </DropzoneContainer>
+    </Text>
   );
 }
 

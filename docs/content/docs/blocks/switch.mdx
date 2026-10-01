@@ -1,0 +1,100 @@
+---
+title: Switch
+description: Toggle a boolean value with an animated pill switch and optional label and help text.
+navTitle: Switch
+order: 1
+---
+
+`Switch` is a client component that renders a controlled toggle built on the Headless UI `Switch`, with the thumb animated by `motion/react`. It does not manage its own state; pass `value` and update it from `onChange`.
+
+## Import
+
+```tsx
+import { Switch } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={true}>
+    {(enabled, setEnabled) => (
+      <Box display="flex" flexDirection="column" gap="m" maxWidth="22rem" width="100%" mx="auto">
+        <Switch
+          value={enabled}
+          onChange={setEnabled}
+          label="Email notifications"
+          help="Receive a summary of activity once a day."
+        />
+        <Text fontSize="small" color="secondary">Notifications are {enabled ? "on" : "off"}.</Text>
+      </Box>
+    )}
+  </State>
+  <State initial={false}>
+    {(darkMode, setDarkMode) => (
+      <Box display="flex" justifyContent="center">
+        <Switch value={darkMode} onChange={setDarkMode} ariaLabel="Dark mode" width="auto" />
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Switch } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+export default function NotificationSettings() {
+  const [enabled, setEnabled] = useState(false);
+
+  return (
+    <Box width="20rem">
+      <Switch
+        value={enabled}
+        onChange={setEnabled}
+        label="Email notifications"
+        help="Receive a summary of activity once a day."
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `value` (`boolean`, default `false`) — whether the switch is on. Controls the track colour (`brand` when on) and thumb position.
+- `onChange` (`(newValue: boolean) => void`) — called with the inverted `value` when the row is clicked.
+- `label` (`string`, default `""`) — bold primary text shown to the left of the switch.
+- `help` (`string`) — secondary text shown below the label in a smaller size.
+- `ariaLabel` (`string`) — accessible label for the switch. Falls back to `label` when omitted.
+
+Any other props are spread onto the outer row (a `Text` rendered as a `div` with `display="flex"`, `justifyContent="space-between"` and `width="100%"`), so layout and style props can override those defaults.
+
+## Examples
+
+Switch without visible text, labelled for assistive technology only:
+
+```tsx
+<Switch value={darkMode} onChange={setDarkMode} ariaLabel="Dark mode" />
+```
+
+Overriding the row layout via spread props:
+
+```tsx
+<Switch
+  value={compact}
+  onChange={setCompact}
+  label="Compact layout"
+  width="auto"
+  justifyContent="flex-start"
+  gap="medium"
+/>
+```
+
+## Notes
+
+- The whole row is clickable; `onChange` fires from the row's `onClick`, so clicks on the label and help text also toggle the value.
+- The inner switch element is given `role="checkbox"`, `aria-checked`, and `tabIndex=0`. A hidden native checkbox input is also rendered and kept in sync with `value`.
+- When neither `label` nor `help` is provided, only the switch track is rendered.
+- Keyboard toggling is handled by the Headless UI `Switch`, but no `onChange` is passed to it directly, so keyboard activation may not call your `onChange`. Verify keyboard behaviour if it is required.

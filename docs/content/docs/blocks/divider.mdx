@@ -1,0 +1,80 @@
+---
+title: Divider
+description: Draw a thin horizontal rule between sections of content.
+navTitle: Divider
+order: 1
+---
+
+`Divider` renders a 1px-high, full-width `Box` with a subtle transparent background. It is not marked `"use client"` and has no dependencies beyond `Box`.
+
+## Import
+
+```tsx
+import { Divider } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Box display="flex" flexDirection="column" gap="s">
+    <Text fontWeight="600">Account</Text>
+    <Divider />
+    <Text>Plan: Team</Text>
+    <Divider bg="border" my="m" />
+    <Box display="flex" alignItems="center" height="2rem">
+      <Text>Left side</Text>
+      <Divider width="1px" height="100%" my="0" mx="s" />
+      <Text>Right side</Text>
+    </Box>
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { Divider } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+export default function AccountSummary() {
+  return (
+    <Box display="flex" flexDirection="column" gap="s">
+      <Text fontWeight="600">Account</Text>
+      <Divider />
+      <Text>Plan: Team</Text>
+    </Box>
+  );
+}
+```
+
+## Props
+
+`Divider` declares no props of its own (its parameter is typed `any`). Every prop is spread onto the `Box` after the defaults below, so any of them can be overridden.
+
+- `height` (default `"1px"`)
+- `width` (default `"100%"`)
+- `bg` (default `"transparent.light.1"`)
+- `my` (default `"xxxsmall"`)
+- `shape` (default `"rounded"`)
+
+## Examples
+
+Stronger colour and more spacing:
+
+```tsx
+<Divider bg="border" my="m" />
+```
+
+Vertical divider inside a flex row:
+
+```tsx
+<Box display="flex" alignItems="center" height="2rem">
+  <Text>Left</Text>
+  <Divider width="1px" height="100%" my="0" mx="s" />
+  <Text>Right</Text>
+</Box>
+```
+
+## Notes
+
+- The element is a plain `div` with no `role="separator"`. Add `role="separator"` (and `aria-orientation="vertical"` for vertical use) if the divider conveys structure to assistive technology.
+- Because props are typed `any`, there is no compile-time checking of what you pass.

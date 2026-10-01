@@ -1,0 +1,40 @@
+---
+title: BottomSheet
+description: Present draggable bottom sheets with optional peek handle and collapsed snap point.
+navTitle: BottomSheet
+order: 1
+---
+
+`BottomSheet` is a client-side block built on [vaul](https://github.com/emilkowalski/vaul). It supports controlled and uncontrolled use, a peek handle while closed, and an optional collapsed snap point.
+
+## Import
+
+```tsx
+import { BottomSheet } from "@reactberry/system/blocks";
+```
+
+## Live examples
+
+<BottomSheetLiveExamples />
+
+## Basic usage
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+
+<BottomSheet open={isOpen} onOpenChange={setIsOpen} title="Filters" peekHeight={0} showCloseButton>
+  <Text>Sheet content</Text>
+</BottomSheet>;
+```
+
+## Useful props
+
+- `open` / `defaultOpen` / `onOpenChange` / `onClose` — open state (`defaultOpen` is `true`)
+- `title` / `description` — header content, also used for accessible labelling
+- `peekContent` / `peekHeight` — handle shown while closed (default `44`; `0` hides it)
+- `collapsedHeight` / `defaultCollapsed` / `expandedSnapPoint` — snap point behaviour
+- `height` / `maxHeight` / `maxWidth` — panel sizing; `maxHeight` makes the panel size to its content
+- `showBackdrop` / `showBackdropWhenExpanded` / `backdropBlur` — backdrop behaviour
+- `closeOnBackdropClick` / `closeOnEscape` — dismissal behaviour
+- `showCloseButton` — render a close button in the header
+- `zIndex` — stacking order (default `10000`)

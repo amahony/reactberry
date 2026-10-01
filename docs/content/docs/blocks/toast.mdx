@@ -1,0 +1,99 @@
+---
+title: Toast
+description: Render a single toast card with a message, optional description, icon, close button, and action.
+navTitle: Toast
+order: 1
+---
+
+`Toast` is a client component that renders one presentational toast card. It does not provide a queue, positioning, timers, or animation; render it inside your own toast container and control its lifetime yourself.
+
+## Import
+
+```tsx
+import { Toast } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column">
+  <State initial={true}>
+    {(visible, setVisible) =>
+      visible ? (
+        <Toast
+          variant="success"
+          message="Project archived"
+          description="You can restore it from Settings."
+          onClose={() => setVisible(false)}
+          action={{ label: "Undo", onClick: () => setVisible(false) }}
+        />
+      ) : (
+        <Button type="button" onClick={() => setVisible(true)}>Show toast</Button>
+      )
+    }
+  </State>
+  <Toast variant="error" icon={<IconOWarning width="1rem" height="1rem" />} message="Upload failed" />
+  <Toast variant="info" message="A new version is available" />
+  <Toast message="Copied to clipboard" />
+</Preview>
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Toast } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+export default function UndoToast({ onUndo }: { onUndo: () => void }) {
+  const [visible, setVisible] = useState(true);
+
+  if (!visible) return null;
+
+  return (
+    <Box position="fixed" bottom="1rem" right="1rem">
+      <Toast
+        variant="success"
+        message="Project archived"
+        description="You can restore it from Settings."
+        onClose={() => setVisible(false)}
+        action={{ label: "Undo", onClick: onUndo }}
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `message` (`React.ReactNode`, required) — primary text.
+- `description` (`string`) — secondary text shown below the message at 80% opacity.
+- `variant` (`"default" | "success" | "error" | "info" | "warning"`, default `"default"`) — background and text colour.
+- `icon` (`React.ReactNode`) — element shown before the text.
+- `onClose` (`() => void`) — when set, renders a circular close button that calls it.
+- `action` (`{ label: string; onClick: () => void }`) — when set, renders a ghost button with `label` after the close button.
+
+Any other props (`BoxProps`) are spread onto the outer `Box` after the variant styles, so defaults such as `width="22.5rem"`, `p`, `shape`, and `boxShadow` can be overridden.
+
+## Examples
+
+Error toast with an icon:
+
+```tsx
+<Toast
+  variant="error"
+  icon={<Box as={IconOWarning} size="1rem" />}
+  message="Upload failed"
+  onClose={dismiss}
+/>
+```
+
+Full-width toast:
+
+```tsx
+<Toast message="Copied to clipboard" width="100%" />
+```
+
+## Notes
+
+- Variant colours: `default` uses `skin="translucent"` with `palette.grays.11` text; `success`, `error`, `info`, and `warning` use the `0` and `11` shades of the green, red, brand, and yellow palettes.
+- The close button contains only an icon and has no `aria-label` or other accessible name.
+- The toast has no ARIA live region role. Add `role="status"` or `role="alert"` through spread props if it should be announced.

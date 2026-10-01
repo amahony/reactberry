@@ -1,0 +1,88 @@
+---
+title: Slideshow
+description: Cycle through background images automatically with cross-fade transitions and optional progress dots.
+navTitle: Slideshow
+order: 1
+---
+
+`Slideshow` is a client component that autoplays a list of photos as full-bleed CSS background images, animating between them with `motion`. It fills its parent, so the parent needs an explicit size; it reads theme tokens and should render inside `DesignSystemProvider`.
+
+## Import
+
+```tsx
+import { Slideshow } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <Box position="relative" width="100%" height="18rem" shape="rounded" overflow="hidden">
+    <Slideshow
+      photos={[
+        { id: 1, url: "https://picsum.photos/seed/harbor/400/300" },
+        { id: 2, url: "https://picsum.photos/seed/forest/400/300" },
+        { id: 3, url: "https://picsum.photos/seed/desert/400/300" },
+      ]}
+      duration={4}
+      showProgress
+    />
+  </Box>
+</Preview>
+
+## Usage
+
+```tsx
+import { Slideshow } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+const photos = [
+  { id: 1, url: "/hero/one.jpg" },
+  { id: 2, url: "/hero/two.jpg" },
+  { id: 3, url: "/hero/three.jpg" },
+];
+
+export default function Hero() {
+  return (
+    <Box position="relative" width="100%" height="24rem">
+      <Slideshow photos={photos} duration={5} showProgress />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `photos` (`ImageType[]`, required) — images to show. Each item is `{ id: number; url: string }`; only `url` is read.
+- `showProgress` (`boolean`) — shows a row of clickable dots at the bottom. Clicking a dot jumps to that slide and restarts the autoplay timer.
+- `duration` (`number`, default `3`) — seconds each slide stays visible before advancing.
+- `fade` (`boolean`, default `true`) — renders a gradient overlay from transparent to `currentColor` over the images.
+
+No other props are accepted and nothing is spread.
+
+## Examples
+
+Without the gradient overlay:
+
+```tsx
+<Slideshow photos={photos} fade={false} />
+```
+
+## Related exports
+
+- `wrap(min: number, max: number, v: number): number` — wraps `v` into the range from `min` (inclusive) to `max` (exclusive). Used internally to map the current page to a photo index.
+
+```tsx
+import { wrap } from "@reactberry/system/blocks";
+
+wrap(0, 3, 4); // 1
+wrap(0, 3, -1); // 2
+```
+
+## Notes
+
+- With an empty `photos` array the component renders a box containing the text "No images available".
+- With a single photo it renders one absolutely positioned image with no autoplay, fade overlay, or dots, so the parent should be positioned (for example `position="relative"`).
+- With two or more photos, autoplay advances every `duration` seconds and loops back to the first photo.
+- Slides enter and exit with a 0.6 second opacity, scale, and vertical offset animation. The component does not check for reduced-motion preferences, and autoplay cannot be paused.
+- The fade overlay uses `currentColor`, so the inherited text colour determines its tint.
+- Images are CSS backgrounds, so they have no alternative text. The progress dots are `div` elements without a button role, label, or keyboard focus.

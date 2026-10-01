@@ -1,3 +1,5 @@
+"use client";
+
 import { ResponsiveBar } from "@nivo/bar";
 import { charttheme } from "./utils";
 // import { useTheme } from "styled-components";

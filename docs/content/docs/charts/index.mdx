@@ -1,0 +1,110 @@
+---
+title: Charts
+description: Bar and pie charts built on Nivo, with a shared chart theme.
+navTitle: Charts
+order: 0
+---
+
+Reactberry ships two chart components, `BarChart` and `PieChart`, built on [Nivo](https://nivo.rocks). Both are client components and use the shared `charttheme` object.
+
+## Import
+
+```tsx
+import { BarChart, PieChart, charttheme } from "@reactberry/system/charts";
+```
+
+The charts depend on `@nivo/bar` and `@nivo/pie`.
+
+## Sizing
+
+Both charts wrap Nivo's responsive components, which fill their parent. Give the parent an explicit height, otherwise the chart renders at zero height.
+
+```tsx
+<Box height="20rem" width="100%">
+  <BarChart data={data} keys={["sent", "received"]} indexBy="day" props={{}} />
+</Box>
+```
+
+## BarChart
+
+Wraps `ResponsiveBar` as a stacked bar chart.
+
+Props:
+
+- `data` — array of rows, one per bar
+- `keys` — field names to stack within each bar
+- `indexBy` — field name used for the category axis
+- `props` — extra `ResponsiveBar` props; required by the type, pass an empty object when not needed
+
+Fixed settings:
+
+- `groupMode="stacked"`, `padding={0.125}`, `innerPadding={2}`, `borderRadius={4}`, `borderWidth={1}`
+- `colors` uses the `tableau10` scheme; borders are a brighter shade of the bar colour
+- Margins of 50 top, 0 right, 100 bottom, 50 left
+- Bottom axis ticks rotated -45 degrees and truncated at 10 characters
+- Left axis legend `"Messages"` with 3 tick values
+- White labels, skipped on bars smaller than 12px
+- Animation on, `theme={charttheme}`
+
+`props` is spread before these settings, so it cannot override them. Use it for options not listed above, such as `valueFormat`, `tooltip`, `layout`, or `onClick`.
+
+```tsx
+const data = [
+  { day: "Mon", sent: 12, received: 8 },
+  { day: "Tue", sent: 9, received: 14 },
+];
+
+<BarChart data={data} keys={["sent", "received"]} indexBy="day" props={{ valueFormat: ">-.0f" }} />;
+```
+
+## PieChart
+
+Wraps `ResponsivePie` as a donut chart.
+
+Props:
+
+- `data` — array of slices; each slice needs `id`, `value`, `label`, and `color`
+- Any other `ResponsivePie` prop, spread after the defaults so it overrides them
+
+Defaults:
+
+- `innerRadius={0.75}`, `padAngle={2}`, `cornerRadius={4}`, `borderWidth={1}`
+- Slice colours read from each datum's `color` field
+- Margins of 30 on every side
+- Arc labels off; arc link labels on, showing each slice's `label`
+- Link label text colour `#ffffff88`, suited to dark backgrounds
+- `sortByValue={false}`, animation on, `theme={charttheme}`
+
+```tsx
+const data = [
+  { id: "email", label: "Email", value: 42, color: "#4e79a7" },
+  { id: "sms", label: "SMS", value: 18, color: "#f28e2b" },
+];
+
+<Box height="16rem">
+  <PieChart data={data} />
+</Box>;
+```
+
+The prop type only declares `data`. In TypeScript, passing extra props such as `innerRadius` produces a type error even though they are applied at runtime.
+
+## charttheme
+
+`charttheme` is a Nivo theme object exported from `src/charts/utils.ts`. Both charts pass it to Nivo, and it can be reused with other Nivo components.
+
+Key values:
+
+- `background` transparent, `fontFamily` sans-serif, `fontSize` 12, `textColor` `#777777`
+- Axis domain lines hidden; tick lines `#777777` at 2px
+- Grid lines `#333` dashed `2 2`
+- Labels 11px, weight 600, `currentColor`
+- Tooltip black background, white text, 8px radius
+
+```tsx
+import { ResponsiveLine } from "@nivo/line";
+import { charttheme } from "@reactberry/system/charts";
+
+<ResponsiveLine data={series} theme={charttheme} />;
+```
+
+`charttheme` uses fixed colour values and does not read from the styled-components theme.

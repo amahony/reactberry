@@ -1,0 +1,91 @@
+---
+title: Await
+description: An async server component that awaits a promise and renders its result through a render function.
+navTitle: Await
+order: 1
+---
+
+`Await` is an `async` React Server Component that awaits `promise` and returns `children(result)`. It requires a React Server Components environment such as the Next.js App Router and cannot be rendered from a client component.
+
+## Import
+
+```tsx
+import { Await } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={Promise.resolve([{ id: "a", title: "Quarterly results beat forecasts" }, { id: "b", title: "New office opens in Lisbon" }])}>
+    {(promise) => (
+      <Await promise={promise}>
+        {(stories) => (
+          <Box as="ul" m="0" pl="l">
+            {stories.map((story) => (
+              <Text as="li" key={story.id}>{story.title}</Text>
+            ))}
+          </Box>
+        )}
+      </Await>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+import { Suspense } from "react";
+import { Await } from "@reactberry/system/blocks";
+import { Box, Text } from "@reactberry/system/elements";
+
+type Story = { id: string; title: string };
+
+async function getRecentNews(): Promise<Story[]> {
+  const res = await fetch("https://example.com/api/news");
+  return res.json();
+}
+
+export default function NewsPage() {
+  return (
+    <Box p="l">
+      <Text as="h1" fontSize="l">News</Text>
+      <Suspense fallback={<Text color="secondary">Loading stories…</Text>}>
+        <Await promise={getRecentNews()}>
+          {(stories) => (
+            <Box as="ul">
+              {stories.map((story) => (
+                <Text as="li" key={story.id}>{story.title}</Text>
+              ))}
+            </Box>
+          )}
+        </Await>
+      </Suspense>
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `promise` (`Promise<T>`, required) — the promise to await.
+- `children` (`(result: T) => JSX.Element`, required) — render function called with the resolved value.
+
+No other props are accepted. `T` is inferred from `promise`.
+
+## Examples
+
+Streaming a slower request while the rest of the page renders:
+
+```tsx
+<Suspense fallback={<Text>Loading orders…</Text>}>
+  <Await promise={getOrders(userId)}>
+    {(orders) => <Text>{orders.length} orders</Text>}
+  </Await>
+</Suspense>
+```
+
+## Notes
+
+- Wrap `Await` in `Suspense` to show a fallback while the promise is pending; without a boundary, the parent waits for the promise before rendering.
+- A rejected promise is thrown during rendering and is handled by the nearest error boundary (for example a Next.js `error.tsx`).
+- `children` must return a `JSX.Element`; returning `null` or a string does not satisfy the type.

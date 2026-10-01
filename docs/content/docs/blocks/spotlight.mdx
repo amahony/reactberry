@@ -1,0 +1,76 @@
+---
+title: Spotlight
+description: Render a card that tilts towards the pointer and shows a radial spotlight following the cursor on hover.
+navTitle: Spotlight
+order: 1
+---
+
+`Spotlight` is a client component that wraps its children in a card with a mouse-driven 3D tilt and a radial-gradient spotlight. It depends on `motion/react`.
+
+## Import
+
+```tsx
+import { Spotlight } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview>
+  <Spotlight maxWidth="16rem" width="100%">
+    <Text as="h3" fontSize="l" fontWeight="700">
+      Realtime sync
+    </Text>
+    <Text as="p" color="secondary">
+      Changes appear on every device instantly.
+    </Text>
+  </Spotlight>
+  <Spotlight aspect="1/1" maxWidth="12rem" width="100%" spotlightColor="transparent.light.2">
+    <Text fontWeight="600">Square card</Text>
+  </Spotlight>
+</Preview>
+
+## Usage
+
+```tsx
+import { Spotlight } from "@reactberry/system/blocks";
+import { Text } from "@reactberry/system/elements";
+
+export default function FeatureCard() {
+  return (
+    <Spotlight maxWidth="320px">
+      <Text as="h3" fontSize="l" fontWeight="700">
+        Realtime sync
+      </Text>
+      <Text as="p" color="secondary">
+        Changes appear on every device instantly.
+      </Text>
+    </Spotlight>
+  );
+}
+```
+
+## Props
+
+- `children` (`React.ReactNode`, required) — card content, rendered in a layer that lifts towards the viewer on hover.
+- `aspect` (`number | number[] | string[] | {}`, default `"4/5"`) — applied as the inline `aspectRatio` style.
+- `spotlightColor` (`string`, default `"transparent.brand.1"`) — set as the spotlight layer's `color`; the gradient uses `currentColor`, so theme colour tokens work.
+
+All remaining `BoxProps` (except `children`) are spread onto the outer `Box`, after its defaults: `skin="card"`, `shape="rounded"`, `border="1px solid"`, `borderColor="transparent.light.2"`, `p="medium"`, `$shadow="medium"` and `overflow="hidden"`.
+
+## Examples
+
+Square card with a custom spotlight colour:
+
+```tsx
+<Spotlight aspect="1/1" spotlightColor="transparent.light.2">
+  <Text>Square</Text>
+</Spotlight>
+```
+
+## Notes
+
+- Tilt is limited to 5 degrees on each axis and uses springs with stiffness 300 and damping 30. It resets on mouse leave.
+- On hover the content layer moves to `translateZ(48px)` and scales to 1.04; the spotlight is a 300px radial gradient that fades in.
+- Because `aspect` is applied as an inline style, only single values take effect; array or object (responsive) values are not resolved.
+- Passing `style` replaces the component's inline style, including the tilt transform and aspect ratio.
+- Interaction relies on mouse events only. There is no reduced-motion or touch handling; see `AnimatedCard` or `FluorescentCard` for variants that respect these.

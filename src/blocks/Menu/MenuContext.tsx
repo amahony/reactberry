@@ -1,3 +1,5 @@
+"use client";
+
 // src/design-system/blocks/Menu/MenuContext.tsx
 import React, { createContext, useContext, useState } from "react";
 

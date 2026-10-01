@@ -1,0 +1,122 @@
+---
+title: FieldSet
+description: A labelled form field with optional description, error message, and value badge, in column or row layout.
+navTitle: FieldSet
+order: 1
+---
+
+`FieldSet` is a client component that renders a `fieldset` containing a `label`, a Reactberry `Field`, and optional description and error text. It forwards its ref to the `Field`.
+
+## Import
+
+```tsx
+import { FieldSet } from "@reactberry/system/blocks";
+```
+
+## Live example
+
+<Preview flexDirection="column" alignItems="stretch">
+  <State initial={{ email: "not-an-email", team: "Design" }}>
+    {(form, setForm) => (
+      <Box display="flex" flexDirection="column" gap="m" width="100%" maxWidth="28rem" mx="auto">
+        <FieldSet
+          name="docs-preview-email"
+          label="Work email"
+          description="Type an address containing @ to clear the error."
+          type="email"
+          placeholder="you@example.com"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          error={form.email && !form.email.includes("@") ? "Enter a valid email" : undefined}
+          required
+        />
+        <FieldSet
+          name="docs-preview-team"
+          label="Team"
+          layout="row"
+          labelWidth="5rem"
+          value={form.team}
+          watch={form.team}
+          onChange={(e) => setForm({ ...form, team: e.target.value })}
+        />
+      </Box>
+    )}
+  </State>
+</Preview>
+
+## Usage
+
+```tsx
+"use client";
+
+import { useState, type ChangeEvent } from "react";
+import { FieldSet } from "@reactberry/system/blocks";
+import { Box } from "@reactberry/system/elements";
+
+export default function ProfileForm() {
+  const [email, setEmail] = useState("");
+  const error = email && !email.includes("@") ? "Enter a valid email" : undefined;
+
+  return (
+    <Box as="form" display="flex" flexDirection="column" gap="m">
+      <FieldSet
+        name="email"
+        label="Email"
+        description="Used for sign-in and notifications."
+        type="email"
+        placeholder="you@example.com"
+        value={email}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+        error={error}
+        required
+      />
+    </Box>
+  );
+}
+```
+
+## Props
+
+- `name` (`string`, required) — used as the field `name` and `id`, and as the label `htmlFor`.
+- `label` (`string | React.ReactNode`, required) — label content. When `required` is set, `" *"` is appended.
+- `description` (`string`) — helper text rendered between the label and the field.
+- `error` (`any`) — rendered below the field in red when truthy.
+- `required` (`boolean`) — adds the `" *"` marker to the label. It is not forwarded to the field.
+- `watch` (`any`) — when truthy, renders the value in a small badge to the right of the field.
+- `as` (`React.ElementType`, default `"input"`) — element rendered by `Field`, for example `"textarea"` or `"select"`.
+- `children` (`React.ReactNode`) — rendered inside the field only when `as` is set to something other than `"input"`, for example `option` elements for a `select`.
+- `layout` (`"column" | "row"`, default `"column"`) — stacks the label above the field, or places it to the left.
+- `fontSize` (`string | number`, default `"medium"`) — applied to the label `fontSize` and to the field `$size`.
+- `labelWidth` (`string | number`) — label width in row layout; when set, the label does not flex.
+- `containerProps` (`object`, default an empty object) — spread onto the outer `fieldset` `Box`.
+
+All remaining props (for example `type`, `value`, `onChange`, `placeholder`, `disabled`) are spread onto the `Field`, after its defaults of `variant="default"` and `width="100%"`.
+
+## Examples
+
+Row layout with a fixed label width:
+
+```tsx
+<FieldSet name="city" label="City" layout="row" labelWidth="8rem" />
+```
+
+Select with options:
+
+```tsx
+<FieldSet name="role" label="Role" as="select" value={role} onChange={handleRole}>
+  <option value="viewer">Viewer</option>
+  <option value="editor">Editor</option>
+</FieldSet>
+```
+
+Range input with a live value badge:
+
+```tsx
+<FieldSet name="volume" label="Volume" type="range" min={0} max={100} value={volume} watch={volume} onChange={handleVolume} />
+```
+
+## Notes
+
+- The error text is not linked to the field with `aria-describedby`, and the field does not receive `aria-invalid`. Pass these through the spread props if needed.
+- The description uses `fontSize="xsmall"` in column layout and `fontSize="small"` in row layout.
+- `watch` is checked for truthiness, so a value of `0` hides the badge.

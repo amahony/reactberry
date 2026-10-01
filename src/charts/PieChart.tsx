@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { charttheme } from "./utils";
