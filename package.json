@@ -12,7 +12,7 @@
     "tsconfig.json"
   ],
   "engines": {
-    "node": "24.x",
+    "node": ">=20",
     "npm": ">=9.0.0"
   },
   "scripts": {
